@@ -8,12 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		3F048E8C1B96AED500ADF5D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F048E8B1B96AED500ADF5D2 /* AppDelegate.swift */; };
-		3F048E8E1B96AED500ADF5D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F048E8D1B96AED500ADF5D2 /* ViewController.swift */; };
 		3F048E911B96AED500ADF5D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F048E8F1B96AED500ADF5D2 /* Main.storyboard */; };
 		3F048E931B96AED500ADF5D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F048E921B96AED500ADF5D2 /* Assets.xcassets */; };
 		3F048E961B96AED500ADF5D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F048E941B96AED500ADF5D2 /* LaunchScreen.storyboard */; };
 		3F048EA11B96AED500ADF5D2 /* TensorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F048EA01B96AED500ADF5D2 /* TensorTests.swift */; };
 		3F048EAC1B96AED500ADF5D2 /* TensorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F048EAB1B96AED500ADF5D2 /* TensorUITests.swift */; };
+		3F048EBB1B96B4E400ADF5D2 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F048EB91B96B4E400ADF5D2 /* Bolts.framework */; };
+		3F048EBC1B96B4E400ADF5D2 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F048EBA1B96B4E400ADF5D2 /* Parse.framework */; };
+		3F048EBF1B96B61800ADF5D2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F048EBE1B96B61800ADF5D2 /* AudioToolbox.framework */; };
+		3F048EC11B96B62300ADF5D2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F048EC01B96B62300ADF5D2 /* SystemConfiguration.framework */; };
+		3F048EC31B96B63100ADF5D2 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F048EC21B96B63100ADF5D2 /* libstdc++.6.tbd */; };
+		3F048EC51B96B64000ADF5D2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F048EC41B96B64000ADF5D2 /* libsqlite3.tbd */; };
+		3F048EC71B96B7CA00ADF5D2 /* PlanTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F048EC61B96B7CA00ADF5D2 /* PlanTableViewController.swift */; };
+		3F356AD71BA50D3900277A84 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F356AD61BA50D3900277A84 /* TaskDetailViewController.swift */; };
+		3F6A57491BAD127100F6030C /* AuthorizationTokens.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A57481BAD127100F6030C /* AuthorizationTokens.plist */; };
+		3FC607E11B98017400758842 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC607E01B98017400758842 /* Action.swift */; };
+		3FC607E41B9817C500758842 /* PlanTableViewTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC607E31B9817C500758842 /* PlanTableViewTaskCell.swift */; };
+		3FC607E81B9BA3AB00758842 /* LeavesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC607E71B9BA3AB00758842 /* LeavesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +47,6 @@
 /* Begin PBXFileReference section */
 		3F048E881B96AED500ADF5D2 /* Tensor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tensor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F048E8B1B96AED500ADF5D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3F048E8D1B96AED500ADF5D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3F048E901B96AED500ADF5D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3F048E921B96AED500ADF5D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F048E951B96AED500ADF5D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +57,19 @@
 		3F048EA71B96AED500ADF5D2 /* TensorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TensorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F048EAB1B96AED500ADF5D2 /* TensorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TensorUITests.swift; sourceTree = "<group>"; };
 		3F048EAD1B96AED500ADF5D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F048EB91B96B4E400ADF5D2 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Tensor/Bolts.framework; sourceTree = "<group>"; };
+		3F048EBA1B96B4E400ADF5D2 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Tensor/Parse.framework; sourceTree = "<group>"; };
+		3F048EBE1B96B61800ADF5D2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		3F048EC01B96B62300ADF5D2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3F048EC21B96B63100ADF5D2 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
+		3F048EC41B96B64000ADF5D2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		3F048EC61B96B7CA00ADF5D2 /* PlanTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanTableViewController.swift; sourceTree = "<group>"; };
+		3F356AD61BA50D3900277A84 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
+		3F6A57481BAD127100F6030C /* AuthorizationTokens.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AuthorizationTokens.plist; sourceTree = "<group>"; };
+		3FC607E01B98017400758842 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		3FC607E21B98033100758842 /* Tensor-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tensor-Bridging-Header.h"; sourceTree = "<group>"; };
+		3FC607E31B9817C500758842 /* PlanTableViewTaskCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanTableViewTaskCell.swift; sourceTree = "<group>"; };
+		3FC607E71B9BA3AB00758842 /* LeavesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeavesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +77,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F048EC51B96B64000ADF5D2 /* libsqlite3.tbd in Frameworks */,
+				3F048EC31B96B63100ADF5D2 /* libstdc++.6.tbd in Frameworks */,
+				3F048EC11B96B62300ADF5D2 /* SystemConfiguration.framework in Frameworks */,
+				3F048EBF1B96B61800ADF5D2 /* AudioToolbox.framework in Frameworks */,
+				3F048EBC1B96B4E400ADF5D2 /* Parse.framework in Frameworks */,
+				3F048EBB1B96B4E400ADF5D2 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +106,7 @@
 		3F048E7F1B96AED500ADF5D2 = {
 			isa = PBXGroup;
 			children = (
+				3F048EBD1B96B50000ADF5D2 /* Frameworks */,
 				3F048E8A1B96AED500ADF5D2 /* Tensor */,
 				3F048E9F1B96AED500ADF5D2 /* TensorTests */,
 				3F048EAA1B96AED500ADF5D2 /* TensorUITests */,
@@ -97,12 +127,18 @@
 		3F048E8A1B96AED500ADF5D2 /* Tensor */ = {
 			isa = PBXGroup;
 			children = (
+				3FC607DF1B98015600758842 /* Parse Model */,
 				3F048E8B1B96AED500ADF5D2 /* AppDelegate.swift */,
-				3F048E8D1B96AED500ADF5D2 /* ViewController.swift */,
+				3F048EC61B96B7CA00ADF5D2 /* PlanTableViewController.swift */,
+				3F356AD61BA50D3900277A84 /* TaskDetailViewController.swift */,
+				3FC607E31B9817C500758842 /* PlanTableViewTaskCell.swift */,
+				3FC607E71B9BA3AB00758842 /* LeavesTableViewController.swift */,
 				3F048E8F1B96AED500ADF5D2 /* Main.storyboard */,
+				3FC607E21B98033100758842 /* Tensor-Bridging-Header.h */,
 				3F048E921B96AED500ADF5D2 /* Assets.xcassets */,
 				3F048E941B96AED500ADF5D2 /* LaunchScreen.storyboard */,
 				3F048E971B96AED500ADF5D2 /* Info.plist */,
+				3F6A57481BAD127100F6030C /* AuthorizationTokens.plist */,
 			);
 			path = Tensor;
 			sourceTree = "<group>";
@@ -123,6 +159,27 @@
 				3F048EAD1B96AED500ADF5D2 /* Info.plist */,
 			);
 			path = TensorUITests;
+			sourceTree = "<group>";
+		};
+		3F048EBD1B96B50000ADF5D2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F048EC41B96B64000ADF5D2 /* libsqlite3.tbd */,
+				3F048EC21B96B63100ADF5D2 /* libstdc++.6.tbd */,
+				3F048EC01B96B62300ADF5D2 /* SystemConfiguration.framework */,
+				3F048EBE1B96B61800ADF5D2 /* AudioToolbox.framework */,
+				3F048EB91B96B4E400ADF5D2 /* Bolts.framework */,
+				3F048EBA1B96B4E400ADF5D2 /* Parse.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3FC607DF1B98015600758842 /* Parse Model */ = {
+			isa = PBXGroup;
+			children = (
+				3FC607E01B98017400758842 /* Action.swift */,
+			);
+			name = "Parse Model";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +244,8 @@
 		3F048E801B96AED500ADF5D2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Nathan Melehan";
 				TargetAttributes = {
@@ -233,6 +292,7 @@
 			files = (
 				3F048E961B96AED500ADF5D2 /* LaunchScreen.storyboard in Resources */,
 				3F048E931B96AED500ADF5D2 /* Assets.xcassets in Resources */,
+				3F6A57491BAD127100F6030C /* AuthorizationTokens.plist in Resources */,
 				3F048E911B96AED500ADF5D2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,8 +318,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F048E8E1B96AED500ADF5D2 /* ViewController.swift in Sources */,
+				3F356AD71BA50D3900277A84 /* TaskDetailViewController.swift in Sources */,
 				3F048E8C1B96AED500ADF5D2 /* AppDelegate.swift in Sources */,
+				3FC607E11B98017400758842 /* Action.swift in Sources */,
+				3FC607E81B9BA3AB00758842 /* LeavesTableViewController.swift in Sources */,
+				3F048EC71B96B7CA00ADF5D2 /* PlanTableViewController.swift in Sources */,
+				3FC607E41B9817C500758842 /* PlanTableViewTaskCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,10 +465,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Tensor",
+				);
 				INFOPLIST_FILE = Tensor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nmelehan.Tensor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Tensor/Tensor-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -412,10 +482,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Tensor",
+				);
 				INFOPLIST_FILE = Tensor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nmelehan.Tensor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Tensor/Tensor-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -486,6 +562,7 @@
 				3F048EB21B96AED500ADF5D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3F048EB31B96AED500ADF5D2 /* Build configuration list for PBXNativeTarget "TensorTests" */ = {
 			isa = XCConfigurationList;
@@ -494,6 +571,7 @@
 				3F048EB51B96AED500ADF5D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3F048EB61B96AED500ADF5D2 /* Build configuration list for PBXNativeTarget "TensorUITests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +580,7 @@
 				3F048EB81B96AED500ADF5D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
