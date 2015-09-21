@@ -23,6 +23,7 @@ class Action : PFObject, PFSubclassing {
         return "Action"
     }
     
+    @NSManaged var user: PFUser?
     @NSManaged var name: String
     @NSManaged var parentAction: Action
     @NSManaged var isLeaf: Bool

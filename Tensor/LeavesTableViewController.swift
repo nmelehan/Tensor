@@ -27,9 +27,12 @@ class LeavesTableViewController: UITableViewController {
             }
         }
         
-        let query = PFQuery(className:"Action")
-        query.whereKey("isLeaf", equalTo: 1)
-        query.findObjectsInBackgroundWithBlock(resultsBlock)
+        if PFUser.currentUser()?.objectId != nil {
+            let query = PFQuery(className:"Action")
+            query.whereKey("isLeaf", equalTo: 1)
+//            query.whereKey("user", equalTo: PFUser.currentUser()!)
+            query.findObjectsInBackgroundWithBlock(resultsBlock)
+        }
     }
     
     override func viewDidLoad()

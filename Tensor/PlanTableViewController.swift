@@ -9,7 +9,11 @@
 import UIKit
 import Parse
 
-class PlanTableViewController: UITableViewController, TaskDetailViewControllerDelegate {
+class PlanTableViewController: UITableViewController, TaskDetailViewControllerDelegate, ParseLoginViewControllerDelegate {
+    
+    // Mark: - Properties
+    
+    var tasks = [Action]()
     
     var parentTask: Action?
     {
@@ -20,7 +24,7 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
         }
     }
     
-    var tasks = [Action]()
+    // Mark: - Methods
     
     func fetchTasks() {
         let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
@@ -38,38 +42,32 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
         
         if parentTask == nil
         {
-            let query = PFQuery(className:"Action")
-            query.whereKeyDoesNotExist("parentAction")
-            query.findObjectsInBackgroundWithBlock(resultsBlock)
+            // condition ensures we don't query against an anonymous
+            // user that hasn't been saved to Parse yet
+            if PFUser.currentUser()?.objectId != nil {
+                let query = PFQuery(className:"Action")
+                query.whereKeyDoesNotExist("parentAction")
+                query.whereKey("user", equalTo: PFUser.currentUser()!)
+                query.findObjectsInBackgroundWithBlock(resultsBlock)
+            }
         }
         else
         {
             parentTask!.fetchDependenciesInBackgroundWithBlock(resultsBlock)
         }
     }
-
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        fetchTasks()
-    }
-
-    override func didReceiveMemoryWarning()
-    {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    // Mark: - IBActions
+    
+    @IBAction func logOutButtonPressed(sender: UIBarButtonItem) {
+        PFUser.logOut()
+        self.performSegueWithIdentifier(Storyboard.ShowAuthenticationUISegueIdentifier, sender: self)
     }
     
     @IBAction func createNewTask(sender: UIBarButtonItem)
     {
         let newAction = Action()
+        newAction.user = PFUser.currentUser()
         newAction.name = "New Task"
         newAction.isLeaf = true
         
@@ -91,10 +89,48 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
         }
     }
     
+    // Mark: - View lifecycle
+
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        if PFAnonymousUtils.isLinkedWithUser(PFUser.currentUser()) {
+            performSegueWithIdentifier("Show Authentication UI", sender: self)
+        }
+        else {
+            fetchTasks()
+        }
+    }
+
+    override func didReceiveMemoryWarning()
+    {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     // MARK: - TaskDetailViewControllerDelegate
     
     func taskDetailViewControllerDidUpdateTask(controller: TaskDetailViewController) {
         self.tableView.reloadData()
+    }
+    
+    // Mark: - ParseLoginViewControllerDelegate
+    
+    func parseLoginViewController(plvc: ParseLoginViewController, didAuthenticateUser user: PFUser) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        fetchTasks()
+    }
+    
+    func parseLoginViewControllerDidCancel(plvc: ParseLoginViewController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        fetchTasks()
     }
 
     // MARK: - Table view data source
@@ -164,6 +200,7 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
     struct Storyboard {
         static let ShowPlanForTaskSegueIdentifier = "Show Plan For Task"
         static let ShowDetailForTaskSegueIdentifier = "Show Detail For Task"
+        static let ShowAuthenticationUISegueIdentifier = "Show Authentication UI"
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -180,6 +217,10 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
             case Storyboard.ShowDetailForTaskSegueIdentifier:
                 if let dvc = segue.destinationViewController as? TaskDetailViewController {
                     dvc.task = (sender as? PlanTableViewTaskCell)?.task
+                    dvc.delegate = self
+                }
+            case Storyboard.ShowAuthenticationUISegueIdentifier:
+                if let dvc = segue.destinationViewController as? ParseLoginViewController {
                     dvc.delegate = self
                 }
             default: break
