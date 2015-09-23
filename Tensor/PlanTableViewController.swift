@@ -46,6 +46,7 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
             // user that hasn't been saved to Parse yet
             if PFUser.currentUser()?.objectId != nil {
                 let query = PFQuery(className:"Action")
+                query.fromLocalDatastore()
                 query.whereKeyDoesNotExist("parentAction")
                 query.whereKey("user", equalTo: PFUser.currentUser()!)
                 query.findObjectsInBackgroundWithBlock(resultsBlock)
@@ -125,7 +126,7 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
     
     func parseLoginViewController(plvc: ParseLoginViewController, didAuthenticateUser user: PFUser) {
         self.dismissViewControllerAnimated(true, completion: nil)
-        fetchTasks()
+        LocalParseManager.sharedManager.becomeUser(user)
     }
     
     func parseLoginViewControllerDidCancel(plvc: ParseLoginViewController) {
