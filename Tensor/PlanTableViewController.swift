@@ -11,7 +11,7 @@ import Parse
 
 class PlanTableViewController: UITableViewController, TaskDetailViewControllerDelegate, ParseLoginViewControllerDelegate {
     
-    // Mark: - Properties
+    // MARK: - Properties
     
     var tasks = [Action]()
     
@@ -24,13 +24,13 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
         }
     }
     
-    // Mark: - Methods
+    // MARK: - Methods
     
     func fetchTasks() {
         let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
             if error == nil {
                 // The find succeeded.
-                print("Successfully retrieved \(objects!.count) actions.", terminator: "")
+                print("Successfully retrieved \(objects!.count) actions: \(objects)\n")
                 // Do something with the found objects
                 if let objects = objects as? [Action] {
                     self.tasks = objects
@@ -54,11 +54,12 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
         }
         else
         {
-            parentTask!.fetchDependenciesInBackgroundWithBlock(resultsBlock)
+            LocalParseManager.sharedManager
+                .fetchDependenciesOfActionInBackground(parentTask!, withBlock: resultsBlock)
         }
     }
     
-    // Mark: - IBActions
+    // MARK: - IBActions
     
     @IBAction func logOutButtonPressed(sender: UIBarButtonItem) {
         PFUser.logOut()
@@ -67,30 +68,15 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
     
     @IBAction func createNewTask(sender: UIBarButtonItem)
     {
-        let newAction = Action()
-        newAction.user = PFUser.currentUser()
+        let newAction = parentTask != nil
+            ? LocalParseManager.sharedManager.createDependencyForAction(parentTask!)
+            : LocalParseManager.sharedManager.createAction()
         newAction.name = "New Task"
-        newAction.isLeaf = true
-        
-        let savingBlock = { (success: Bool, error: NSError?) -> Void in
-            if (success) {
-                // The object has been saved.
-                self.tasks.append(newAction)
-                dispatch_async(dispatch_get_main_queue()) { self.tableView.reloadData() }
-            }  else {
-                // There was a problem, check error.description
-            }
-        }
-        
-        if let parent = parentTask {
-            parent.addDependency(newAction, saveInBackgroundWithBlock: savingBlock)
-        }
-        else {
-            newAction.saveInBackgroundWithBlock(savingBlock)
-        }
+        self.tasks.append(newAction)
+        self.tableView.reloadData()
     }
     
-    // Mark: - View lifecycle
+    // MARK: - View lifecycle
 
     override func viewDidLoad()
     {
@@ -108,21 +94,50 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
         else {
             fetchTasks()
         }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionDidPin:",
+            name: LocalParseManager.Notification.LocalDatastoreDidPinAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionDidFailToPin:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFailToPinAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionDidUpdate:",
+            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
+            object: nil)
     }
-
-    override func didReceiveMemoryWarning()
-    {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    // MARK: - Notifications
+    
+    func actionDidPin(notification: NSNotification) {
+        print("actionDidPin: \(notification)\n")
+    }
+    
+    func actionDidFailToPin(notification: NSNotification) {
+        print("actionDidFailToPin: \(notification)")
+    }
+    
+    func actionDidUpdate(notification: NSNotification) {
+        print("actionDidUpdate: \(notification)")
+        if let action = notification.object as? Action {
+            print(tasks.contains(action))
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: - TaskDetailViewControllerDelegate
     
     func taskDetailViewControllerDidUpdateTask(controller: TaskDetailViewController) {
-        self.tableView.reloadData()
+//        self.tableView.reloadData()
     }
     
-    // Mark: - ParseLoginViewControllerDelegate
+    // MARK: - ParseLoginViewControllerDelegate
     
     func parseLoginViewController(plvc: ParseLoginViewController, didAuthenticateUser user: PFUser) {
         self.dismissViewControllerAnimated(true, completion: nil)

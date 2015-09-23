@@ -45,7 +45,10 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         if textField == taskNameTextField {
             task?.name = textField.text ?? ""
-            task?.saveInBackground()
+//            task?.saveInBackground()
+            if let action = task {
+                LocalParseManager.sharedManager.saveLocally(action)
+            }
             delegate?.taskDetailViewControllerDidUpdateTask(self)
         }
     }

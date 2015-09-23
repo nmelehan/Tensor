@@ -11,6 +11,13 @@ import Parse
 
 class LocalParseManager
 {
+    enum Notification {
+        static let LocalDatastoreDidPinAction = "Tensor.LocalDatastoreDidPinActionNotification"
+        static let LocalDatastoreDidFailToPinAction = "Tensor.LocalDatastoreDidFailToPinActionNotification"
+        static let LocalDatastoreDidUnpinAction = "Tensor.LocalDatastoreDidUnpinActionNotification"
+        static let LocalDatastoreDidUpdateAction = "Tensor.LocalDatastoreDidUpdateActionNotification"
+    }
+    
     static let sharedManager = LocalParseManager()
     
     var lastFetchTime: NSDate?
@@ -45,30 +52,55 @@ class LocalParseManager
     func createAction() -> Action {
         let newAction = Action()
         newAction.isLeaf = true
-        newAction.pinInBackground() // add block/notification
+        newAction.user = PFUser.currentUser()
+        newAction.pinInBackgroundWithBlock { (succeeded, error) -> Void in
+            if succeeded {
+                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidPinAction, object: newAction)
+            }
+            else {
+                let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
+                NSNotificationCenter.defaultCenter()
+                    .postNotificationName(Notification.LocalDatastoreDidFailToPinAction,
+                        object: newAction,
+                        userInfo: userInfo)
+            }
+        }
         
         return newAction
     }
     
     func createDependencyForAction(action: Action) -> Action {
-        let newAction = Action()
-        newAction.isLeaf = true
+        let newAction = self.createAction()
         newAction.parentAction = action
         action.isLeaf = false
         
-        newAction.pinInBackground() // add block/notification
         return newAction
     }
     
-    func addDependency(dependency: Action, toAction parentAction: Action, saveInBackgroundWithBlock block: PFBooleanResultBlock?) {
+    func addDependency(dependency: Action, toAction parentAction: Action) {
         parentAction.isLeaf = false
         dependency.parentAction = parentAction
+    }
+    
+    func saveLocally(action: Action) {
+        action.pinInBackgroundWithBlock { (succeeded, error) -> Void in
+            if succeeded {
+                print("LocalParseManager.saveLocally() successfully pinned action: \(action)")
+            }
+            else {
+                print("LocalParseManager.saveLocally() failed to pin action: \(action)")
+            }
+        }
+        NSNotificationCenter.defaultCenter()
+            .postNotificationName(Notification.LocalDatastoreDidUpdateAction,
+                object: action,
+                userInfo: nil)
     }
     
     func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
         let query = PFQuery(className:"Action")
         query.fromLocalDatastore()
-        query.whereKey("parentAction", equalTo:self)
+        query.whereKey("parentAction", equalTo:action)
         query.findObjectsInBackgroundWithBlock(block)
     }
 }
