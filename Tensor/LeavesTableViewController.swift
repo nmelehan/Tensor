@@ -11,14 +11,15 @@ import Parse
 
 class LeavesTableViewController: UITableViewController {
     
+    // MARK: - Properties
+    
     var tasks = [Action]()
+    
+    // MARK: - Methods
     
     func fetchTasks() {
         let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
             if error == nil {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) actions.", terminator: "")
-                // Do something with the found objects
                 if let objects = objects as? [Action] {
                     self.tasks = objects
                     dispatch_async(dispatch_get_main_queue()) { self.tableView.reloadData() }
@@ -29,11 +30,15 @@ class LeavesTableViewController: UITableViewController {
         
         if PFUser.currentUser()?.objectId != nil {
             let query = PFQuery(className:"Action")
+            query.fromLocalDatastore()
             query.whereKey("isLeaf", equalTo: 1)
-//            query.whereKey("user", equalTo: PFUser.currentUser()!)
+            query.whereKey("completionStatus", equalTo: Action.CompletionStatus.InProgress.rawValue)
+            query.whereKey("user", equalTo: PFUser.currentUser()!)
             query.findObjectsInBackgroundWithBlock(resultsBlock)
         }
     }
+    
+    // MARK: - View lifecycle
     
     override func viewDidLoad()
     {
@@ -46,6 +51,20 @@ class LeavesTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         fetchTasks()
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionDidPin:",
+            name: LocalParseManager.Notification.LocalDatastoreDidAddAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionDidFailToPin:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFailToAddAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionDidUpdate:",
+            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
+            object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -54,7 +73,21 @@ class LeavesTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
+    // MARK: - Notifications
     
+    func actionDidPin(notification: NSNotification) {
+        print("\n\nLeaves.actionDidPin: \(notification)\n")
+        fetchTasks()
+    }
+    
+    func actionDidFailToPin(notification: NSNotification) {
+        print("\n\nLeaves.actionDidFailToPin: \(notification)")
+    }
+    
+    func actionDidUpdate(notification: NSNotification) {
+        print("\n\nLeaves.actionDidUpdate: \(notification)")
+        fetchTasks()
+    }
     
     // MARK: - Table view data source
     

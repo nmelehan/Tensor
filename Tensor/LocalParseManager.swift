@@ -11,11 +11,24 @@ import Parse
 
 class LocalParseManager
 {
+    // Naming pattern:
+    // "Will": posted before pinInBackgroundWithBlock: is called
+    // "Did": posted from block passed to pinInBackgroundWithBlock: on success
+    // "DidFailTo": posted from block passed to pinInBackgroundWithBlock: on error
     enum Notification {
-        static let LocalDatastoreDidPinAction = "Tensor.LocalDatastoreDidPinActionNotification"
-        static let LocalDatastoreDidFailToPinAction = "Tensor.LocalDatastoreDidFailToPinActionNotification"
-        static let LocalDatastoreDidUnpinAction = "Tensor.LocalDatastoreDidUnpinActionNotification"
+        static let LocalDatastoreDidFetchActionsFromCloud = "Tensor.LocalDatastoreDidFetchActionsFromCloudNotification"
+        
+        static let LocalDatastoreWillAddAction = "Tensor.LocalDatastoreWillAddActionNotification"
+        static let LocalDatastoreDidAddAction = "Tensor.LocalDatastoreDidAddActionNotification"
+        static let LocalDatastoreDidFailToAddAction = "Tensor.LocalDatastoreDidFailToAddActionNotification"
+        
+        static let LocalDatastoreWillRemoveAction = "Tensor.LocalDatastoreWillRemoveActionNotification"
+        static let LocalDatastoreDidRemoveAction = "Tensor.LocalDatastoreDidRemoveActionNotification"
+        static let LocalDatastoreDidFailToRemoveAction = "Tensor.LocalDatastoreDidFailToRemoveActionNotification"
+        
+        static let LocalDatastoreWillUpdateAction = "Tensor.LocalDatastoreWillUpdateActionNotification"
         static let LocalDatastoreDidUpdateAction = "Tensor.LocalDatastoreDidUpdateActionNotification"
+        static let LocalDatastoreDidFailToUpdateAction = "Tensor.LocalDatastoreDidFailToUpdateActionNotification"
     }
     
     static let sharedManager = LocalParseManager()
@@ -23,21 +36,21 @@ class LocalParseManager
     var lastFetchTime: NSDate?
     
     var user: PFUser?
+    var isSubscribed: Bool = true
     
     func becomeUser(user: PFUser) {
-        var previousUser = self.user
+//        var previousUser = self.user
         self.user = user
         // unpin all actions from previous user
         
         // fetch new actions from new user and pin them
         let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
             if error == nil {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) actions.", terminator: "")
-                // Do something with the found objects
                 PFObject.pinAllInBackground(objects, block: { (success, error) -> Void in
                     if success {
-                        print("Successfully pinned all results in background")
+                        NSNotificationCenter.defaultCenter()
+                            .postNotificationName(Notification.LocalDatastoreDidFetchActionsFromCloud,
+                                object: objects as? [Action])
                     }
                 })
             } else {
@@ -52,18 +65,24 @@ class LocalParseManager
     func createAction() -> Action {
         let newAction = Action()
         newAction.isLeaf = true
+        newAction.completionStatus = Action.CompletionStatus.InProgress.rawValue
         newAction.user = PFUser.currentUser()
+        NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreWillAddAction, object: newAction)
         newAction.pinInBackgroundWithBlock { (succeeded, error) -> Void in
             if succeeded {
-                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidPinAction, object: newAction)
+                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidAddAction, object: newAction)
             }
             else {
                 let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
                 NSNotificationCenter.defaultCenter()
-                    .postNotificationName(Notification.LocalDatastoreDidFailToPinAction,
+                    .postNotificationName(Notification.LocalDatastoreDidFailToAddAction,
                         object: newAction,
                         userInfo: userInfo)
             }
+        }
+        
+        if isSubscribed {
+            queueToSaveRemotely(newAction)
         }
         
         return newAction
@@ -74,27 +93,40 @@ class LocalParseManager
         newAction.parentAction = action
         action.isLeaf = false
         
+        if isSubscribed {
+            queueToSaveRemotely(newAction)
+        }
+        
         return newAction
     }
     
     func addDependency(dependency: Action, toAction parentAction: Action) {
         parentAction.isLeaf = false
         dependency.parentAction = parentAction
+        
+        if isSubscribed {
+            queueToSaveRemotely(dependency)
+        }
     }
     
     func saveLocally(action: Action) {
+        NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreWillUpdateAction, object: action)
         action.pinInBackgroundWithBlock { (succeeded, error) -> Void in
             if succeeded {
-                print("LocalParseManager.saveLocally() successfully pinned action: \(action)")
+                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidUpdateAction, object: action)
             }
             else {
-                print("LocalParseManager.saveLocally() failed to pin action: \(action)")
+                let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
+                NSNotificationCenter.defaultCenter()
+                    .postNotificationName(Notification.LocalDatastoreDidFailToUpdateAction,
+                        object: action,
+                        userInfo: userInfo)
             }
         }
-        NSNotificationCenter.defaultCenter()
-            .postNotificationName(Notification.LocalDatastoreDidUpdateAction,
-                object: action,
-                userInfo: nil)
+        
+        if isSubscribed {
+            queueToSaveRemotely(action)
+        }
     }
     
     func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
@@ -102,5 +134,9 @@ class LocalParseManager
         query.fromLocalDatastore()
         query.whereKey("parentAction", equalTo:action)
         query.findObjectsInBackgroundWithBlock(block)
+    }
+    
+    private func queueToSaveRemotely(action: Action) {
+        action.saveEventually()
     }
 }

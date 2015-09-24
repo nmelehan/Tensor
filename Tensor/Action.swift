@@ -10,6 +10,7 @@ import Foundation
 import Parse
 
 class Action : PFObject, PFSubclassing {
+    
     override class func initialize() {
         struct Static {
             static var onceToken : dispatch_once_t = 0;
@@ -23,22 +24,21 @@ class Action : PFObject, PFSubclassing {
         return "Action"
     }
     
+    enum CompletionStatus: Int {
+        case InProgress = 0
+        case Completed = 1
+        case Invalidated = 2
+    }
+    
     @NSManaged var user: PFUser?
     @NSManaged var name: String
     @NSManaged var parentAction: Action
     @NSManaged var isLeaf: Bool
     
-    func addDependency(dependency: Action, saveInBackgroundWithBlock block: PFBooleanResultBlock?) {
-        self.isLeaf = false
-        dependency.parentAction = self
-        
-        self.saveInBackground()
-        dependency.saveInBackgroundWithBlock(block)
-    }
+    @NSManaged var completionStatus: Int
+    @NSManaged var completionDate: NSDate
     
-    func fetchDependenciesInBackgroundWithBlock(block: PFArrayResultBlock?) {
-        let query = PFQuery(className:"Action")
-        query.whereKey("parentAction", equalTo:self)
-        query.findObjectsInBackgroundWithBlock(block)
-    }
+    // MARK: Convenience methods
+    
+    
 }

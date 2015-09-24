@@ -9,29 +9,53 @@
 import UIKit
 import Parse
 
-protocol TaskDetailViewControllerDelegate {
-    func taskDetailViewControllerDidUpdateTask(controller: TaskDetailViewController)
-}
-
 class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     
-    var delegate: TaskDetailViewControllerDelegate?
+    // MARK: - Properties
     
     var task: Action?
+    
+    // MARK: - IBOutlets
 
     @IBOutlet weak var taskNameTextField: UITextField!
+    @IBOutlet weak var completionStatusSwitch: UISwitch!
+    
+    // MARK: - IBActions
+    
+    @IBAction func completionStatusSwitchChanged(sender: UISwitch) {
+        if sender == completionStatusSwitch {
+            task?.completionStatus = completionStatusSwitch.on
+                ? Action.CompletionStatus.Completed.rawValue
+                : Action.CompletionStatus.InProgress.rawValue
+            if let action = task {
+                LocalParseManager.sharedManager.saveLocally(action)
+            }
+        }
+    }
+    
+    // MARK: - View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         taskNameTextField.text = task?.name
+        
+        var setOn = false
+        if let completionStatus = task?.completionStatus
+            where completionStatus == Action.CompletionStatus.Completed.rawValue
+        {
+            setOn = true
+        }
+        completionStatusSwitch.setOn(setOn, animated: false)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - UITextFieldDelegate
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         return true
@@ -45,15 +69,12 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         if textField == taskNameTextField {
             task?.name = textField.text ?? ""
-//            task?.saveInBackground()
             if let action = task {
                 LocalParseManager.sharedManager.saveLocally(action)
             }
-            delegate?.taskDetailViewControllerDidUpdateTask(self)
         }
     }
     
-
     /*
     // MARK: - Navigation
 

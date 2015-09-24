@@ -97,18 +97,38 @@
                                     <outlet property="delegate" destination="oe6-Ag-a0l" id="6PH-tA-9Fo"/>
                                 </connections>
                             </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P05-b1-y90">
+                                <rect key="frame" x="115" y="110" width="51" height="31"/>
+                                <animations/>
+                                <connections>
+                                    <action selector="completionStatusSwitchChanged:" destination="oe6-Ag-a0l" eventType="valueChanged" id="Gby-XG-fF0"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z18-sz-38F">
+                                <rect key="frame" x="20" y="115" width="85" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="k5e-wu-Bnd" secondAttribute="leading" id="3ZO-Ft-yhr"/>
+                            <constraint firstItem="Z18-sz-38F" firstAttribute="centerY" secondItem="P05-b1-y90" secondAttribute="centerY" id="DQP-a0-ccP"/>
                             <constraint firstItem="xhr-gD-a72" firstAttribute="top" secondItem="BfU-sI-XmV" secondAttribute="bottom" constant="8" id="NIx-rN-Yhg"/>
+                            <constraint firstItem="Z18-sz-38F" firstAttribute="trailing" secondItem="k5e-wu-Bnd" secondAttribute="trailing" id="QUW-Yf-0Lx"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="Z18-sz-38F" secondAttribute="leading" id="R0K-IX-0fI"/>
                             <constraint firstItem="xhr-gD-a72" firstAttribute="leading" secondItem="k5e-wu-Bnd" secondAttribute="trailing" constant="10" id="dqQ-Ko-Pwn"/>
+                            <constraint firstItem="P05-b1-y90" firstAttribute="leading" secondItem="xhr-gD-a72" secondAttribute="leading" id="g7r-QI-wsw"/>
                             <constraint firstItem="k5e-wu-Bnd" firstAttribute="baseline" secondItem="xhr-gD-a72" secondAttribute="baseline" id="gnf-Hd-tPG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xhr-gD-a72" secondAttribute="trailing" id="plO-WM-Kv2"/>
+                            <constraint firstItem="P05-b1-y90" firstAttribute="top" secondItem="xhr-gD-a72" secondAttribute="bottom" constant="8" id="ulJ-pM-BZR"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="completionStatusSwitch" destination="P05-b1-y90" id="ada-uf-d9d"/>
                         <outlet property="taskNameTextField" destination="xhr-gD-a72" id="Ueg-Aj-xNS"/>
                     </connections>
                 </viewController>

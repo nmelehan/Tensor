@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class PlanTableViewController: UITableViewController, TaskDetailViewControllerDelegate, ParseLoginViewControllerDelegate {
+class PlanTableViewController: UITableViewController, ParseLoginViewControllerDelegate {
     
     // MARK: - Properties
     
@@ -29,9 +29,6 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
     func fetchTasks() {
         let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
             if error == nil {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) actions: \(objects)\n")
-                // Do something with the found objects
                 if let objects = objects as? [Action] {
                     self.tasks = objects
                     dispatch_async(dispatch_get_main_queue()) { self.tableView.reloadData() }
@@ -72,8 +69,8 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
             ? LocalParseManager.sharedManager.createDependencyForAction(parentTask!)
             : LocalParseManager.sharedManager.createAction()
         newAction.name = "New Task"
-        self.tasks.append(newAction)
-        self.tableView.reloadData()
+//        self.tasks.append(newAction)
+//        self.tableView.reloadData()
     }
     
     // MARK: - View lifecycle
@@ -96,12 +93,16 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionsWereFetchedFromCloud:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFetchActionsFromCloud,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidPin:",
-            name: LocalParseManager.Notification.LocalDatastoreDidPinAction,
+            name: LocalParseManager.Notification.LocalDatastoreDidAddAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidFailToPin:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFailToPinAction,
+            name: LocalParseManager.Notification.LocalDatastoreDidFailToAddAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidUpdate:",
@@ -115,26 +116,23 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
     
     // MARK: - Notifications
     
+    func actionsWereFetchedFromCloud(notification: NSNotification) {
+        print("\n\nactionsWereFetchedFromCloud: \(notification)\n")
+        fetchTasks()
+    }
+    
     func actionDidPin(notification: NSNotification) {
-        print("actionDidPin: \(notification)\n")
+        print("\n\nactionDidPin: \(notification)\n")
+        fetchTasks()
     }
     
     func actionDidFailToPin(notification: NSNotification) {
-        print("actionDidFailToPin: \(notification)")
+        print("\n\nactionDidFailToPin: \(notification)")
     }
     
     func actionDidUpdate(notification: NSNotification) {
-        print("actionDidUpdate: \(notification)")
-        if let action = notification.object as? Action {
-            print(tasks.contains(action))
-            self.tableView.reloadData()
-        }
-    }
-    
-    // MARK: - TaskDetailViewControllerDelegate
-    
-    func taskDetailViewControllerDidUpdateTask(controller: TaskDetailViewController) {
-//        self.tableView.reloadData()
+        print("\n\nactionDidUpdate: \(notification)")
+        fetchTasks()
     }
     
     // MARK: - ParseLoginViewControllerDelegate
@@ -233,7 +231,6 @@ class PlanTableViewController: UITableViewController, TaskDetailViewControllerDe
             case Storyboard.ShowDetailForTaskSegueIdentifier:
                 if let dvc = segue.destinationViewController as? TaskDetailViewController {
                     dvc.task = (sender as? PlanTableViewTaskCell)?.task
-                    dvc.delegate = self
                 }
             case Storyboard.ShowAuthenticationUISegueIdentifier:
                 if let dvc = segue.destinationViewController as? ParseLoginViewController {
