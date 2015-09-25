@@ -18,16 +18,19 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     // MARK: - IBOutlets
 
     @IBOutlet weak var taskNameTextField: UITextField!
-    @IBOutlet weak var completionStatusSwitch: UISwitch!
+    @IBOutlet weak var completionStatusSlider: UISlider!
+    
+    @IBOutlet weak var inProgressLabel: UILabel!
+    @IBOutlet weak var completedLabel: UILabel!
+    @IBOutlet weak var invalidatedLabel: UILabel!
     
     // MARK: - IBActions
     
-    @IBAction func completionStatusSwitchChanged(sender: UISwitch) {
-        if sender == completionStatusSwitch {
-            task?.completionStatus = completionStatusSwitch.on
-                ? Action.CompletionStatus.Completed.rawValue
-                : Action.CompletionStatus.InProgress.rawValue
+    @IBAction func completionStatusSliderValueChanged(sender: UISlider) {
+        if sender == completionStatusSlider {
+            completionStatusSlider.value = roundf(completionStatusSlider.value)
             if let action = task {
+                action.completionStatus = Int(completionStatusSlider.value)
                 LocalParseManager.sharedManager.saveLocally(action)
             }
         }
@@ -41,13 +44,9 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         taskNameTextField.text = task?.name
         
-        var setOn = false
-        if let completionStatus = task?.completionStatus
-            where completionStatus == Action.CompletionStatus.Completed.rawValue
-        {
-            setOn = true
+        if let action = task {
+            completionStatusSlider.value = Float(action.completionStatus)
         }
-        completionStatusSwitch.setOn(setOn, animated: false)
     }
 
     override func didReceiveMemoryWarning() {
