@@ -25,8 +25,10 @@
 		3F6A574B1BAE2BE800F6030C /* ParseLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A574A1BAE2BE800F6030C /* ParseLoginViewController.swift */; };
 		3F6A574F1BB10A1F00F6030C /* LocalParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A574E1BB10A1F00F6030C /* LocalParseManager.swift */; };
 		3FC607E11B98017400758842 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC607E01B98017400758842 /* Action.swift */; };
-		3FC607E41B9817C500758842 /* PlanTableViewTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC607E31B9817C500758842 /* PlanTableViewTaskCell.swift */; };
+		3FC607E41B9817C500758842 /* TableViewTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC607E31B9817C500758842 /* TableViewTaskCell.swift */; };
 		3FC607E81B9BA3AB00758842 /* LeavesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC607E71B9BA3AB00758842 /* LeavesTableViewController.swift */; };
+		3FEE81941BB51FBF00BB5A10 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE81931BB51FBF00BB5A10 /* Scheduler.swift */; };
+		3FEE81961BB52A3000BB5A10 /* SchedulerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE81951BB52A3000BB5A10 /* SchedulerTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,8 +74,10 @@
 		3F6A574E1BB10A1F00F6030C /* LocalParseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalParseManager.swift; sourceTree = "<group>"; };
 		3FC607E01B98017400758842 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		3FC607E21B98033100758842 /* Tensor-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tensor-Bridging-Header.h"; sourceTree = "<group>"; };
-		3FC607E31B9817C500758842 /* PlanTableViewTaskCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanTableViewTaskCell.swift; sourceTree = "<group>"; };
+		3FC607E31B9817C500758842 /* TableViewTaskCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewTaskCell.swift; sourceTree = "<group>"; };
 		3FC607E71B9BA3AB00758842 /* LeavesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeavesTableViewController.swift; sourceTree = "<group>"; };
+		3FEE81931BB51FBF00BB5A10 /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		3FEE81951BB52A3000BB5A10 /* SchedulerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,8 +139,9 @@
 				3F048E8B1B96AED500ADF5D2 /* AppDelegate.swift */,
 				3F048EC61B96B7CA00ADF5D2 /* PlanTableViewController.swift */,
 				3F356AD61BA50D3900277A84 /* TaskDetailViewController.swift */,
-				3FC607E31B9817C500758842 /* PlanTableViewTaskCell.swift */,
+				3FC607E31B9817C500758842 /* TableViewTaskCell.swift */,
 				3FC607E71B9BA3AB00758842 /* LeavesTableViewController.swift */,
+				3FEE81951BB52A3000BB5A10 /* SchedulerTableViewController.swift */,
 				3F048E8F1B96AED500ADF5D2 /* Main.storyboard */,
 				3F6A574A1BAE2BE800F6030C /* ParseLoginViewController.swift */,
 				3FC607E21B98033100758842 /* Tensor-Bridging-Header.h */,
@@ -183,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				3FC607E01B98017400758842 /* Action.swift */,
+				3FEE81931BB51FBF00BB5A10 /* Scheduler.swift */,
 				3F6A574E1BB10A1F00F6030C /* LocalParseManager.swift */,
 			);
 			name = "Parse Model";
@@ -324,14 +330,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FEE81941BB51FBF00BB5A10 /* Scheduler.swift in Sources */,
 				3F356AD71BA50D3900277A84 /* TaskDetailViewController.swift in Sources */,
 				3F048E8C1B96AED500ADF5D2 /* AppDelegate.swift in Sources */,
+				3FEE81961BB52A3000BB5A10 /* SchedulerTableViewController.swift in Sources */,
 				3FC607E11B98017400758842 /* Action.swift in Sources */,
 				3F6A574F1BB10A1F00F6030C /* LocalParseManager.swift in Sources */,
 				3F6A574B1BAE2BE800F6030C /* ParseLoginViewController.swift in Sources */,
 				3FC607E81B9BA3AB00758842 /* LeavesTableViewController.swift in Sources */,
 				3F048EC71B96B7CA00ADF5D2 /* PlanTableViewController.swift in Sources */,
-				3FC607E41B9817C500758842 /* PlanTableViewTaskCell.swift in Sources */,
+				3FC607E41B9817C500758842 /* TableViewTaskCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

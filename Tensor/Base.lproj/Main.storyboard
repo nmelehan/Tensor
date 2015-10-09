@@ -17,7 +17,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="Task Cell" textLabel="ePX-2r-850" style="IBUITableViewCellStyleDefault" id="AV3-Ql-E9a" customClass="PlanTableViewTaskCell" customModule="Tensor" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="Task Cell" textLabel="ePX-2r-850" style="IBUITableViewCellStyleDefault" id="AV3-Ql-E9a" customClass="TableViewTaskCell" customModule="Tensor" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AV3-Ql-E9a" id="ree-h4-XRN">
@@ -178,7 +178,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Task Cell" id="3ut-Iz-KnO" customClass="PlanTableViewTaskCell" customModule="Tensor" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Task Cell" id="3ut-Iz-KnO" customClass="TableViewTaskCell" customModule="Tensor" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3ut-Iz-KnO" id="d4G-r8-DMT">
@@ -199,6 +199,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jJZ-qb-2Fw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2252" y="1092"/>
+        </scene>
+        <!--Scheduler Table View Controller-->
+        <scene sceneID="hE2-nL-oae">
+            <objects>
+                <tableViewController id="KYB-1J-DvJ" customClass="SchedulerTableViewController" customModule="Tensor" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="gAA-GC-K0Y">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Task Cell" id="S27-d7-8RI" customClass="TableViewTaskCell" customModule="Tensor" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S27-d7-8RI" id="Nwr-Nf-VcM">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="KYB-1J-DvJ" id="fH2-gd-9v9"/>
+                            <outlet property="delegate" destination="KYB-1J-DvJ" id="9RA-Ht-VOj"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="4Ea-e3-gD1">
+                        <barButtonItem key="rightBarButtonItem" title="Skip" id="BmQ-8o-Bsk">
+                            <connections>
+                                <action selector="skipButtonPressed:" destination="KYB-1J-DvJ" id="6d4-na-84R"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b1l-nt-xI6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2252" y="1829"/>
         </scene>
         <!--Parse Login View Controller-->
         <scene sceneID="1C7-wH-ZN0">
@@ -343,6 +381,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="1MB-6e-ykR" kind="relationship" relationship="viewControllers" id="ksD-VP-atv"/>
+                        <segue destination="SUr-J6-Icj" kind="relationship" relationship="viewControllers" id="sdy-e6-NvU"/>
                         <segue destination="BId-Qe-NxI" kind="relationship" relationship="viewControllers" id="bXe-Xr-Ehi"/>
                         <segue destination="mib-RK-YYQ" kind="relationship" relationship="viewControllers" id="DH5-pU-AeM"/>
                     </connections>
@@ -371,11 +410,11 @@
             </objects>
             <point key="canvasLocation" x="1440" y="390"/>
         </scene>
-        <!--Do Now-->
+        <!--Leaves-->
         <scene sceneID="G3U-Wz-TTo">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BId-Qe-NxI" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Do Now" id="ZMd-3f-Mre"/>
+                    <tabBarItem key="tabBarItem" title="Leaves" id="ZMd-3f-Mre"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6aL-KP-zRe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -421,7 +460,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pDZ-f3-zrU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2252" y="1808"/>
+            <point key="canvasLocation" x="2252" y="2572"/>
         </scene>
         <!--History-->
         <scene sceneID="Ppy-em-dgB">
@@ -441,7 +480,27 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0lS-mu-xYZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1440" y="1808"/>
+            <point key="canvasLocation" x="1440" y="2572"/>
+        </scene>
+        <!--Scheduler-->
+        <scene sceneID="ggD-Q7-cTr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SUr-J6-Icj" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Scheduler" id="eHW-SD-GJ9"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aIG-Im-UOa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="KYB-1J-DvJ" kind="relationship" relationship="rootViewController" id="gON-H4-63D"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i2z-7L-d2a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1440" y="1829"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

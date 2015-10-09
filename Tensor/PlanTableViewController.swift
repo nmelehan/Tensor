@@ -46,6 +46,7 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
                 query.fromLocalDatastore()
                 query.whereKeyDoesNotExist("parentAction")
                 query.whereKey("user", equalTo: PFUser.currentUser()!)
+                query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
                 query.findObjectsInBackgroundWithBlock(resultsBlock)
             }
         }
@@ -162,7 +163,7 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell", forIndexPath: indexPath) as! PlanTableViewTaskCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell", forIndexPath: indexPath) as! TableViewTaskCell
 
         // Configure the cell...
         cell.task = tasks[indexPath.row]
@@ -226,11 +227,11 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
             switch identifier {
             case Storyboard.ShowPlanForTaskSegueIdentifier:
                 if let dvc = segue.destinationViewController as? PlanTableViewController {
-                    dvc.parentTask = (sender as? PlanTableViewTaskCell)?.task
+                    dvc.parentTask = (sender as? TableViewTaskCell)?.task
                 }
             case Storyboard.ShowDetailForTaskSegueIdentifier:
                 if let dvc = segue.destinationViewController as? TaskDetailViewController {
-                    dvc.task = (sender as? PlanTableViewTaskCell)?.task
+                    dvc.task = (sender as? TableViewTaskCell)?.task
                 }
             case Storyboard.ShowAuthenticationUISegueIdentifier:
                 if let dvc = segue.destinationViewController as? ParseLoginViewController {

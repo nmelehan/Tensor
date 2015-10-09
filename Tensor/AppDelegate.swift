@@ -30,6 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Uncomment and fill in with your Parse credentials:
         // Parse.setApplicationId("your_application_id", clientKey: "your_client_key")
         
+        
+        // need to make sure these are called before setApplicationID 
+        // so PFObject subclassing works
+        Action.initialize()
+        Scheduler.initialize()
+        
         let path = NSBundle.mainBundle().pathForResource("AuthorizationTokens", ofType: "plist")
         if let tokensDictionary = NSDictionary(contentsOfFile: path!)?.objectForKey("Parse Authorization Tokens")
         {

@@ -52,7 +52,6 @@ class LeavesTableViewController: UITableViewController {
         
         fetchTasks()
         
-        
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidPin:",
             name: LocalParseManager.Notification.LocalDatastoreDidAddAction,
@@ -71,6 +70,10 @@ class LeavesTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         self.tableView.reloadData()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     // MARK: - Notifications
@@ -104,10 +107,11 @@ class LeavesTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell", forIndexPath: indexPath) as! PlanTableViewTaskCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell", forIndexPath: indexPath) as! TableViewTaskCell
         
         // Configure the cell...
         cell.task = tasks[indexPath.row]
         
         return cell
-    }}
+    }
+}

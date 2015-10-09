@@ -1,5 +1,5 @@
 //
-//  PlanTableViewTaskCell.swift
+//  TableViewTaskCell.swift
 //  Tensor
 //
 //  Created by Nathan Melehan on 9/3/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlanTableViewTaskCell: UITableViewCell {
+class TableViewTaskCell: UITableViewCell {
     
     var task: Action? {
         didSet {

@@ -30,10 +30,11 @@ class Action : PFObject, PFSubclassing {
         case Invalidated = 2
     }
     
-    @NSManaged var user: PFUser?
+    @NSManaged var user: PFUser
     @NSManaged var name: String
     @NSManaged var parentAction: Action
     @NSManaged var isLeaf: Bool
+    @NSManaged var inSandbox: NSNumber?
     
     @NSManaged var completionStatus: Int
     @NSManaged var completionDate: NSDate
