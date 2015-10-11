@@ -39,9 +39,7 @@ class SchedulerTableViewController: UITableViewController {
             if self.scheduler?.currentAction != nil {
                 self.tableView.reloadData()
             }
-            else {
-                self.scheduler?.refreshScheduledActions()
-            }
+            self.scheduler?.refreshScheduledActions()
         }
         
         sharedManager.fetchSchedulerInBackgroundWithBlock(resultBlock)

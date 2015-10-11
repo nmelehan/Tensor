@@ -28,7 +28,6 @@ class Scheduler : PFObject, PFSubclassing {
     
     // MARK: - Notification constants
     
-    // Naming pattern:
     struct Notification {
         static let SchedulerDidRefreshScheduledActions = "Tensor.SchedulerDidRefreshScheduledActionsNotification"
         static let SchedulerDidFailToRefreshScheduledActions = "Tensor.SchedulerDidFailToRefreshScheduledActionsNotification"
@@ -87,7 +86,8 @@ class Scheduler : PFObject, PFSubclassing {
         let query = PFQuery(className:"Action")
         query.fromLocalDatastore()
         query.whereKey("isLeaf", equalTo: 1)
-        query.whereKey("completionStatus", equalTo: Action.CompletionStatus.InProgress.rawValue)
+//        query.whereKey("completionStatus", equalTo: Action.CompletionStatus.InProgress.rawValue)
+        query.whereKeyDoesNotExist("workConclusion")
         query.whereKey("user", equalTo: user!)
         query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
         query.findObjectsInBackgroundWithBlock(resultsBlock)

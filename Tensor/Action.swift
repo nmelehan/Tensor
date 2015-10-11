@@ -36,8 +36,11 @@ class Action : PFObject, PFSubclassing {
     @NSManaged var isLeaf: Bool
     @NSManaged var inSandbox: NSNumber?
     
-    @NSManaged var completionStatus: Int
-    @NSManaged var completionDate: NSDate
+    @NSManaged var workHistory: [WorkUnit]?
+    @NSManaged var workConclusion: WorkUnit?
+    
+//    @NSManaged var completionStatus: Int
+//    @NSManaged var completionDate: NSDate
     
     // MARK: Convenience methods
     

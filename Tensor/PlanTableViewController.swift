@@ -47,6 +47,7 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
                 query.whereKeyDoesNotExist("parentAction")
                 query.whereKey("user", equalTo: PFUser.currentUser()!)
                 query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
+                query.includeKey("workConclusion")
                 query.findObjectsInBackgroundWithBlock(resultsBlock)
             }
         }

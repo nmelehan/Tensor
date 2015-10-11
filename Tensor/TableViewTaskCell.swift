@@ -18,5 +18,20 @@ class TableViewTaskCell: UITableViewCell {
     
     func updateUI() {
         self.textLabel?.text = task?.name
+        
+        let detailText: String
+        if  let workConclusionType = self.task?.workConclusion?.getType()
+        {
+            switch workConclusionType {
+            case .Completion: detailText = "Completed"
+            case .Invalidation: detailText = "Invalidated"
+            default: detailText = ""
+            }
+        }
+        else {
+            detailText = "In Progress"
+        }
+        self.detailTextLabel?.text = detailText
     }
+    
 }

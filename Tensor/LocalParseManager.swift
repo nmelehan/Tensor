@@ -36,6 +36,10 @@ class LocalParseManager
         static let LocalDatastoreWillUpdateAction = "Tensor.LocalDatastoreWillUpdateActionNotification"
         static let LocalDatastoreDidUpdateAction = "Tensor.LocalDatastoreDidUpdateActionNotification"
         static let LocalDatastoreDidFailToUpdateAction = "Tensor.LocalDatastoreDidFailToUpdateActionNotification"
+        
+        static let LocalDatastoreWillAddWorkUnit = "Tensor.LocalDatastoreWillAddWorkUnitNotification"
+        static let LocalDatastoreDidAddWorkUnit = "Tensor.LocalDatastoreDidAddWorkUnitNotification"
+        static let LocalDatastoreDidFailToAddWorkUnit = "Tensor.LocalDatastoreDidFailToAddWorkUnitNotification"
     }
     
     // MARK: - Properties
@@ -119,6 +123,38 @@ class LocalParseManager
     
     // MARK: - Public factory and query methods
     
+    func createWorkUnitForAction(action: Action) -> WorkUnit
+    {
+        let newWorkUnit = WorkUnit()
+        newWorkUnit.user = user
+        newWorkUnit.action = action
+        newWorkUnit.setType(.Progress)
+        newWorkUnit.startDate = NSDate()
+        newWorkUnit.duration = 0
+        
+        NSNotificationCenter.defaultCenter()
+            .postNotificationName(Notification.LocalDatastoreWillAddWorkUnit, object: newWorkUnit)
+        
+        newWorkUnit.pinInBackgroundWithBlock { (succeeded, error) -> Void in
+            if succeeded {
+                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidAddWorkUnit, object: newWorkUnit)
+                
+                if self.isSubscribed {
+                    self.queueToSaveRemotely(newWorkUnit)
+                }
+            }
+            else {
+                let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
+                NSNotificationCenter.defaultCenter()
+                    .postNotificationName(Notification.LocalDatastoreDidFailToAddWorkUnit,
+                        object: newWorkUnit,
+                        userInfo: userInfo)
+            }
+        }
+        
+        return newWorkUnit
+    }
+    
     func createScheduler() -> Scheduler {
         let newScheduler = Scheduler()
         newScheduler.user = user
@@ -150,7 +186,7 @@ class LocalParseManager
     func createAction() -> Action {
         let newAction = Action()
         newAction.isLeaf = true
-        newAction.completionStatus = Action.CompletionStatus.InProgress.rawValue
+//        newAction.completionStatus = Action.CompletionStatus.InProgress.rawValue
         newAction.user = user
         newAction.inSandbox = currentPersistenceMode.rawValue
         
@@ -242,6 +278,7 @@ class LocalParseManager
         let query = PFQuery(className: "Action")
         query.fromLocalDatastore()
         query.whereKey("parentAction", equalTo:action)
+        query.includeKey("workConclusion")
         query.findObjectsInBackgroundWithBlock(block)
     }
     

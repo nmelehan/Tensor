@@ -15,24 +15,53 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     
     var task: Action?
     
+    // MARK: - Methods
+    
+    func markActionAsCompleted() {
+        guard let action = task else {
+            return
+        }
+        
+        print("markActionAsCompleted()")
+        
+        let manager = LocalParseManager.sharedManager
+        
+        let workUnit = manager.createWorkUnitForAction(action)
+        workUnit.type = WorkUnit.WorkUnitType.Completion.rawValue
+        action.workHistory?.append(workUnit)
+        action.workConclusion = workUnit
+        
+        manager.saveLocally(action)
+    }
+    
+    func returnActionToInProgress() {
+        guard let action = task else {
+            return
+        }
+        
+        print("returnActionToInProgress()")
+        
+        let manager = LocalParseManager.sharedManager
+        
+        let workUnit = manager.createWorkUnitForAction(action)
+        workUnit.type = WorkUnit.WorkUnitType.Reactivation.rawValue
+        action.workHistory?.append(workUnit)
+        action.workConclusion = nil
+        
+        manager.saveLocally(action)
+    }
+    
     // MARK: - IBOutlets
 
     @IBOutlet weak var taskNameTextField: UITextField!
-    @IBOutlet weak var completionStatusSlider: UISlider!
-    
-    @IBOutlet weak var inProgressLabel: UILabel!
-    @IBOutlet weak var completedLabel: UILabel!
-    @IBOutlet weak var invalidatedLabel: UILabel!
+    @IBOutlet weak var completionStatusSwitch: UISwitch!
     
     // MARK: - IBActions
     
-    @IBAction func completionStatusSliderValueChanged(sender: UISlider) {
-        if sender == completionStatusSlider {
-            completionStatusSlider.value = roundf(completionStatusSlider.value)
-            if let action = task {
-                action.completionStatus = Int(completionStatusSlider.value)
-                LocalParseManager.sharedManager.saveLocally(action)
-            }
+    @IBAction func completionStatusSwitchValueChanged() {
+        switch completionStatusSwitch.on {
+        case true: markActionAsCompleted()
+        case false: returnActionToInProgress()
         }
     }
     
@@ -44,8 +73,13 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         taskNameTextField.text = task?.name
         
-        if let action = task {
-            completionStatusSlider.value = Float(action.completionStatus)
+        if  let workConclusionType = task?.workConclusion?.getType()
+            where workConclusionType == .Completion
+        {
+            completionStatusSwitch.on = true
+        }
+        else {
+            completionStatusSwitch.on = false
         }
     }
 

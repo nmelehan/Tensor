@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // so PFObject subclassing works
         Action.initialize()
         Scheduler.initialize()
+        WorkUnit.initialize()
         
         let path = NSBundle.mainBundle().pathForResource("AuthorizationTokens", ofType: "plist")
         if let tokensDictionary = NSDictionary(contentsOfFile: path!)?.objectForKey("Parse Authorization Tokens")
