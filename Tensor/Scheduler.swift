@@ -104,14 +104,20 @@ class Scheduler : PFObject, PFSubclassing {
             return // or throw?
         }
         
-        let currentAction = scheduledActions!.removeAtIndex(0)
-        
+        // remove current action from scheduled actions and reschedule
+        let skippedAction = scheduledActions!.removeAtIndex(0)
         if actionsIneligibleForScheduling == nil {
             actionsIneligibleForScheduling = [Action]()
         }
-        actionsIneligibleForScheduling!.append(currentAction)
-        
+        actionsIneligibleForScheduling!.append(skippedAction)
         self.refreshScheduledActions()
+        
+        // add a 'skip' WorkUnit to the skipped action
+        let manager = LocalParseManager.sharedManager
+        let workUnit = manager.createWorkUnitForAction(skippedAction)
+        workUnit.setType(.Skip)
+        skippedAction.workHistory?.append(workUnit)
+        manager.saveLocally(skippedAction)
     }
     
 //    func refreshScheduledActionsWithBlock() {

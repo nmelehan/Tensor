@@ -15,10 +15,10 @@ class WorkHistoryTableViewController: UITableViewController {
     
     var history = [WorkUnit]()
     
-//    var action: Action?
-//    {
-//        didSet { fetchTasks() }
-//    }
+    var action: Action?
+    {
+        didSet { fetchHistory() }
+    }
     
     // MARK: - Methods
     
@@ -40,6 +40,9 @@ class WorkHistoryTableViewController: UITableViewController {
             let query = PFQuery(className:"WorkUnit")
             query.fromLocalDatastore()
             query.whereKey("user", equalTo: PFUser.currentUser()!)
+            if let action = action {
+                query.whereKey("action", equalTo: action)
+            }
             query.orderByDescending("startDate")
             query.includeKey("action")
             query.findObjectsInBackgroundWithBlock(resultsBlock)
@@ -65,6 +68,10 @@ class WorkHistoryTableViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "historyDidChange:",
             name: LocalParseManager.Notification.LocalDatastoreDidAddWorkUnit,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "historyDidChange:",
+            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
             object: nil)
     }
     
@@ -139,7 +146,7 @@ class WorkHistoryTableViewController: UITableViewController {
     // MARK: - Navigation
     
     struct Storyboard {
-        static let ShowDetailForWorkUnitSegueIdentifier = "Show Detail For Work Unit"
+        static let ShowActionForWorkUnitSegueIdentifier = "Show Action For Work Unit"
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -147,15 +154,15 @@ class WorkHistoryTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-//        if let identifier = segue.identifier {
-//            switch identifier {
-//            case Storyboard.ShowDetailForWorkUnitSegueIdentifier:
-//                if let dvc = segue.destinationViewController as? TaskDetailViewController {
-//                    dvc.task = (sender as? WorkUnitTableViewCell)?.workUnit?.action
-//                }
-//            default: break
-//            }
-//        }
+        if let identifier = segue.identifier {
+            switch identifier {
+            case Storyboard.ShowActionForWorkUnitSegueIdentifier:
+                if let dvc = segue.destinationViewController as? TaskDetailViewController {
+                    dvc.task = (sender as? WorkUnitTableViewCell)?.workUnit?.action
+                }
+            default: break
+            }
+        }
     }
 
 }

@@ -123,32 +123,104 @@
                                 <rect key="frame" x="489" y="111" width="91" height="30"/>
                                 <animations/>
                                 <state key="normal" title="View History "/>
+                                <connections>
+                                    <segue destination="vqg-Mg-s7D" kind="show" identifier="Show Work History For Action" id="zRr-Ol-K37"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalidated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yd7-a8-Yzo">
+                                <rect key="frame" x="20" y="154" width="83" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Evw-Mn-53a">
+                                <rect key="frame" x="115" y="149" width="51" height="31"/>
+                                <animations/>
+                                <connections>
+                                    <action selector="completionStatusSwitchValueChanged" destination="oe6-Ag-a0l" eventType="valueChanged" id="UQp-Ib-5Vr"/>
+                                    <action selector="invalidationStatusSwitchValueChanged" destination="oe6-Ag-a0l" eventType="valueChanged" id="eqX-sm-Yun"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="k5e-wu-Bnd" secondAttribute="leading" id="3ZO-Ft-yhr"/>
+                            <constraint firstItem="Evw-Mn-53a" firstAttribute="centerY" secondItem="Yd7-a8-Yzo" secondAttribute="centerY" id="BhX-cQ-Rex"/>
                             <constraint firstItem="lkt-6B-PLV" firstAttribute="leading" secondItem="bnb-0m-sg5" secondAttribute="trailing" constant="10" id="Fd9-X4-Zdp"/>
                             <constraint firstItem="8O0-Yp-XHm" firstAttribute="baseline" secondItem="bnb-0m-sg5" secondAttribute="baseline" id="IRV-n6-cDx"/>
                             <constraint firstItem="8O0-Yp-XHm" firstAttribute="trailing" secondItem="xhr-gD-a72" secondAttribute="trailing" id="J59-f7-XXw"/>
                             <constraint firstItem="xhr-gD-a72" firstAttribute="top" secondItem="BfU-sI-XmV" secondAttribute="bottom" constant="8" id="NIx-rN-Yhg"/>
                             <constraint firstItem="bnb-0m-sg5" firstAttribute="leading" secondItem="k5e-wu-Bnd" secondAttribute="leading" id="OP3-zC-Y1w"/>
+                            <constraint firstItem="Evw-Mn-53a" firstAttribute="top" secondItem="lkt-6B-PLV" secondAttribute="bottom" constant="8" id="RWC-Ot-xEW"/>
+                            <constraint firstItem="Evw-Mn-53a" firstAttribute="leading" secondItem="Yd7-a8-Yzo" secondAttribute="trailing" constant="12" id="VuN-ji-QRG"/>
                             <constraint firstItem="lkt-6B-PLV" firstAttribute="top" secondItem="xhr-gD-a72" secondAttribute="bottom" constant="8" symbolic="YES" id="cgV-gO-BN3"/>
                             <constraint firstItem="xhr-gD-a72" firstAttribute="leading" secondItem="k5e-wu-Bnd" secondAttribute="trailing" constant="10" id="dqQ-Ko-Pwn"/>
                             <constraint firstItem="k5e-wu-Bnd" firstAttribute="baseline" secondItem="xhr-gD-a72" secondAttribute="baseline" id="gnf-Hd-tPG"/>
+                            <constraint firstItem="Yd7-a8-Yzo" firstAttribute="leading" secondItem="bnb-0m-sg5" secondAttribute="leading" id="lqR-u5-flc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xhr-gD-a72" secondAttribute="trailing" id="plO-WM-Kv2"/>
                             <constraint firstItem="lkt-6B-PLV" firstAttribute="centerY" secondItem="bnb-0m-sg5" secondAttribute="centerY" id="skm-RU-fKg"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="completionStatusSwitch" destination="lkt-6B-PLV" id="leN-61-jeq"/>
+                        <outlet property="invalidationStatusSwitch" destination="Evw-Mn-53a" id="XmI-a1-9PX"/>
                         <outlet property="taskNameTextField" destination="xhr-gD-a72" id="Ueg-Aj-xNS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Elf-pp-pCL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3128" y="390"/>
+        </scene>
+        <!--Work History Table View Controller-->
+        <scene sceneID="8UN-4W-mKU">
+            <objects>
+                <tableViewController id="vqg-Mg-s7D" customClass="WorkHistoryTableViewController" customModule="Tensor" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="3M9-Qe-OTW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Work Unit Cell" textLabel="ABZ-Js-6t4" detailTextLabel="f57-Cu-BSj" style="IBUITableViewCellStyleSubtitle" id="y4U-MQ-gAJ" customClass="WorkUnitTableViewCell" customModule="Tensor" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y4U-MQ-gAJ" id="qAa-5x-ZEC">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ABZ-Js-6t4">
+                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f57-Cu-BSj">
+                                            <rect key="frame" x="15" y="25" width="41" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="vqg-Mg-s7D" id="V9O-t4-bYa"/>
+                            <outlet property="delegate" destination="vqg-Mg-s7D" id="faL-40-TB7"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="alE-QA-va8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4005" y="390"/>
         </scene>
         <!--Leaves Table View Controller-->
         <scene sceneID="mby-G9-k78">
@@ -450,6 +522,9 @@
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <connections>
+                                    <segue destination="oe6-Ag-a0l" kind="show" identifier="Show Action For Work Unit" id="CV3-8u-UTN"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -505,5 +580,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="qzy-SC-M8D"/>
+        <segue reference="CV3-8u-UTN"/>
     </inferredMetricsTieBreakers>
 </document>
