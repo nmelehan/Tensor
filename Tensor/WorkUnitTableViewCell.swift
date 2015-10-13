@@ -16,6 +16,15 @@ class WorkUnitTableViewCell: UITableViewCell {
         }
     }
     
+    func labelForDuration(seconds: Int) -> String {
+        switch seconds {
+        case 0..<60: return "\(seconds) seconds"
+        case 60..<3600: return "\(seconds/60) minutes"
+        case 3600..<86400: return "\(seconds/3600) hours"
+        default: return "\(seconds) seconds"
+        }
+    }
+    
     func updateUI() {
         self.textLabel?.text = workUnit?.action?.name
         
@@ -31,7 +40,21 @@ class WorkUnitTableViewCell: UITableViewCell {
 //        else {
 //            detailText = "In Progress"
 //        }
-        self.detailTextLabel?.text = workUnit?.getType()?.rawValue
+        
+        if let type = workUnit?.getType() {
+            let labelText: String
+            switch type {
+            case .Progress:
+                if let duration = workUnit?.duration {
+                    labelText = "\(type.rawValue), \(labelForDuration(Int(duration)))"
+                }
+                else {
+                    fallthrough
+                }
+            default: labelText = type.rawValue
+            }
+            self.detailTextLabel?.text = labelText
+        }
     }
 
 }

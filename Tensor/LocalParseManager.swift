@@ -40,6 +40,10 @@ class LocalParseManager
         static let LocalDatastoreWillAddWorkUnit = "Tensor.LocalDatastoreWillAddWorkUnitNotification"
         static let LocalDatastoreDidAddWorkUnit = "Tensor.LocalDatastoreDidAddWorkUnitNotification"
         static let LocalDatastoreDidFailToAddWorkUnit = "Tensor.LocalDatastoreDidFailToAddWorkUnitNotification"
+        
+        static let LocalDatastoreWillUpdateWorkUnit = "Tensor.LocalDatastoreWillUpdateWorkUnitNotification"
+        static let LocalDatastoreDidUpdateWorkUnit = "Tensor.LocalDatastoreDidUpdateWorkUnitNotification"
+        static let LocalDatastoreDidFailToUpdateWorkUnit = "Tensor.LocalDatastoreDidFailToUpdateWorkUnitNotification"
     }
     
     // MARK: - Properties
@@ -274,6 +278,26 @@ class LocalParseManager
         }
     }
     
+    func saveLocally(workUnit: WorkUnit) {
+        NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreWillUpdateWorkUnit, object: workUnit)
+        workUnit.pinInBackgroundWithBlock { (succeeded, error) -> Void in
+            if succeeded {
+                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidUpdateWorkUnit, object: workUnit)
+            }
+            else {
+                let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
+                NSNotificationCenter.defaultCenter()
+                    .postNotificationName(Notification.LocalDatastoreDidFailToUpdateWorkUnit,
+                        object: workUnit,
+                        userInfo: userInfo)
+            }
+        }
+        
+        if isSubscribed {
+            queueToSaveRemotely(workUnit)
+        }
+    }
+    
     func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
         let query = PFQuery(className: "Action")
         query.fromLocalDatastore()
@@ -288,6 +312,7 @@ class LocalParseManager
         query.whereKey("user", equalTo: user)
         query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
         query.includeKey("scheduledActions")
+        query.includeKey("workUnitInProgress")
         query.getFirstObjectInBackgroundWithBlock(block)
     }
     

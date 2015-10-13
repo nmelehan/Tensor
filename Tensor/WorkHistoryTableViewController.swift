@@ -73,6 +73,10 @@ class WorkHistoryTableViewController: UITableViewController {
             selector: "historyDidChange:",
             name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
             object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "historyDidChange:",
+            name: LocalParseManager.Notification.LocalDatastoreDidUpdateWorkUnit,
+            object: nil)
     }
     
     deinit {
