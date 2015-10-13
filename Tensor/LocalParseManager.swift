@@ -123,6 +123,8 @@ class LocalParseManager
         let query = PFQuery(className:"Action")
         query.whereKey("user", equalTo: user)
         query.findObjectsInBackgroundWithBlock(resultsBlock)
+        
+        currentPersistenceMode = .Persistent
     }
     
     // MARK: - Public factory and query methods
