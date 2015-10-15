@@ -28,6 +28,8 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
     
     func fetchTasks() {
         let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+            print("results: \(objects)")
+            
             if error == nil {
                 if let objects = objects as? [Action] {
                     self.tasks = objects
@@ -71,8 +73,6 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
             ? LocalParseManager.sharedManager.createDependencyForAction(parentTask!)
             : LocalParseManager.sharedManager.createAction()
         newAction.name = "New Task"
-//        self.tasks.append(newAction)
-//        self.tableView.reloadData()
     }
     
     // MARK: - View lifecycle

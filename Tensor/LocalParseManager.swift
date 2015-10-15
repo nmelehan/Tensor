@@ -124,7 +124,20 @@ class LocalParseManager
         query.whereKey("user", equalTo: user)
         query.findObjectsInBackgroundWithBlock(resultsBlock)
         
-        currentPersistenceMode = .Persistent
+        
+        // fetch workunits from new user and pin them
+        let workUnitResultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                PFObject.pinAllInBackground(objects)
+            } else {
+            }
+        }
+        
+        let workUnitQuery = PFQuery(className:"WorkUnit")
+        workUnitQuery.whereKey("user", equalTo: user)
+        workUnitQuery.findObjectsInBackgroundWithBlock(workUnitResultsBlock)
+        
+//        currentPersistenceMode = .Persistent
     }
     
     // MARK: - Public factory and query methods
@@ -226,6 +239,7 @@ class LocalParseManager
         
         if isSubscribed {
             queueToSaveRemotely(newAction)
+            queueToSaveRemotely(action)
         }
         
         return newAction

@@ -28,19 +28,6 @@ class WorkUnitTableViewCell: UITableViewCell {
     func updateUI() {
         self.textLabel?.text = workUnit?.action?.name
         
-//        let detailText: String
-//        if  let type = workUnit?.getType()
-//        {
-//            switch type {
-//            case .Completion: detailText = "Completion"
-//            case .Invalidation: detailText = "Invalidation"
-//            default: detailText = ""
-//            }
-//        }
-//        else {
-//            detailText = "In Progress"
-//        }
-        
         if let type = workUnit?.getType() {
             let labelText: String
             switch type {

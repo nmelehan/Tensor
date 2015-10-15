@@ -112,6 +112,19 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func focusOnActionButtonPressed() {
+        let resultBlock: PFObjectResultBlock = { (result, error) in
+            if let scheduler = result as? Scheduler {
+                scheduler.actionFocus = self.task
+                scheduler.refreshScheduledActions(preserveCurrentAction: false)
+            }
+        }
+        
+        LocalParseManager.sharedManager
+            .fetchSchedulerInBackgroundWithBlock(resultBlock)
+    }
+    
+    
     // MARK: - View lifecycle
     
     override func viewDidLoad() {

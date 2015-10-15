@@ -29,7 +29,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hh1-DV-3BA">
@@ -37,7 +37,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -119,12 +119,12 @@
                                     <action selector="completionStatusSwitchValueChanged" destination="oe6-Ag-a0l" eventType="valueChanged" id="jXL-0q-Xiu"/>
                                 </connections>
                             </switch>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8O0-Yp-XHm">
-                                <rect key="frame" x="489" y="111" width="91" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v3w-xm-iDE">
+                                <rect key="frame" x="20" y="197" width="110" height="30"/>
                                 <animations/>
-                                <state key="normal" title="View History "/>
+                                <state key="normal" title="Focus on Action"/>
                                 <connections>
-                                    <segue destination="vqg-Mg-s7D" kind="show" identifier="Show Work History For Action" id="zRr-Ol-K37"/>
+                                    <action selector="focusOnActionButtonPressed" destination="oe6-Ag-a0l" eventType="touchUpInside" id="fYZ-fd-Lzw"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalidated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yd7-a8-Yzo">
@@ -142,10 +142,27 @@
                                     <action selector="invalidationStatusSwitchValueChanged" destination="oe6-Ag-a0l" eventType="valueChanged" id="eqX-sm-Yun"/>
                                 </connections>
                             </switch>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="41U-o6-9bE" customClass="HorizontalLineView" customModule="Tensor" customModuleProvider="target">
+                                <rect key="frame" x="20" y="188" width="580" height="1"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="N0a-Nw-aaS"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8O0-Yp-XHm">
+                                <rect key="frame" x="489" y="197" width="91" height="30"/>
+                                <animations/>
+                                <state key="normal" title="View History "/>
+                                <connections>
+                                    <segue destination="vqg-Mg-s7D" kind="show" identifier="Show Work History For Action" id="zRr-Ol-K37"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="8O0-Yp-XHm" firstAttribute="baseline" secondItem="v3w-xm-iDE" secondAttribute="baseline" id="0ll-hF-dnN"/>
                             <constraint firstAttribute="leadingMargin" secondItem="k5e-wu-Bnd" secondAttribute="leading" id="3ZO-Ft-yhr"/>
                             <constraint firstItem="Evw-Mn-53a" firstAttribute="centerY" secondItem="Yd7-a8-Yzo" secondAttribute="centerY" id="BhX-cQ-Rex"/>
                             <constraint firstItem="lkt-6B-PLV" firstAttribute="leading" secondItem="bnb-0m-sg5" secondAttribute="trailing" constant="10" id="Fd9-X4-Zdp"/>
@@ -153,15 +170,25 @@
                             <constraint firstItem="8O0-Yp-XHm" firstAttribute="trailing" secondItem="xhr-gD-a72" secondAttribute="trailing" id="J59-f7-XXw"/>
                             <constraint firstItem="xhr-gD-a72" firstAttribute="top" secondItem="BfU-sI-XmV" secondAttribute="bottom" constant="8" id="NIx-rN-Yhg"/>
                             <constraint firstItem="bnb-0m-sg5" firstAttribute="leading" secondItem="k5e-wu-Bnd" secondAttribute="leading" id="OP3-zC-Y1w"/>
+                            <constraint firstItem="v3w-xm-iDE" firstAttribute="top" secondItem="41U-o6-9bE" secondAttribute="bottom" constant="8" id="R1F-cb-IUa"/>
                             <constraint firstItem="Evw-Mn-53a" firstAttribute="top" secondItem="lkt-6B-PLV" secondAttribute="bottom" constant="8" id="RWC-Ot-xEW"/>
+                            <constraint firstItem="41U-o6-9bE" firstAttribute="top" secondItem="Evw-Mn-53a" secondAttribute="bottom" constant="8" id="TUw-vQ-h2t"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="41U-o6-9bE" secondAttribute="leading" id="TeV-f6-Drb"/>
+                            <constraint firstAttribute="trailing" secondItem="41U-o6-9bE" secondAttribute="trailing" id="Vtf-Gh-QOw"/>
                             <constraint firstItem="Evw-Mn-53a" firstAttribute="leading" secondItem="Yd7-a8-Yzo" secondAttribute="trailing" constant="12" id="VuN-ji-QRG"/>
                             <constraint firstItem="lkt-6B-PLV" firstAttribute="top" secondItem="xhr-gD-a72" secondAttribute="bottom" constant="8" symbolic="YES" id="cgV-gO-BN3"/>
                             <constraint firstItem="xhr-gD-a72" firstAttribute="leading" secondItem="k5e-wu-Bnd" secondAttribute="trailing" constant="10" id="dqQ-Ko-Pwn"/>
                             <constraint firstItem="k5e-wu-Bnd" firstAttribute="baseline" secondItem="xhr-gD-a72" secondAttribute="baseline" id="gnf-Hd-tPG"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="v3w-xm-iDE" secondAttribute="leading" id="jZY-ti-Arx"/>
                             <constraint firstItem="Yd7-a8-Yzo" firstAttribute="leading" secondItem="bnb-0m-sg5" secondAttribute="leading" id="lqR-u5-flc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xhr-gD-a72" secondAttribute="trailing" id="plO-WM-Kv2"/>
                             <constraint firstItem="lkt-6B-PLV" firstAttribute="centerY" secondItem="bnb-0m-sg5" secondAttribute="centerY" id="skm-RU-fKg"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="IRV-n6-cDx"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="completionStatusSwitch" destination="lkt-6B-PLV" id="leN-61-jeq"/>
@@ -195,7 +222,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yhO-HT-biJ">
@@ -501,21 +528,21 @@
                                 <rect key="frame" x="20" y="195" width="560" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Elapsed: " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHr-Ya-r6L">
                                 <rect key="frame" x="20" y="271" width="70" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2e-4s-rLh">
                                 <rect key="frame" x="98" y="271" width="38" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oBP-KD-RoP">
@@ -618,7 +645,6 @@
         <!--History-->
         <scene sceneID="gp2-Yf-kyi">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pDZ-f3-zrU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="g8M-eQ-agS" customClass="WorkHistoryTableViewController" customModule="Tensor" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="qcq-oP-ZjA">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -638,7 +664,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uHw-s1-H2F">
@@ -646,7 +672,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -665,6 +691,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="History" id="pLK-N6-MYn"/>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pDZ-f3-zrU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2252" y="3204"/>
         </scene>

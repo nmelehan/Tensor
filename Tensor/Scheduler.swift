@@ -47,9 +47,17 @@ class Scheduler : PFObject, PFSubclassing {
         }
     }
     
+    // MARK: - Heuristics
+    
+    @NSManaged var actionFocus: Action?
+    
     // MARK: - Methods
     
     func refreshScheduledActions() {
+        self.refreshScheduledActions(preserveCurrentAction: true)
+    }
+    
+    func refreshScheduledActions(preserveCurrentAction preserveCurrentAction: Bool) {
         guard user != nil else {
             return // but this should really be a thrown error
         }
@@ -57,17 +65,20 @@ class Scheduler : PFObject, PFSubclassing {
         let resultsBlock: PFArrayResultBlock = { (results, error) -> Void in
             if error == nil {
                 if let scheduledActions = results as? [Action] {
-                    let filteredScheduledActions = scheduledActions.filter
+                    var filteredScheduledActions = scheduledActions.filter
                         { !(self.actionsIneligibleForScheduling?.contains($0) ?? false) }
                     
                     if scheduledActions.count > 0 && filteredScheduledActions.count == 0 {
-                        // if we skipped all available actions, 
+                        // if we skipped all available actions,
                         // empty out the filtering array and reschedule
                         
                         self.actionsIneligibleForScheduling = [Action]()
                         self.refreshScheduledActions()
                     }
                     else {
+                        if preserveCurrentAction && self.currentAction != nil {
+                            filteredScheduledActions.insert(self.currentAction!, atIndex: 0)
+                        }
                         self.scheduledActions = filteredScheduledActions
                         NSNotificationCenter.defaultCenter()
                             .postNotificationName(Notification.SchedulerDidRefreshScheduledActions, object: self)
@@ -90,6 +101,12 @@ class Scheduler : PFObject, PFSubclassing {
         query.whereKeyDoesNotExist("workConclusion")
         query.whereKey("user", equalTo: user!)
         query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
+        
+        // heuristics
+        if let actionFocus = actionFocus {
+            query.whereKey("parentAction", equalTo: actionFocus)
+        }
+        
         query.findObjectsInBackgroundWithBlock(resultsBlock)
     }
     
