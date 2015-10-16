@@ -36,6 +36,22 @@ class DoNowViewController: UIViewController {
         }
     }
     
+    func startTimer() {
+        guard timer == nil else { return }
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(1,
+            target: self,
+            selector: "timerTicked:",
+            userInfo: nil,
+            repeats: true)
+        startButton.enabled = false
+        pauseButton.enabled = true
+        
+        elapsedLabel.hidden = false
+        timeIntervalLabel.hidden = false
+        timeIntervalLabel.text = "0"
+    }
+    
     func pauseWork() {
         startButton.enabled = true
         pauseButton.enabled = false
@@ -108,17 +124,7 @@ class DoNowViewController: UIViewController {
                 return
             }
             
-            timer = NSTimer.scheduledTimerWithTimeInterval(1,
-                target: self,
-                selector: "timerTicked:",
-                userInfo: nil,
-                repeats: true)
-            startButton.enabled = false
-            pauseButton.enabled = true
-            
-            elapsedLabel.hidden = false
-            timeIntervalLabel.hidden = false
-            timeIntervalLabel.text = "0"
+            startTimer()
             
             let manager = LocalParseManager.sharedManager
             scheduler?.workUnitInProgress = manager.createWorkUnitForAction(action)
@@ -154,6 +160,10 @@ class DoNowViewController: UIViewController {
             
             if self.scheduler?.currentAction != nil {
                 self.updateUI()
+                
+                if self.scheduler?.workUnitInProgress != nil {
+                    self.startTimer()
+                }
             }
             self.scheduler?.refreshScheduledActions()
         }
