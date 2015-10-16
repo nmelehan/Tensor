@@ -86,7 +86,7 @@ class DoNowViewController: UIViewController {
         action.workConclusion = workUnit
         manager.saveLocally(action)
         
-        scheduler?.refreshScheduledActions()
+        scheduler?.refreshScheduledActions(preserveCurrentAction: false)
         updateUI()
     }
     
