@@ -76,7 +76,10 @@ class Scheduler : PFObject, PFSubclassing {
                         self.refreshScheduledActions()
                     }
                     else {
-                        if preserveCurrentAction && self.currentAction != nil {
+                        if      preserveCurrentAction
+                            &&  self.currentAction != nil
+                            &&  self.currentAction?.workConclusion == nil // don't preserve invalidated or completed actions
+                        {
                             filteredScheduledActions.insert(self.currentAction!, atIndex: 0)
                         }
                         self.scheduledActions = filteredScheduledActions
