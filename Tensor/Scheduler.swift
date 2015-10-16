@@ -80,6 +80,10 @@ class Scheduler : PFObject, PFSubclassing {
                             &&  self.currentAction != nil
                             &&  self.currentAction?.workConclusion == nil // don't preserve invalidated or completed actions
                         {
+                            // filter array again to ensure that first element
+                            // doesn't appear again later in schedule
+                            filteredScheduledActions = filteredScheduledActions.filter
+                                { $0 != self.currentAction! }
                             filteredScheduledActions.insert(self.currentAction!, atIndex: 0)
                         }
                         self.scheduledActions = filteredScheduledActions
