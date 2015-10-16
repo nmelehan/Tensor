@@ -86,8 +86,8 @@ class DoNowViewController: UIViewController {
         action.workConclusion = workUnit
         manager.saveLocally(action)
         
-        scheduler?.refreshScheduledActions(preserveCurrentAction: false)
-        updateUI()
+//        scheduler?.refreshScheduledActions(preserveCurrentAction: false)
+//        updateUI()
     }
     
     @IBAction func saveProgressAndSkipToNextActionButtonPressed() {
