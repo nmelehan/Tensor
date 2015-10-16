@@ -119,6 +119,14 @@
                                     <action selector="completionStatusSwitchValueChanged" destination="oe6-Ag-a0l" eventType="valueChanged" id="jXL-0q-Xiu"/>
                                 </connections>
                             </switch>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8O0-Yp-XHm">
+                                <rect key="frame" x="489" y="111" width="91" height="30"/>
+                                <animations/>
+                                <state key="normal" title="View History "/>
+                                <connections>
+                                    <segue destination="vqg-Mg-s7D" kind="show" identifier="Show Work History For Action" id="zRr-Ol-K37"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v3w-xm-iDE">
                                 <rect key="frame" x="20" y="197" width="110" height="30"/>
                                 <animations/>
@@ -150,24 +158,26 @@
                                     <constraint firstAttribute="height" constant="1" id="N0a-Nw-aaS"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8O0-Yp-XHm">
-                                <rect key="frame" x="489" y="197" width="91" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VV7-bO-815">
+                                <rect key="frame" x="429" y="197" width="151" height="30"/>
                                 <animations/>
-                                <state key="normal" title="View History "/>
+                                <state key="normal" title="Immediately Schedule"/>
                                 <connections>
-                                    <segue destination="vqg-Mg-s7D" kind="show" identifier="Show Work History For Action" id="zRr-Ol-K37"/>
+                                    <action selector="immediatelyScheduleButtonPressed" destination="oe6-Ag-a0l" eventType="touchUpInside" id="Qm0-NP-6zZ"/>
                                 </connections>
                             </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8O0-Yp-XHm" firstAttribute="baseline" secondItem="v3w-xm-iDE" secondAttribute="baseline" id="0ll-hF-dnN"/>
                             <constraint firstAttribute="leadingMargin" secondItem="k5e-wu-Bnd" secondAttribute="leading" id="3ZO-Ft-yhr"/>
+                            <constraint firstItem="VV7-bO-815" firstAttribute="baseline" secondItem="v3w-xm-iDE" secondAttribute="baseline" id="4wP-Ij-bLn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="VV7-bO-815" secondAttribute="trailing" id="8FJ-qN-eFi"/>
                             <constraint firstItem="Evw-Mn-53a" firstAttribute="centerY" secondItem="Yd7-a8-Yzo" secondAttribute="centerY" id="BhX-cQ-Rex"/>
                             <constraint firstItem="lkt-6B-PLV" firstAttribute="leading" secondItem="bnb-0m-sg5" secondAttribute="trailing" constant="10" id="Fd9-X4-Zdp"/>
                             <constraint firstItem="8O0-Yp-XHm" firstAttribute="baseline" secondItem="bnb-0m-sg5" secondAttribute="baseline" id="IRV-n6-cDx"/>
                             <constraint firstItem="8O0-Yp-XHm" firstAttribute="trailing" secondItem="xhr-gD-a72" secondAttribute="trailing" id="J59-f7-XXw"/>
+                            <constraint firstItem="8O0-Yp-XHm" firstAttribute="baseline" secondItem="bnb-0m-sg5" secondAttribute="baseline" id="Jfz-Tp-jZz"/>
                             <constraint firstItem="xhr-gD-a72" firstAttribute="top" secondItem="BfU-sI-XmV" secondAttribute="bottom" constant="8" id="NIx-rN-Yhg"/>
                             <constraint firstItem="bnb-0m-sg5" firstAttribute="leading" secondItem="k5e-wu-Bnd" secondAttribute="leading" id="OP3-zC-Y1w"/>
                             <constraint firstItem="v3w-xm-iDE" firstAttribute="top" secondItem="41U-o6-9bE" secondAttribute="bottom" constant="8" id="R1F-cb-IUa"/>
@@ -594,10 +604,19 @@
                                     <action selector="startButtonPressed" destination="BTQ-R5-SsF" eventType="touchUpInside" id="NaZ-LJ-F1l"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oBI-4M-WIb">
+                                <rect key="frame" x="471" y="28" width="109" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Clear Heuristics"/>
+                                <connections>
+                                    <action selector="clearHeuristicsButtonPressed" destination="BTQ-R5-SsF" eventType="touchUpInside" id="2Us-Er-vSg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="oBI-4M-WIb" firstAttribute="top" secondItem="0qG-WP-k8w" secondAttribute="bottom" constant="8" id="7c9-bW-VoZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="drJ-kS-r9g" secondAttribute="trailing" id="EKI-dr-yuh"/>
                             <constraint firstItem="f0k-6g-lNv" firstAttribute="top" secondItem="0fm-xs-mwA" secondAttribute="bottom" constant="8" id="Gbt-kn-G8t"/>
                             <constraint firstAttribute="leadingMargin" secondItem="vlS-g2-te4" secondAttribute="leading" id="NJY-79-7id"/>
@@ -610,6 +629,7 @@
                             <constraint firstAttribute="leadingMargin" secondItem="DLl-25-JAr" secondAttribute="leading" id="cMm-bp-mbX"/>
                             <constraint firstItem="bHr-Ya-r6L" firstAttribute="centerY" secondItem="Jeh-oK-UOH" secondAttribute="centerY" id="cTu-gZ-ZEm"/>
                             <constraint firstItem="DLl-25-JAr" firstAttribute="centerY" secondItem="Jeh-oK-UOH" secondAttribute="centerY" id="eS4-nM-8ub"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="oBI-4M-WIb" secondAttribute="trailing" id="fin-P1-pTp"/>
                             <constraint firstAttribute="trailing" secondItem="DLl-25-JAr" secondAttribute="trailing" id="iI5-sI-Bci"/>
                             <constraint firstItem="oBP-KD-RoP" firstAttribute="baseline" secondItem="P2e-4s-rLh" secondAttribute="baseline" id="okg-1q-VmG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JVH-ez-A9y" secondAttribute="trailing" id="tJJ-5j-QYE"/>

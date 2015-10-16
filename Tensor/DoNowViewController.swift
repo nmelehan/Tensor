@@ -83,7 +83,6 @@ class DoNowViewController: UIViewController {
         let manager = LocalParseManager.sharedManager
         let workUnit = manager.createWorkUnitForAction(action)
         workUnit.setType(.Completion)
-        action.workHistory?.append(workUnit)
         action.workConclusion = workUnit
         manager.saveLocally(action)
         
@@ -125,6 +124,11 @@ class DoNowViewController: UIViewController {
             scheduler?.workUnitInProgress = manager.createWorkUnitForAction(action)
             manager.saveLocally(scheduler!)
         }
+    }
+    
+    @IBAction func clearHeuristicsButtonPressed() {
+        self.scheduler?.actionFocus = nil
+        self.scheduler?.refreshScheduledActions(preserveCurrentAction: false)
     }
     
     // MARK: - View lifecycle

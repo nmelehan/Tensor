@@ -111,7 +111,7 @@ class Scheduler : PFObject, PFSubclassing {
     }
     
     func skip() {
-        guard scheduledActions != nil else
+        guard scheduledActions != nil && scheduledActions!.count > 0 else
         {
             return // or throw?
         }
@@ -127,14 +127,24 @@ class Scheduler : PFObject, PFSubclassing {
             actionsIneligibleForScheduling = [Action]()
         }
         actionsIneligibleForScheduling!.append(skippedAction)
-        self.refreshScheduledActions()
+        self.refreshScheduledActions(preserveCurrentAction: false)
         
         // add a 'skip' WorkUnit to the skipped action
         let manager = LocalParseManager.sharedManager
         let workUnit = manager.createWorkUnitForAction(skippedAction)
         workUnit.setType(.Skip)
-        skippedAction.workHistory?.append(workUnit)
-        manager.saveLocally(skippedAction)
+    }
+    
+    func immediatelyScheduleAction(action: Action) {
+        if scheduledActions != nil {
+            scheduledActions!.insert(action, atIndex: 0)
+        }
+        else {
+            scheduledActions = [action]
+        }
+        
+        NSNotificationCenter.defaultCenter()
+            .postNotificationName(Notification.SchedulerDidRefreshScheduledActions, object: self)
     }
     
 //    func refreshScheduledActionsWithBlock() {

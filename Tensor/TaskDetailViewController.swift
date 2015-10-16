@@ -28,7 +28,6 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         let manager = LocalParseManager.sharedManager
         let workUnit = manager.createWorkUnitForAction(action)
         workUnit.type = WorkUnit.WorkUnitType.Completion.rawValue
-        action.workHistory?.append(workUnit)
         action.workConclusion = workUnit
         manager.saveLocally(action)
         
@@ -43,7 +42,6 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         let manager = LocalParseManager.sharedManager
         let workUnit = manager.createWorkUnitForAction(action)
         workUnit.setType(.Invalidation)
-        action.workHistory?.append(workUnit)
         action.workConclusion = workUnit
         manager.saveLocally(action)
         
@@ -58,7 +56,6 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         let manager = LocalParseManager.sharedManager
         let workUnit = manager.createWorkUnitForAction(action)
         workUnit.type = WorkUnit.WorkUnitType.Reactivation.rawValue
-        action.workHistory?.append(workUnit)
         action.workConclusion = nil
         manager.saveLocally(action)
         
@@ -124,6 +121,18 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
             .fetchSchedulerInBackgroundWithBlock(resultBlock)
     }
     
+    @IBAction func immediatelyScheduleButtonPressed() {
+        let resultBlock: PFObjectResultBlock = { (result, error) in
+            if  let scheduler = result as? Scheduler,
+                let action = self.task
+            {
+                scheduler.immediatelyScheduleAction(action)
+            }
+        }
+        
+        LocalParseManager.sharedManager
+            .fetchSchedulerInBackgroundWithBlock(resultBlock)
+    }
     
     // MARK: - View lifecycle
     
