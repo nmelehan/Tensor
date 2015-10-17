@@ -612,10 +612,18 @@
                                     <action selector="clearHeuristicsButtonPressed" destination="BTQ-R5-SsF" eventType="touchUpInside" id="2Us-Er-vSg"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parent Action Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eYV-ZF-O7P">
+                                <rect key="frame" x="20" y="166" width="560" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="JVH-ez-A9y" firstAttribute="top" secondItem="eYV-ZF-O7P" secondAttribute="bottom" constant="8" id="1Rj-b2-IV5"/>
                             <constraint firstItem="oBI-4M-WIb" firstAttribute="top" secondItem="0qG-WP-k8w" secondAttribute="bottom" constant="8" id="7c9-bW-VoZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="drJ-kS-r9g" secondAttribute="trailing" id="EKI-dr-yuh"/>
                             <constraint firstItem="f0k-6g-lNv" firstAttribute="top" secondItem="0fm-xs-mwA" secondAttribute="bottom" constant="8" id="Gbt-kn-G8t"/>
@@ -632,8 +640,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="oBI-4M-WIb" secondAttribute="trailing" id="fin-P1-pTp"/>
                             <constraint firstAttribute="trailing" secondItem="DLl-25-JAr" secondAttribute="trailing" id="iI5-sI-Bci"/>
                             <constraint firstItem="oBP-KD-RoP" firstAttribute="baseline" secondItem="P2e-4s-rLh" secondAttribute="baseline" id="okg-1q-VmG"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="eYV-ZF-O7P" secondAttribute="leading" id="sup-hf-s1L"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JVH-ez-A9y" secondAttribute="trailing" id="tJJ-5j-QYE"/>
                             <constraint firstItem="P2e-4s-rLh" firstAttribute="baseline" secondItem="bHr-Ya-r6L" secondAttribute="baseline" id="xf6-Iv-PwN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eYV-ZF-O7P" secondAttribute="trailing" id="xxq-K5-Kut"/>
                             <constraint firstItem="vlS-g2-te4" firstAttribute="top" secondItem="DLl-25-JAr" secondAttribute="bottom" constant="8" id="yBf-bs-IOv"/>
                             <constraint firstItem="bHr-Ya-r6L" firstAttribute="top" secondItem="f0k-6g-lNv" secondAttribute="bottom" constant="8" id="yDP-Ce-tb2"/>
                             <constraint firstAttribute="leadingMargin" secondItem="0fm-xs-mwA" secondAttribute="leading" id="yQh-hZ-aqR"/>
@@ -652,6 +662,7 @@
                         <outlet property="actionNameLabel" destination="JVH-ez-A9y" id="FyL-ph-QyE"/>
                         <outlet property="elapsedLabel" destination="bHr-Ya-r6L" id="meX-NK-a9y"/>
                         <outlet property="markActionAsCompleteButton" destination="0fm-xs-mwA" id="T2z-Zn-3sU"/>
+                        <outlet property="parentActionNameLabel" destination="eYV-ZF-O7P" id="RmF-x6-p7g"/>
                         <outlet property="pauseButton" destination="oBP-KD-RoP" id="JvT-nD-v0z"/>
                         <outlet property="saveProgressAndSkipButton" destination="vlS-g2-te4" id="bo1-pd-KAR"/>
                         <outlet property="startButton" destination="drJ-kS-r9g" id="uRO-AJ-S61"/>

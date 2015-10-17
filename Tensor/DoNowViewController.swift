@@ -20,6 +20,7 @@ class DoNowViewController: UIViewController {
     
     func updateUI() {
         actionNameLabel.text = self.scheduler?.currentAction?.name
+        parentActionNameLabel.text = self.scheduler?.currentAction?.parentAction.name
     }
     
     func timerTicked(timer: NSTimer) {
@@ -76,6 +77,7 @@ class DoNowViewController: UIViewController {
     // MARK: - @IBOutlets
     
     @IBOutlet weak var actionNameLabel: UILabel!
+    @IBOutlet weak var parentActionNameLabel: UILabel!
     @IBOutlet weak var elapsedLabel: UILabel!
     @IBOutlet weak var timeIntervalLabel: UILabel!
     @IBOutlet weak var pauseButton: UIButton!

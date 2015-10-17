@@ -107,6 +107,7 @@ class Scheduler : PFObject, PFSubclassing {
         query.whereKey("isLeaf", equalTo: 1)
         query.whereKeyDoesNotExist("workConclusion")
         query.whereKey("user", equalTo: user!)
+        query.includeKey("parentAction")
         query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
         
         // heuristics
