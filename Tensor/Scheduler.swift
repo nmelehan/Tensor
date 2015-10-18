@@ -102,8 +102,9 @@ class Scheduler : PFObject, PFSubclassing {
             LocalParseManager.sharedManager.saveLocally(self)
         }
         
-        let query = PFQuery(className:"Action")
+        let query = PFQuery(className: "Action")
         query.fromLocalDatastore()
+        
         query.whereKey("isLeaf", equalTo: 1)
         query.whereKeyDoesNotExist("workConclusion")
         query.whereKey("user", equalTo: user!)
@@ -112,7 +113,7 @@ class Scheduler : PFObject, PFSubclassing {
         
         // heuristics
         if let actionFocus = actionFocus {
-            query.whereKey("parentAction", equalTo: actionFocus)
+            query.whereKey("ancestors", equalTo: actionFocus)
         }
         
         query.findObjectsInBackgroundWithBlock(resultsBlock)

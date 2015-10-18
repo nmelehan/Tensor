@@ -88,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-        LocalParseManager.sharedManager.migrateToAncestorArray()
+//        LocalParseManager.sharedManager.migrateToAncestorArray()
         
         
         return true
