@@ -208,6 +208,7 @@ class LocalParseManager
 //        newAction.completionStatus = Action.CompletionStatus.InProgress.rawValue
         newAction.user = user
         newAction.inSandbox = currentPersistenceMode.rawValue
+        newAction.depth = 0
         
         NSNotificationCenter.defaultCenter()
             .postNotificationName(Notification.LocalDatastoreWillAddAction, object: newAction)
@@ -234,7 +235,14 @@ class LocalParseManager
     
     func createDependencyForAction(action: Action) -> Action {
         let newAction = self.createAction()
+        
         newAction.parentAction = action
+        
+        var ancestors = action.ancestors ?? []
+        ancestors.insert(action, atIndex: 0)
+        newAction.ancestors = ancestors
+        newAction.depth = action.depth + 1
+        
         action.isLeaf = false
         
         if isSubscribed {
@@ -314,11 +322,23 @@ class LocalParseManager
         }
     }
     
+//    func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
+//        let query = PFQuery(className: "Action")
+//        query.fromLocalDatastore()
+//        query.whereKey("parentAction", equalTo:action)
+//        query.includeKey("workConclusion")
+//        query.includeKey("parentAction")
+//        query.findObjectsInBackgroundWithBlock(block)
+//    }
+    
     func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
         let query = PFQuery(className: "Action")
         query.fromLocalDatastore()
-        query.whereKey("parentAction", equalTo:action)
+        query.whereKey("ancestors", containsAllObjectsInArray: [action])
+        query.whereKey("depth", equalTo: action.depth+1)
         query.includeKey("workConclusion")
+        query.includeKey("parentAction")
+        
         query.findObjectsInBackgroundWithBlock(block)
     }
     
@@ -341,5 +361,57 @@ class LocalParseManager
     
     private func queueToSaveRemotely(object: PFObject) {
         object.saveEventually()
+    }
+    
+    // MARK: - Model migration method
+    
+    func assignAncestorsForAction(action: Action) {
+        defer {
+            let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+                if error == nil {
+                    if let objects = objects as? [Action] {
+                        for action in objects {
+                            self.assignAncestorsForAction(action)
+                        }
+                    }
+                }
+            }
+            
+            self.fetchDependenciesOfActionInBackground(action, withBlock: resultsBlock)
+        }
+        
+//        guard action.ancestors != nil else { return }
+        
+        if action.parentAction == nil {
+            action.ancestors = nil
+            action.depth = 0
+        }
+        else {
+            var ancestors = action.parentAction?.ancestors ?? []
+            ancestors.insert(action.parentAction!, atIndex: 0)
+            action.ancestors = ancestors
+            action.depth = action.parentAction!.depth + 1
+        }
+        
+        self.saveLocally(action)
+    }
+    
+    func migrateToAncestorArray() {
+        let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [Action] {
+                    for action in objects {
+                        self.assignAncestorsForAction(action)
+                    }
+                }
+            }
+        }
+        
+        // condition ensures we don't query against an anonymous
+        // user that hasn't been saved to Parse yet
+        let query = PFQuery(className:"Action")
+        query.fromLocalDatastore()
+        query.whereKeyDoesNotExist("parentAction")
+        query.findObjectsInBackgroundWithBlock(resultsBlock)
     }
 }

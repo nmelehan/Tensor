@@ -20,7 +20,7 @@ class DoNowViewController: UIViewController {
     
     func updateUI() {
         actionNameLabel.text = self.scheduler?.currentAction?.name
-        parentActionNameLabel.text = self.scheduler?.currentAction?.parentAction.name
+        parentActionNameLabel.text = self.scheduler?.currentAction?.parentAction?.name
     }
     
     func timerTicked(timer: NSTimer) {

@@ -86,6 +86,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotificationTypes(types)
         }
         
+        
+        
+        LocalParseManager.sharedManager.migrateToAncestorArray()
+        
+        
         return true
     }
 

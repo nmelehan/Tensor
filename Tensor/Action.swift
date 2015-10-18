@@ -32,7 +32,9 @@ class Action : PFObject, PFSubclassing {
     
     @NSManaged var user: PFUser
     @NSManaged var name: String
-    @NSManaged var parentAction: Action
+    @NSManaged var parentAction: Action?
+    @NSManaged var ancestors: [Action]?
+    @NSManaged var depth: Int
     @NSManaged var isLeaf: Bool
     @NSManaged var inSandbox: NSNumber?
     
