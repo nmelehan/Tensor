@@ -39,12 +39,7 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        let manager = LocalParseManager.sharedManager
-        let workUnit = manager.createWorkUnitForAction(action)
-        workUnit.setType(.Invalidation)
-        action.workConclusion = workUnit
-        manager.saveLocally(action)
-        
+        action.invalidate()
         completionStatusSwitch.enabled = false
     }
     

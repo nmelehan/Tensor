@@ -24,12 +24,6 @@ class Action : PFObject, PFSubclassing {
         return "Action"
     }
     
-    enum CompletionStatus: Int {
-        case InProgress = 0
-        case Completed = 1
-        case Invalidated = 2
-    }
-    
     @NSManaged var user: PFUser
     @NSManaged var name: String
     @NSManaged var parentAction: Action?
@@ -42,5 +36,22 @@ class Action : PFObject, PFSubclassing {
     
     // MARK: Convenience methods
     
-    
+    func invalidate() {
+        guard workConclusion == nil else { return } // throw?
+        
+        let manager = LocalParseManager.sharedManager
+        let workUnit = manager.createWorkUnitForAction(self)
+        workUnit.setType(.Invalidation)
+        workConclusion = workUnit
+        manager.saveLocally(self)
+        
+        let resultsBlock: PFArrayResultBlock = { (results, error) in
+            if let dependencies = results as? [Action] {
+                for dependency in dependencies {
+                    dependency.invalidate()
+                }
+            }
+        }
+        manager.fetchDependenciesOfActionInBackground(self, withBlock: resultsBlock)
+    }
 }
