@@ -52,11 +52,11 @@ class ParseLoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        print("\(email)")
+        let trimmedEmail = email.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
         let user = PFUser.currentUser() ?? PFUser()
-        user.username = email.lowercaseString
-        user.email = email.lowercaseString
+        user.username = trimmedEmail.lowercaseString
+        user.email = trimmedEmail.lowercaseString
         user.password = password
         
         user.signUpInBackgroundWithBlock { (succeeded, error) -> Void in
@@ -82,7 +82,9 @@ class ParseLoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        PFUser.logInWithUsernameInBackground(email.lowercaseString, password:password) {
+        let trimmedEmail = email.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        
+        PFUser.logInWithUsernameInBackground(trimmedEmail.lowercaseString, password:password) {
             (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
                 // Do stuff after successful login.
@@ -103,7 +105,9 @@ class ParseLoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        PFUser.requestPasswordResetForEmailInBackground(email)
+        let trimmedEmail = email.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        
+        PFUser.requestPasswordResetForEmailInBackground(trimmedEmail.lowercaseString)
     }
     
     /*
