@@ -9,11 +9,17 @@
 import UIKit
 import Parse
 
-class PlanTableViewController: UITableViewController, ParseLoginViewControllerDelegate {
+class PlanTableViewController: UITableViewController, UISearchResultsUpdating, ParseLoginViewControllerDelegate {
     
+    //
+    //
+    //
+    //
     // MARK: - Properties
     
     var tasks = [Action]()
+    var filteredActions = [Action]()
+    var searchController: UISearchController!
     
     var parentTask: Action?
     {
@@ -24,18 +30,21 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
         }
     }
     
+    //
+    //
+    //
+    //
     // MARK: - Methods
     
     func fetchTasks() {
         let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
-            print("results: \(objects)")
-            
-            if error == nil {
-                if let objects = objects as? [Action] {
+            if error == nil
+            {
+                if let objects = objects as? [Action]
+                {
                     self.tasks = objects
                     dispatch_async(dispatch_get_main_queue()) { self.tableView.reloadData() }
                 }
-            } else {
             }
         }
         
@@ -43,7 +52,8 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
         {
             // condition ensures we don't query against an anonymous
             // user that hasn't been saved to Parse yet
-            if PFUser.currentUser()?.objectId != nil {
+            if PFUser.currentUser()?.objectId != nil
+            {
                 let query = PFQuery(className:"Action")
                 query.fromLocalDatastore()
                 query.whereKeyDoesNotExist("parentAction")
@@ -60,6 +70,40 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
         }
     }
     
+    func filterContentForSearchText(searchText: String)
+    {
+        // Filter the array using the filter method
+        self.filteredActions = self.tasks.filter
+        {   (action: Action) -> Bool in
+                let stringMatch = action.name.rangeOfString(searchText)
+                return stringMatch != nil
+        }
+    }
+    
+    func addNotificationCenterObservers()
+    {
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionsWereFetchedFromCloud:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFetchActionsFromCloud,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionDidPin:",
+            name: LocalParseManager.Notification.LocalDatastoreDidAddAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionDidFailToPin:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFailToAddAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionDidUpdate:",
+            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
+            object: nil)
+    }
+    
+    //
+    //
+    //
+    //
     // MARK: - IBActions
     
     @IBAction func logOutButtonPressed(sender: UIBarButtonItem) {
@@ -75,6 +119,11 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
         newAction.name = "New Task"
     }
     
+    
+    //
+    //
+    //
+    //
     // MARK: - View lifecycle
 
     override func viewDidLoad()
@@ -94,28 +143,24 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
             fetchTasks()
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "actionsWereFetchedFromCloud:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFetchActionsFromCloud,
-            object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "actionDidPin:",
-            name: LocalParseManager.Notification.LocalDatastoreDidAddAction,
-            object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "actionDidFailToPin:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFailToAddAction,
-            object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "actionDidUpdate:",
-            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
-            object: nil)
+        self.searchController = UISearchController(searchResultsController: nil)
+        self.searchController.searchResultsUpdater = self
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.searchBar.sizeToFit()
+        self.tableView.tableHeaderView = self.searchController.searchBar
+        
+        addNotificationCenterObservers()
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    
+    //
+    //
+    //
+    //
     // MARK: - Notifications
     
     func actionsWereFetchedFromCloud(notification: NSNotification) {
@@ -137,6 +182,10 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
         fetchTasks()
     }
     
+    //
+    //
+    //
+    //
     // MARK: - ParseLoginViewControllerDelegate
     
     func parseLoginViewController(plvc: ParseLoginViewController, didAuthenticateUser user: PFUser) {
@@ -148,26 +197,52 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
         self.dismissViewControllerAnimated(true, completion: nil)
         fetchTasks()
     }
-
+    
+    //
+    //
+    //
+    //
+    // MARK: - UISearchResultsUpdating
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController)
+    {
+        self.filteredActions.removeAll(keepCapacity: false)
+        
+        let searchPredicate = NSPredicate(format: "name CONTAINS[c] %@", searchController.searchBar.text!)
+        let array = (self.tasks as NSArray).filteredArrayUsingPredicate(searchPredicate)
+        self.filteredActions = array as! [Action]
+        
+        self.tableView.reloadData()
+    }
+    
+    //
+    //
+    //
+    //
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        // #warning Incomplete implementation, return the number of rows
-        return tasks.count ?? 0
+        return self.searchController.active
+            ? filteredActions.count
+            : tasks.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Task Cell", forIndexPath: indexPath) as! TableViewTaskCell
 
         // Configure the cell...
-        cell.task = tasks[indexPath.row]
+        if (self.searchController.active) {
+            cell.task = filteredActions[indexPath.row]
+        }
+        else {
+            cell.task = tasks[indexPath.row]
+        }
 
         return cell
     }
@@ -175,42 +250,11 @@ class PlanTableViewController: UITableViewController, ParseLoginViewControllerDe
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         performSegueWithIdentifier(Storyboard.ShowDetailForTaskSegueIdentifier, sender: tableView.cellForRowAtIndexPath(indexPath))
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+    
+    //
+    //
+    //
+    //
     // MARK: - Navigation
     
     struct Storyboard {
