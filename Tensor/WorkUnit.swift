@@ -28,11 +28,11 @@ class WorkUnit : PFObject, PFSubclassing {
     
     // MARK: - Properties
     
-    @NSManaged var user: PFUser?
-    @NSManaged var action: Action?
-    @NSManaged var type: String?
-    @NSManaged var startDate: NSDate?
-    @NSManaged var duration: NSNumber?
+    @NSManaged var user: PFUser
+    @NSManaged var action: Action
+    @NSManaged var type: String
+    @NSManaged var startDate: NSDate
+    @NSManaged var duration: NSNumber
     
     enum WorkUnitType: String {
         case Progress = "progress"
@@ -42,12 +42,12 @@ class WorkUnit : PFObject, PFSubclassing {
         case Reactivation = "reactivation"
     }
     
-    func setType(workUnitType: WorkUnitType?) {
-        type = workUnitType?.rawValue
+    func setType(workUnitType: WorkUnitType) {
+        type = workUnitType.rawValue
     }
     
-    func getType() -> WorkUnitType? {
-        return type == nil ? nil : WorkUnitType(rawValue: type!)
+    func getType() -> WorkUnitType {
+        return WorkUnitType(rawValue: type)!
     }
     
     // MARK: - Methods

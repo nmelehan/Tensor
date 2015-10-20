@@ -26,7 +26,7 @@ class WorkUnitTableViewCell: UITableViewCell {
     }
     
     func updateUI() {
-        self.textLabel?.text = workUnit?.action?.name
+        self.textLabel?.text = workUnit?.action.name
         
         if let type = workUnit?.getType() {
             let labelText: String

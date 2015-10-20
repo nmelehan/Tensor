@@ -36,8 +36,8 @@ class Scheduler : PFObject, PFSubclassing {
     
     // MARK: - Properties
     
-    @NSManaged var user: PFUser?
-    @NSManaged var inSandbox: NSNumber?
+    @NSManaged var user: PFUser
+    @NSManaged var inSandbox: NSNumber
     @NSManaged var scheduledActions: [Action]?
     @NSManaged var actionsIneligibleForScheduling: [Action]?
     @NSManaged var workUnitInProgress: WorkUnit?
@@ -59,9 +59,9 @@ class Scheduler : PFObject, PFSubclassing {
     }
     
     func refreshScheduledActions(preserveCurrentAction preserveCurrentAction: Bool) {
-        guard user != nil else {
-            return // but this should really be a thrown error
-        }
+//        guard user != nil else {
+//            return // but this should really be a thrown error
+//        }
         
         let resultsBlock: PFArrayResultBlock = { (results, error) -> Void in
             if error == nil {
@@ -108,7 +108,7 @@ class Scheduler : PFObject, PFSubclassing {
         
         query.whereKey("isLeaf", equalTo: 1)
         query.whereKeyDoesNotExist("workConclusion")
-        query.whereKey("user", equalTo: user!)
+        query.whereKey("user", equalTo: user)
         query.includeKey("parentAction")
         query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
         
@@ -126,10 +126,10 @@ class Scheduler : PFObject, PFSubclassing {
             return // or throw?
         }
         
-        guard user != nil else
-        {
-            return // or throw?
-        }
+//        guard user != nil else
+//        {
+//            return // or throw?
+//        }
         
         // remove current action from scheduled actions and reschedule
         let skippedAction = scheduledActions!.removeAtIndex(0)
@@ -146,15 +146,13 @@ class Scheduler : PFObject, PFSubclassing {
     }
     
     func pauseWorkUnitInProgress() {
-        guard   let workUnitInProgress = workUnitInProgress,
-                let startDate = workUnitInProgress.startDate,
-                let type = workUnitInProgress.getType()
-                where type == .Progress else {
+        guard   let workUnitInProgress = workUnitInProgress
+                where workUnitInProgress.getType() == .Progress else {
             return
         }
         
         let manager = LocalParseManager.sharedManager
-        let interval = Int(-1*startDate.timeIntervalSinceNow)
+        let interval = Int(-1*workUnitInProgress.startDate.timeIntervalSinceNow)
         workUnitInProgress.duration = interval
         manager.saveLocally(workUnitInProgress)
         

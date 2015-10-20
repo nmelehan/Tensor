@@ -75,7 +75,7 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
         // Filter the array using the filter method
         self.filteredActions = self.tasks.filter
         {   (action: Action) -> Bool in
-                let stringMatch = action.name.rangeOfString(searchText)
+                let stringMatch = action.name?.rangeOfString(searchText)
                 return stringMatch != nil
         }
     }
