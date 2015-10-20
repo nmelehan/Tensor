@@ -54,24 +54,7 @@ class DoNowViewController: UIViewController {
     }
     
     func pauseWork() {
-        startButton.enabled = true
-        pauseButton.enabled = false
-        timer?.invalidate()
-        timer = nil
-        
-        elapsedLabel.hidden = true
-        timeIntervalLabel.hidden = true
-        
-        guard let startDate = scheduler?.workUnitInProgress?.startDate else {
-            return
-        }
-        
-        let interval = Int(-1*startDate.timeIntervalSinceNow)
-        self.timeIntervalLabel.text = "\(interval)"
-        
-        scheduler?.workUnitInProgress?.duration = interval
-        scheduler?.workUnitInProgress = nil
-        LocalParseManager.sharedManager.saveLocally(scheduler!)
+        scheduler?.pauseWorkUnitInProgress()
     }
     
     // MARK: - @IBOutlets
@@ -103,9 +86,6 @@ class DoNowViewController: UIViewController {
         workUnit.setType(.Completion)
         action.workConclusion = workUnit
         manager.saveLocally(action)
-        
-//        scheduler?.refreshScheduledActions(preserveCurrentAction: false)
-//        updateUI()
     }
     
     @IBAction func saveProgressAndSkipToNextActionButtonPressed() {
@@ -180,6 +160,10 @@ class DoNowViewController: UIViewController {
             selector: "schedulerDidFailToRefreshScheduledActions:",
             name: Scheduler.Notification.SchedulerDidFailToRefreshScheduledActions,
             object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "schedulerDidPauseWorkUnitInProgress:",
+            name: Scheduler.Notification.SchedulerDidPauseWorkUnitInProgress,
+            object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "localDatastoreDidChangeActions:",
@@ -223,6 +207,20 @@ class DoNowViewController: UIViewController {
     func localDatastoreDidChangeActions(notification: NSNotification) {
         print("\n\nlocalDatastoreDidChangeActions: \(notification)\n")
         self.scheduler?.refreshScheduledActions()
+    }
+    
+    func schedulerDidPauseWorkUnitInProgress(notification: NSNotification) {
+        startButton.enabled = true
+        pauseButton.enabled = false
+        timer?.invalidate()
+        timer = nil
+        
+        elapsedLabel.hidden = true
+        timeIntervalLabel.hidden = true
+        
+        if let duration = (notification.userInfo?["workUnit"] as? WorkUnit)?.duration {
+            self.timeIntervalLabel.text = "\(duration)"
+        }
     }
 
     /*

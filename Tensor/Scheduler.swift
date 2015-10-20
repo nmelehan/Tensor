@@ -31,6 +31,7 @@ class Scheduler : PFObject, PFSubclassing {
     struct Notification {
         static let SchedulerDidRefreshScheduledActions = "Tensor.SchedulerDidRefreshScheduledActionsNotification"
         static let SchedulerDidFailToRefreshScheduledActions = "Tensor.SchedulerDidFailToRefreshScheduledActionsNotification"
+        static let SchedulerDidPauseWorkUnitInProgress = "Tensor.SchedulerDidPauseWorkUnitInProgressNotification"
     }
     
     // MARK: - Properties
@@ -144,7 +145,34 @@ class Scheduler : PFObject, PFSubclassing {
         workUnit.setType(.Skip)
     }
     
+    func pauseWorkUnitInProgress() {
+        guard   let workUnitInProgress = workUnitInProgress,
+                let startDate = workUnitInProgress.startDate,
+                let type = workUnitInProgress.getType()
+                where type == .Progress else {
+            return
+        }
+        
+        let manager = LocalParseManager.sharedManager
+        let interval = Int(-1*startDate.timeIntervalSinceNow)
+        workUnitInProgress.duration = interval
+        manager.saveLocally(workUnitInProgress)
+        
+        self.workUnitInProgress = nil
+        manager.saveLocally(self)
+        
+        
+        let userInfo = ["workUnit" : workUnitInProgress]
+        NSNotificationCenter.defaultCenter()
+            .postNotificationName(Notification.SchedulerDidPauseWorkUnitInProgress,
+                object: self, userInfo: userInfo)
+    }
+    
     func immediatelyScheduleAction(action: Action) {
+        if workUnitInProgress != nil {
+            pauseWorkUnitInProgress()
+        }
+        
         if scheduledActions != nil {
             scheduledActions!.insert(action, atIndex: 0)
         }
