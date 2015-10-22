@@ -148,7 +148,7 @@ class Scheduler : PFObject, PFSubclassing {
     func pauseWorkUnitInProgress() {
         guard   let workUnitInProgress = workUnitInProgress
                 where workUnitInProgress.getType() == .Progress else {
-            return
+            return // #warning throw?
         }
         
         let manager = LocalParseManager.sharedManager
@@ -158,7 +158,6 @@ class Scheduler : PFObject, PFSubclassing {
         
         self.workUnitInProgress = nil
         manager.saveLocally(self)
-        
         
         let userInfo = ["workUnit" : workUnitInProgress]
         NSNotificationCenter.defaultCenter()
@@ -178,6 +177,7 @@ class Scheduler : PFObject, PFSubclassing {
             scheduledActions = [action]
         }
         
+        LocalParseManager.sharedManager.saveLocally(self)
         NSNotificationCenter.defaultCenter()
             .postNotificationName(Notification.SchedulerDidRefreshScheduledActions, object: self)
     }
