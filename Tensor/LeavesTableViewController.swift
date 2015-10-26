@@ -30,10 +30,11 @@ class LeavesTableViewController: UITableViewController {
         
         if PFUser.currentUser()?.objectId != nil {
             let query = PFQuery(className:"Action")
-            query.fromLocalDatastore()
+//            query.fromLocalDatastore()
             query.whereKey("isLeaf", equalTo: 1)
 //            query.whereKey("completionStatus", equalTo: Action.CompletionStatus.InProgress.rawValue)
             query.whereKey("user", equalTo: PFUser.currentUser()!)
+            query.includeKey("workConclusion")
             query.findObjectsInBackgroundWithBlock(resultsBlock)
         }
     }

@@ -22,6 +22,7 @@
 		3F048EC71B96B7CA00ADF5D2 /* PlanTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F048EC61B96B7CA00ADF5D2 /* PlanTableViewController.swift */; };
 		3F356AD71BA50D3900277A84 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F356AD61BA50D3900277A84 /* TaskDetailViewController.swift */; };
 		3F4DB2721BDD964700EAEFB9 /* AppSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4DB2711BDD964700EAEFB9 /* AppSettingsTableViewController.swift */; };
+		3F589FDF1BDDAE0B009E2A65 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F589FDE1BDDAE0B009E2A65 /* AppSettings.swift */; };
 		3F6A57491BAD127100F6030C /* AuthorizationTokens.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A57481BAD127100F6030C /* AuthorizationTokens.plist */; };
 		3F6A574B1BAE2BE800F6030C /* ParseLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A574A1BAE2BE800F6030C /* ParseLoginViewController.swift */; };
 		3F6A574F1BB10A1F00F6030C /* LocalParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A574E1BB10A1F00F6030C /* LocalParseManager.swift */; };
@@ -76,6 +77,7 @@
 		3F048EC61B96B7CA00ADF5D2 /* PlanTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanTableViewController.swift; sourceTree = "<group>"; };
 		3F356AD61BA50D3900277A84 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
 		3F4DB2711BDD964700EAEFB9 /* AppSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsTableViewController.swift; sourceTree = "<group>"; };
+		3F589FDE1BDDAE0B009E2A65 /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		3F6A57481BAD127100F6030C /* AuthorizationTokens.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AuthorizationTokens.plist; sourceTree = "<group>"; };
 		3F6A574A1BAE2BE800F6030C /* ParseLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseLoginViewController.swift; sourceTree = "<group>"; };
 		3F6A574E1BB10A1F00F6030C /* LocalParseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalParseManager.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 			children = (
 				3FC607E01B98017400758842 /* Action.swift */,
 				3FEE81931BB51FBF00BB5A10 /* Scheduler.swift */,
+				3F589FDE1BDDAE0B009E2A65 /* AppSettings.swift */,
 				3FBD6D591BC78536002D28F9 /* WorkUnit.swift */,
 				3F6A574E1BB10A1F00F6030C /* LocalParseManager.swift */,
 			);
@@ -372,6 +375,7 @@
 				3FC607E41B9817C500758842 /* TableViewTaskCell.swift in Sources */,
 				3FBD6D5C1BC8E5A6002D28F9 /* WorkHistoryTableViewController.swift in Sources */,
 				3FBD6D5E1BC8E603002D28F9 /* WorkUnitTableViewCell.swift in Sources */,
+				3F589FDF1BDDAE0B009E2A65 /* AppSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

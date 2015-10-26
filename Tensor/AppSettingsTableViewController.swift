@@ -26,14 +26,38 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
         }
     }
     
+
+    
     //
     //
     //
     //
     // MARK: - IBOutlets
     
-    
     @IBOutlet weak var authenticationButton: UIButton!
+    @IBOutlet weak var showCompletedAndInvalidatedActionsSwitch: UISwitch!
+    @IBOutlet weak var showSkipsInWorkHistorySwitch: UISwitch!
+    
+    //
+    //
+    //
+    //
+    // MARK: - IBActions
+    
+    @IBAction func showCompletedAndInvalidatedActionsSwitchValueChanged() {
+        switch showCompletedAndInvalidatedActionsSwitch.on {
+        case true: break
+        case false: break
+        }
+        
+        let userInfo = ["showCompletedAndInvalidatedActionsSetting" : showCompletedAndInvalidatedActionsSwitch.on]
+        NSNotificationCenter.defaultCenter()
+            .postNotificationName(AppSettings.Notification.ShowCompletedAndInvalidatedActionsInPlanViewSettingDidChange,
+                object: nil,
+                userInfo: userInfo)
+    }
+    
+    
     
     //
     //
@@ -52,6 +76,8 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
     //
     //
     //
@@ -67,6 +93,8 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
     func parseLoginViewControllerDidCancel(plvc: ParseLoginViewController) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
     
     //
     //

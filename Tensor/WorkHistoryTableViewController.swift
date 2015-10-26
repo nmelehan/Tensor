@@ -38,7 +38,7 @@ class WorkHistoryTableViewController: UITableViewController {
         // user that hasn't been saved to Parse yet
         if PFUser.currentUser()?.objectId != nil {
             let query = PFQuery(className:"WorkUnit")
-            query.fromLocalDatastore()
+//            query.fromLocalDatastore()
             query.whereKey("user", equalTo: PFUser.currentUser()!)
             if let action = action {
                 query.whereKey("action", equalTo: action)

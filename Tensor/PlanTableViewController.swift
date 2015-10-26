@@ -55,7 +55,7 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
             if PFUser.currentUser()?.objectId != nil
             {
                 let query = PFQuery(className:"Action")
-                query.fromLocalDatastore()
+//                query.fromLocalDatastore()
                 query.whereKeyDoesNotExist("parentAction")
                 query.whereKey("user", equalTo: PFUser.currentUser()!)
                 query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
@@ -97,6 +97,11 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidUpdate:",
             name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
+            object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "settingDidChange:",
+            name: AppSettings.Notification.ShowCompletedAndInvalidatedActionsInPlanViewSettingDidChange,
             object: nil)
     }
     
@@ -180,6 +185,10 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
     func actionDidUpdate(notification: NSNotification) {
         print("\n\nactionDidUpdate: \(notification)")
         fetchTasks()
+    }
+    
+    func settingDidChange(notification: NSNotification) {
+        print("\n\nsettingDidChange: \(notification)")
     }
     
     //
