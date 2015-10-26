@@ -21,6 +21,7 @@
 		3F048EC51B96B64000ADF5D2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F048EC41B96B64000ADF5D2 /* libsqlite3.tbd */; };
 		3F048EC71B96B7CA00ADF5D2 /* PlanTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F048EC61B96B7CA00ADF5D2 /* PlanTableViewController.swift */; };
 		3F356AD71BA50D3900277A84 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F356AD61BA50D3900277A84 /* TaskDetailViewController.swift */; };
+		3F4DB2721BDD964700EAEFB9 /* AppSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4DB2711BDD964700EAEFB9 /* AppSettingsTableViewController.swift */; };
 		3F6A57491BAD127100F6030C /* AuthorizationTokens.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A57481BAD127100F6030C /* AuthorizationTokens.plist */; };
 		3F6A574B1BAE2BE800F6030C /* ParseLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A574A1BAE2BE800F6030C /* ParseLoginViewController.swift */; };
 		3F6A574F1BB10A1F00F6030C /* LocalParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A574E1BB10A1F00F6030C /* LocalParseManager.swift */; };
@@ -74,6 +75,7 @@
 		3F048EC41B96B64000ADF5D2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		3F048EC61B96B7CA00ADF5D2 /* PlanTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanTableViewController.swift; sourceTree = "<group>"; };
 		3F356AD61BA50D3900277A84 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
+		3F4DB2711BDD964700EAEFB9 /* AppSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsTableViewController.swift; sourceTree = "<group>"; };
 		3F6A57481BAD127100F6030C /* AuthorizationTokens.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AuthorizationTokens.plist; sourceTree = "<group>"; };
 		3F6A574A1BAE2BE800F6030C /* ParseLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseLoginViewController.swift; sourceTree = "<group>"; };
 		3F6A574E1BB10A1F00F6030C /* LocalParseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalParseManager.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				3FEE81951BB52A3000BB5A10 /* SchedulerTableViewController.swift */,
 				3FBD6D5B1BC8E5A6002D28F9 /* WorkHistoryTableViewController.swift */,
 				3F6A574A1BAE2BE800F6030C /* ParseLoginViewController.swift */,
+				3F4DB2711BDD964700EAEFB9 /* AppSettingsTableViewController.swift */,
 				3FBD6D611BCA27CD002D28F9 /* Views */,
 				3F048E921B96AED500ADF5D2 /* Assets.xcassets */,
 				3FC607E21B98033100758842 /* Tensor-Bridging-Header.h */,
@@ -361,6 +364,7 @@
 				3FEE81961BB52A3000BB5A10 /* SchedulerTableViewController.swift in Sources */,
 				3FC607E11B98017400758842 /* Action.swift in Sources */,
 				3F6A574F1BB10A1F00F6030C /* LocalParseManager.swift in Sources */,
+				3F4DB2721BDD964700EAEFB9 /* AppSettingsTableViewController.swift in Sources */,
 				3FBD6D631BCA2816002D28F9 /* HorizontalLineView.swift in Sources */,
 				3F6A574B1BAE2BE800F6030C /* ParseLoginViewController.swift in Sources */,
 				3FC607E81B9BA3AB00758842 /* LeavesTableViewController.swift in Sources */,
