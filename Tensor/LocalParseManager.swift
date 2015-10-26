@@ -11,6 +11,10 @@ import Parse
 
 class LocalParseManager
 {
+    //
+    //
+    //
+    //
     // MARK: - Notification constants
     
     // Naming pattern:
@@ -46,6 +50,12 @@ class LocalParseManager
         static let LocalDatastoreDidFailToUpdateWorkUnit = "Tensor.LocalDatastoreDidFailToUpdateWorkUnitNotification"
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Properties
     
     static let sharedManager = LocalParseManager()
@@ -62,6 +72,12 @@ class LocalParseManager
 
     var currentPersistenceMode: PersistenceMode = .Sandbox
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Datastore initialization
     
     enum AchievedInstallationProgressStatus {
@@ -150,7 +166,13 @@ class LocalParseManager
 //        currentPersistenceMode = .Persistent
     }
     
-    // MARK: - Public factory and query methods
+    
+    
+    //
+    //
+    //
+    //
+    // MARK: - Factory and saving methods
     
     func createWorkUnitForAction(action: Action) -> WorkUnit
     {
@@ -332,29 +354,72 @@ class LocalParseManager
         }
     }
     
-//    func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
-//        let query = PFQuery(className: "Action")
-//        query.fromLocalDatastore()
-//        query.whereKey("parentAction", equalTo:action)
-//        query.includeKey("workConclusion")
-//        query.includeKey("parentAction")
-//        query.findObjectsInBackgroundWithBlock(block)
-//    }
+    private func queueToSaveRemotely(object: PFObject) {
+        object.saveEventually()
+    }
+    
+    
+    
+    //
+    //
+    //
+    //
+    // MARK: - Queries
+    
+    //    func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
+    //        let query = PFQuery(className: "Action")
+    //        query.fromLocalDatastore()
+    //        query.whereKey("parentAction", equalTo:action)
+    //        query.includeKey("workConclusion")
+    //        query.includeKey("parentAction")
+    //        query.findObjectsInBackgroundWithBlock(block)
+    //    }
+    
+    func fetchTopLevelActionsInBackgroundWithBlock(block: PFArrayResultBlock?) {
+        let query = PFQuery(className:"Action")
+        // query.fromLocalDatastore()
+        query.whereKeyDoesNotExist("parentAction")
+        query.whereKey("user", equalTo: user)
+        query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
+        
+        let showConcludedActions = NSUserDefaults.standardUserDefaults()
+            .boolForKey(AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView)
+        if showConcludedActions
+        {
+            query.includeKey("workConclusion")
+        }
+        else
+        {
+            query.whereKeyDoesNotExist("workConclusion")
+        }
+        
+        query.findObjectsInBackgroundWithBlock(block)
+    }
     
     func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
         let query = PFQuery(className: "Action")
-//        query.fromLocalDatastore()
+        //        query.fromLocalDatastore()
         query.whereKey("ancestors", containsAllObjectsInArray: [action])
         query.whereKey("depth", equalTo: action.depth+1)
-        query.includeKey("workConclusion")
         query.includeKey("parentAction")
+        
+        let showConcludedActions = NSUserDefaults.standardUserDefaults()
+            .boolForKey(AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView)
+        if showConcludedActions
+        {
+            query.includeKey("workConclusion")
+        }
+        else
+        {
+            query.whereKeyDoesNotExist("workConclusion")
+        }
         
         query.findObjectsInBackgroundWithBlock(block)
     }
     
     func fetchSchedulerInBackgroundWithBlock(block: PFObjectResultBlock?) {
         let query = PFQuery(className: "Scheduler")
-//        query.fromLocalDatastore()
+        //        query.fromLocalDatastore()
         query.whereKey("user", equalTo: user)
         query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
         query.includeKey("scheduledActions")
@@ -364,15 +429,17 @@ class LocalParseManager
     
     func fetchSchedulersInBackgroundWithBlock(block: PFArrayResultBlock?) {
         let query = PFQuery(className: "Scheduler")
-//        query.fromLocalDatastore()
+        //        query.fromLocalDatastore()
         query.whereKey("user", equalTo: user)
         query.findObjectsInBackgroundWithBlock(block)
     }
     
-    private func queueToSaveRemotely(object: PFObject) {
-        object.saveEventually()
-    }
+
     
+    //
+    //
+    //
+    //
     // MARK: - Model migration method
     
     func assignAncestorsForAction(action: Action) {

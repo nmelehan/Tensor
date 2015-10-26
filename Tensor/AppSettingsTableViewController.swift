@@ -26,6 +26,14 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
         }
     }
     
+    func updateUI() {
+        updateAuthenticationButtonLabel()
+        
+        showCompletedAndInvalidatedActionsSwitch.on = NSUserDefaults
+            .standardUserDefaults()
+            .boolForKey(AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView)
+    }
+    
 
     
     //
@@ -37,6 +45,8 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
     @IBOutlet weak var authenticationButton: UIButton!
     @IBOutlet weak var showCompletedAndInvalidatedActionsSwitch: UISwitch!
     @IBOutlet weak var showSkipsInWorkHistorySwitch: UISwitch!
+    
+    
     
     //
     //
@@ -50,7 +60,10 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
         case false: break
         }
         
-        let userInfo = ["showCompletedAndInvalidatedActionsSetting" : showCompletedAndInvalidatedActionsSwitch.on]
+        NSUserDefaults.standardUserDefaults()
+            .setBool(showCompletedAndInvalidatedActionsSwitch.on,
+                forKey: AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView)
+        let userInfo = [AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView : showCompletedAndInvalidatedActionsSwitch.on]
         NSNotificationCenter.defaultCenter()
             .postNotificationName(AppSettings.Notification.ShowCompletedAndInvalidatedActionsInPlanViewSettingDidChange,
                 object: nil,
@@ -59,7 +72,7 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
     
     
     
-    //
+    // 
     //
     //
     //
@@ -68,7 +81,7 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateAuthenticationButtonLabel()
+        updateUI()
     }
 
     override func didReceiveMemoryWarning() {

@@ -23,5 +23,9 @@ struct AppSettings {
     struct Notification {
         static let ShowCompletedAndInvalidatedActionsInPlanViewSettingDidChange = "Tensor.ShowCompletedAndInvalidatedActionsInPlanViewSettingDidChangeNotification"
     }
+    
+    struct Keys {
+        static let ShowCompletedAndInvalidatedActionsInPlanView = "Tensor.AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView"
+    }
 
 }

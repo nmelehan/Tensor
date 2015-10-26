@@ -50,18 +50,8 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
         
         if parentTask == nil
         {
-            // condition ensures we don't query against an anonymous
-            // user that hasn't been saved to Parse yet
-            if PFUser.currentUser()?.objectId != nil
-            {
-                let query = PFQuery(className:"Action")
-//                query.fromLocalDatastore()
-                query.whereKeyDoesNotExist("parentAction")
-                query.whereKey("user", equalTo: PFUser.currentUser()!)
-                query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
-                query.includeKey("workConclusion")
-                query.findObjectsInBackgroundWithBlock(resultsBlock)
-            }
+            LocalParseManager.sharedManager
+                .fetchTopLevelActionsInBackgroundWithBlock(resultsBlock)
         }
         else
         {
@@ -189,6 +179,7 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
     
     func settingDidChange(notification: NSNotification) {
         print("\n\nsettingDidChange: \(notification)")
+        fetchTasks()
     }
     
     //
