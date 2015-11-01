@@ -398,7 +398,7 @@ class LocalParseManager
     
     func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
         let query = PFQuery(className: "Action")
-        //        query.fromLocalDatastore()
+        // query.fromLocalDatastore()
         query.whereKey("ancestors", containsAllObjectsInArray: [action])
         query.whereKey("depth", equalTo: action.depth+1)
         query.includeKey("parentAction")
@@ -419,7 +419,7 @@ class LocalParseManager
     
     func fetchSchedulerInBackgroundWithBlock(block: PFObjectResultBlock?) {
         let query = PFQuery(className: "Scheduler")
-        //        query.fromLocalDatastore()
+        // query.fromLocalDatastore()
         query.whereKey("user", equalTo: user)
         query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
         query.includeKey("scheduledActions")
@@ -429,11 +429,39 @@ class LocalParseManager
     
     func fetchSchedulersInBackgroundWithBlock(block: PFArrayResultBlock?) {
         let query = PFQuery(className: "Scheduler")
-        //        query.fromLocalDatastore()
+        // query.fromLocalDatastore()
         query.whereKey("user", equalTo: user)
         query.findObjectsInBackgroundWithBlock(block)
     }
     
+    func fetchWorkHistoryInBackgroundWithBlock(block: PFArrayResultBlock?)
+    {
+        let query = PFQuery(className: "WorkUnit")
+        // query.fromLocalDatastore()
+        query.whereKey("user", equalTo: user)
+        query.orderByDescending("startDate")
+        query.includeKey("action")
+        
+        let showSkips = NSUserDefaults.standardUserDefaults()
+            .boolForKey(AppSettings.Keys.ShowSkipsInWorkHistory)
+        if !showSkips
+        {
+            query.whereKey("type", notEqualTo: WorkUnit.WorkUnitType.Skip.rawValue)
+        }
+        
+        query.findObjectsInBackgroundWithBlock(block)
+    }
+    
+    func fetchWorkHistoryForActionInBackground(action: Action, withBlock block: PFArrayResultBlock?)
+    {
+        let query = PFQuery(className:"WorkUnit")
+        // query.fromLocalDatastore()
+        query.whereKey("user", equalTo: user)
+        query.whereKey("action", equalTo: action)
+        query.orderByDescending("startDate")
+        query.includeKey("action")
+        query.findObjectsInBackgroundWithBlock(block)
+    }
 
     
     //

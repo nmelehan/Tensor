@@ -30,6 +30,8 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
         }
     }
     
+    
+    
     //
     //
     //
@@ -91,9 +93,11 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
         
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "settingDidChange:",
-            name: AppSettings.Notification.ShowCompletedAndInvalidatedActionsInPlanViewSettingDidChange,
+            name: AppSettings.Notifications.ShowCompletedAndInvalidatedActionsInPlanViewDidChange,
             object: nil)
     }
+    
+    
     
     //
     //
@@ -113,6 +117,7 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
             : LocalParseManager.sharedManager.createAction()
         newAction.name = "New Task"
     }
+    
     
     
     //
@@ -152,6 +157,7 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
     }
     
     
+    
     //
     //
     //
@@ -182,6 +188,8 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
         fetchTasks()
     }
     
+    
+    
     //
     //
     //
@@ -197,6 +205,8 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
         self.dismissViewControllerAnimated(true, completion: nil)
         fetchTasks()
     }
+    
+    
     
     //
     //
@@ -214,6 +224,8 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
         
         self.tableView.reloadData()
     }
+    
+    
     
     //
     //
@@ -250,6 +262,8 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         performSegueWithIdentifier(Storyboard.ShowDetailForTaskSegueIdentifier, sender: tableView.cellForRowAtIndexPath(indexPath))
     }
+    
+    
     
     //
     //

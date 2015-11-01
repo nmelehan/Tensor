@@ -149,6 +149,7 @@
 		3F048E8A1B96AED500ADF5D2 /* Tensor */ = {
 			isa = PBXGroup;
 			children = (
+				3F589FDE1BDDAE0B009E2A65 /* AppSettings.swift */,
 				3FC607DF1B98015600758842 /* Parse Model */,
 				3F048E8B1B96AED500ADF5D2 /* AppDelegate.swift */,
 				3F048EC61B96B7CA00ADF5D2 /* PlanTableViewController.swift */,
@@ -216,7 +217,6 @@
 			children = (
 				3FC607E01B98017400758842 /* Action.swift */,
 				3FEE81931BB51FBF00BB5A10 /* Scheduler.swift */,
-				3F589FDE1BDDAE0B009E2A65 /* AppSettings.swift */,
 				3FBD6D591BC78536002D28F9 /* WorkUnit.swift */,
 				3F6A574E1BB10A1F00F6030C /* LocalParseManager.swift */,
 			);

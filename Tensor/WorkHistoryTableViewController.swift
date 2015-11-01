@@ -11,6 +11,12 @@ import Parse
 
 class WorkHistoryTableViewController: UITableViewController {
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Properties
     
     var history = [WorkUnit]()
@@ -20,6 +26,12 @@ class WorkHistoryTableViewController: UITableViewController {
         didSet { fetchHistory() }
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Methods
     
     func fetchHistory()
@@ -34,23 +46,29 @@ class WorkHistoryTableViewController: UITableViewController {
             }
         }
         
-        // condition ensures we don't query against an anonymous
-        // user that hasn't been saved to Parse yet
-        if PFUser.currentUser()?.objectId != nil {
-            let query = PFQuery(className:"WorkUnit")
-//            query.fromLocalDatastore()
-            query.whereKey("user", equalTo: PFUser.currentUser()!)
-            if let action = action {
-                query.whereKey("action", equalTo: action)
-            }
-            query.orderByDescending("startDate")
-            query.includeKey("action")
-            query.findObjectsInBackgroundWithBlock(resultsBlock)
+        let manager = LocalParseManager.sharedManager
+        if let action = action {
+            manager.fetchWorkHistoryForActionInBackground(action, withBlock: resultsBlock)
+        }
+        else {
+            manager.fetchWorkHistoryInBackgroundWithBlock(resultsBlock)
         }
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - IBActions
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - View lifecycle
     
     override func viewDidLoad()
@@ -77,18 +95,40 @@ class WorkHistoryTableViewController: UITableViewController {
             selector: "historyDidChange:",
             name: LocalParseManager.Notification.LocalDatastoreDidUpdateWorkUnit,
             object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "settingDidChange:",
+            name: AppSettings.Notifications.ShowSkipsInWorkHistoryDidChange,
+            object: nil)
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Notifications
     
     func historyDidChange(notification: NSNotification) {
         fetchHistory()
     }
     
+    func settingDidChange(notification: NSNotification) {
+        print("\n\nsettingDidChange: \(notification)")
+        fetchHistory()
+    }
+    
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -112,41 +152,12 @@ class WorkHistoryTableViewController: UITableViewController {
         return cell
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the specified item to be editable.
-    return true
-    }
-    */
     
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
     
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-    
+    //
+    //
+    //
+    //
     // MARK: - Navigation
     
     struct Storyboard {

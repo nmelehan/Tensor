@@ -32,6 +32,10 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
         showCompletedAndInvalidatedActionsSwitch.on = NSUserDefaults
             .standardUserDefaults()
             .boolForKey(AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView)
+        
+        showSkipsInWorkHistorySwitch.on = NSUserDefaults
+            .standardUserDefaults()
+            .boolForKey(AppSettings.Keys.ShowSkipsInWorkHistory)
     }
     
 
@@ -55,17 +59,26 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
     // MARK: - IBActions
     
     @IBAction func showCompletedAndInvalidatedActionsSwitchValueChanged() {
-        switch showCompletedAndInvalidatedActionsSwitch.on {
-        case true: break
-        case false: break
-        }
+        let showConcludedActions = showCompletedAndInvalidatedActionsSwitch.on
         
         NSUserDefaults.standardUserDefaults()
-            .setBool(showCompletedAndInvalidatedActionsSwitch.on,
+            .setBool(showConcludedActions,
                 forKey: AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView)
-        let userInfo = [AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView : showCompletedAndInvalidatedActionsSwitch.on]
+        let userInfo = [AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView : showConcludedActions]
         NSNotificationCenter.defaultCenter()
-            .postNotificationName(AppSettings.Notification.ShowCompletedAndInvalidatedActionsInPlanViewSettingDidChange,
+            .postNotificationName(AppSettings.Notifications.ShowCompletedAndInvalidatedActionsInPlanViewDidChange,
+                object: nil,
+                userInfo: userInfo)
+    }
+    
+    @IBAction func showSkipsInWorkHistorySwitchValueChanged() {
+        let showSkips = showSkipsInWorkHistorySwitch.on
+        
+        NSUserDefaults.standardUserDefaults()
+            .setBool(showSkips, forKey: AppSettings.Keys.ShowSkipsInWorkHistory)
+        let userInfo = [AppSettings.Keys.ShowSkipsInWorkHistory : showSkips]
+        NSNotificationCenter.defaultCenter()
+            .postNotificationName(AppSettings.Notifications.ShowSkipsInWorkHistoryDidChange,
                 object: nil,
                 userInfo: userInfo)
     }
