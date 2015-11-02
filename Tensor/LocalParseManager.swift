@@ -113,10 +113,63 @@ class LocalParseManager
         
     }
     
+//    func becomeUser(user: PFUser) {
+//        installationProgress.achievedInstallationProgress = .InstallationRequested
+//        
+////        var previousUser = self.user
+//        self.user = user
+//        // unpin all actions from previous user
+//        
+//        // fetch new actions from new user and pin them
+//        let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+//            if error == nil {
+//                PFObject.pinAllInBackground(objects, block: { (success, error) -> Void in
+//                    if success {
+//                        self.installationProgress = (.InstallationComplete, .NoOperationsInProgress)
+//                        NSNotificationCenter.defaultCenter()
+//                            .postNotificationName(Notification.LocalDatastoreDidFetchActionsFromCloud,
+//                                object: objects as? [Action])
+//                    }
+//                })
+//            } else {
+//            }
+//        }
+//        
+//        installationProgress.currentInstallationProgress = .OperationsInProgress
+//        let query = PFQuery(className:"Action")
+//        query.whereKey("user", equalTo: user)
+//        query.findObjectsInBackgroundWithBlock(resultsBlock)
+//        
+//        
+//        // fetch workunits from new user and pin them
+//        let workUnitResultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+//            if error == nil {
+////                PFObject.pinAllInBackground(objects)
+//                PFObject.pinAllInBackground(objects, block: { (succeeded, error) -> Void in
+//                    print(succeeded)
+//                    print(error)
+//                    if succeeded {
+//                        //
+//                    }
+//                    else {
+//                        
+//                    }
+//                })
+//            } else {
+//            }
+//        }
+//        
+//        let workUnitQuery = PFQuery(className:"WorkUnit")
+//        workUnitQuery.whereKey("user", equalTo: user)
+//        workUnitQuery.findObjectsInBackgroundWithBlock(workUnitResultsBlock)
+//        
+////        currentPersistenceMode = .Persistent
+//    }
+    
     func becomeUser(user: PFUser) {
         installationProgress.achievedInstallationProgress = .InstallationRequested
         
-//        var previousUser = self.user
+        //        var previousUser = self.user
         self.user = user
         // unpin all actions from previous user
         
@@ -138,13 +191,14 @@ class LocalParseManager
         installationProgress.currentInstallationProgress = .OperationsInProgress
         let query = PFQuery(className:"Action")
         query.whereKey("user", equalTo: user)
+        query.includeKey("workConclusion")
         query.findObjectsInBackgroundWithBlock(resultsBlock)
         
         
         // fetch workunits from new user and pin them
         let workUnitResultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
             if error == nil {
-//                PFObject.pinAllInBackground(objects)
+                //                PFObject.pinAllInBackground(objects)
                 PFObject.pinAllInBackground(objects, block: { (succeeded, error) -> Void in
                     print(succeeded)
                     print(error)
@@ -161,9 +215,10 @@ class LocalParseManager
         
         let workUnitQuery = PFQuery(className:"WorkUnit")
         workUnitQuery.whereKey("user", equalTo: user)
+        workUnitQuery.includeKey("Action")
         workUnitQuery.findObjectsInBackgroundWithBlock(workUnitResultsBlock)
         
-//        currentPersistenceMode = .Persistent
+        //        currentPersistenceMode = .Persistent
     }
     
     
@@ -377,7 +432,7 @@ class LocalParseManager
     
     func fetchTopLevelActionsInBackgroundWithBlock(block: PFArrayResultBlock?) {
         let query = PFQuery(className:"Action")
-        // query.fromLocalDatastore()
+        query.fromLocalDatastore()
         query.whereKeyDoesNotExist("parentAction")
         query.whereKey("user", equalTo: user)
         query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
@@ -398,7 +453,7 @@ class LocalParseManager
     
     func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
         let query = PFQuery(className: "Action")
-        // query.fromLocalDatastore()
+        query.fromLocalDatastore()
         query.whereKey("ancestors", containsAllObjectsInArray: [action])
         query.whereKey("depth", equalTo: action.depth+1)
         query.includeKey("parentAction")
@@ -419,7 +474,7 @@ class LocalParseManager
     
     func fetchSchedulerInBackgroundWithBlock(block: PFObjectResultBlock?) {
         let query = PFQuery(className: "Scheduler")
-        // query.fromLocalDatastore()
+        query.fromLocalDatastore()
         query.whereKey("user", equalTo: user)
         query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
         query.includeKey("scheduledActions")
@@ -429,7 +484,7 @@ class LocalParseManager
     
     func fetchSchedulersInBackgroundWithBlock(block: PFArrayResultBlock?) {
         let query = PFQuery(className: "Scheduler")
-        // query.fromLocalDatastore()
+        query.fromLocalDatastore()
         query.whereKey("user", equalTo: user)
         query.findObjectsInBackgroundWithBlock(block)
     }
@@ -437,7 +492,7 @@ class LocalParseManager
     func fetchWorkHistoryInBackgroundWithBlock(block: PFArrayResultBlock?)
     {
         let query = PFQuery(className: "WorkUnit")
-        // query.fromLocalDatastore()
+        query.fromLocalDatastore()
         query.whereKey("user", equalTo: user)
         query.orderByDescending("startDate")
         query.includeKey("action")
@@ -455,7 +510,7 @@ class LocalParseManager
     func fetchWorkHistoryForActionInBackground(action: Action, withBlock block: PFArrayResultBlock?)
     {
         let query = PFQuery(className:"WorkUnit")
-        // query.fromLocalDatastore()
+        query.fromLocalDatastore()
         query.whereKey("user", equalTo: user)
         query.whereKey("action", equalTo: action)
         query.orderByDescending("startDate")

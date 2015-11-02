@@ -80,16 +80,13 @@ class LeavesTableViewController: UITableViewController {
     // MARK: - Notifications
     
     func actionDidPin(notification: NSNotification) {
-        print("\n\nLeaves.actionDidPin: \(notification)\n")
         fetchTasks()
     }
     
     func actionDidFailToPin(notification: NSNotification) {
-        print("\n\nLeaves.actionDidFailToPin: \(notification)")
     }
     
     func actionDidUpdate(notification: NSNotification) {
-        print("\n\nLeaves.actionDidUpdate: \(notification)")
         fetchTasks()
     }
     

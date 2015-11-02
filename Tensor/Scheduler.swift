@@ -113,7 +113,7 @@ class Scheduler : PFObject, PFSubclassing {
         }
         
         let query = PFQuery(className: "Action")
-//        query.fromLocalDatastore()
+        query.fromLocalDatastore()
         
         query.whereKey("isLeaf", equalTo: 1)
         query.whereKeyDoesNotExist("workConclusion")

@@ -86,8 +86,6 @@ class SchedulerTableViewController: UITableViewController {
     
     func schedulerDidRefreshScheduledActions(notification: NSNotification)
     {
-        print("\n\nschedulerDidRefreshScheduledActions: \(notification)\n")
-        
         if  let scheduler = notification.object as? Scheduler
             where scheduler == self.scheduler
         {
@@ -96,11 +94,9 @@ class SchedulerTableViewController: UITableViewController {
     }
     
     func schedulerDidFailToRefreshScheduledActions(notification: NSNotification) {
-        print("\n\nschedulerDidFailToRefreshScheduledActions: \(notification)\n")
     }
     
     func localDatastoreDidChangeActions(notification: NSNotification) {
-        print("\n\nlocalDatastoreDidChangeActions: \(notification)\n")
         self.scheduler?.refreshScheduledActions()
     }
 

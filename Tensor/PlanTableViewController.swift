@@ -174,26 +174,21 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
     // MARK: - Notifications
     
     func actionsWereFetchedFromCloud(notification: NSNotification) {
-        print("\n\nactionsWereFetchedFromCloud: \(notification)\n")
         fetchTasks()
     }
     
     func actionDidPin(notification: NSNotification) {
-        print("\n\nactionDidPin: \(notification)\n")
         fetchTasks()
     }
     
     func actionDidFailToPin(notification: NSNotification) {
-        print("\n\nactionDidFailToPin: \(notification)")
     }
     
     func actionDidUpdate(notification: NSNotification) {
-        print("\n\nactionDidUpdate: \(notification)")
         fetchTasks()
     }
     
     func settingDidChange(notification: NSNotification) {
-        print("\n\nsettingDidChange: \(notification)")
         fetchTasks()
     }
     

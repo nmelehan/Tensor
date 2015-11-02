@@ -119,7 +119,6 @@ class WorkHistoryTableViewController: UITableViewController {
     }
     
     func settingDidChange(notification: NSNotification) {
-        print("\n\nsettingDidChange: \(notification)")
         fetchHistory()
     }
     

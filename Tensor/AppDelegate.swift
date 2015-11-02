@@ -90,6 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        LocalParseManager.sharedManager.migrateToAncestorArray()
         
+        registerDebuggingNotificationObservers()
         
         return true
     }
@@ -117,5 +118,147 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+    
+    //
+    //
+    //
+    //
+    // MARK: - Debugging Notification Observers
+    
+//    static let LocalDatastoreInstallationRequested = "Tensor.LocalDatastoreInstallationRequestedNotification"
+//    static let LocalDatastoreDidCompleteMinimumViableInstallation = "Tensor.LocalDatastoreDidCompleteMinimumViableInstallationNotification"
+//    static let LocalDatastoreDidCompleteInstallation = "Tensor.LocalDatastoreDidCompleteInstallationNotification"
+//    
+//    static let LocalDatastoreDidFetchSchedulerFromCloud = "Tensor.LocalDatastoreDidFetchSchedulerFromCloudNotification"
+//    static let LocalDatastoreDidFetchActionsFromCloud = "Tensor.LocalDatastoreDidFetchActionsFromCloudNotification"
+//    
+//    static let LocalDatastoreWillAddAction = "Tensor.LocalDatastoreWillAddActionNotification"
+//    static let LocalDatastoreDidAddAction = "Tensor.LocalDatastoreDidAddActionNotification"
+//    static let LocalDatastoreDidFailToAddAction = "Tensor.LocalDatastoreDidFailToAddActionNotification"
+//    
+//    static let LocalDatastoreWillRemoveAction = "Tensor.LocalDatastoreWillRemoveActionNotification"
+//    static let LocalDatastoreDidRemoveAction = "Tensor.LocalDatastoreDidRemoveActionNotification"
+//    static let LocalDatastoreDidFailToRemoveAction = "Tensor.LocalDatastoreDidFailToRemoveActionNotification"
+//    
+//    static let LocalDatastoreWillUpdateAction = "Tensor.LocalDatastoreWillUpdateActionNotification"
+//    static let LocalDatastoreDidUpdateAction = "Tensor.LocalDatastoreDidUpdateActionNotification"
+//    static let LocalDatastoreDidFailToUpdateAction = "Tensor.LocalDatastoreDidFailToUpdateActionNotification"
+//    
+//    static let LocalDatastoreWillAddWorkUnit = "Tensor.LocalDatastoreWillAddWorkUnitNotification"
+//    static let LocalDatastoreDidAddWorkUnit = "Tensor.LocalDatastoreDidAddWorkUnitNotification"
+//    static let LocalDatastoreDidFailToAddWorkUnit = "Tensor.LocalDatastoreDidFailToAddWorkUnitNotification"
+//    
+//    static let LocalDatastoreWillUpdateWorkUnit = "Tensor.LocalDatastoreWillUpdateWorkUnitNotification"
+//    static let LocalDatastoreDidUpdateWorkUnit = "Tensor.LocalDatastoreDidUpdateWorkUnitNotification"
+//    static let LocalDatastoreDidFailToUpdateWorkUnit = "Tensor.LocalDatastoreDidFailToUpdateWorkUnitNotification"
+    
+    func registerDebuggingNotificationObservers() {
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidAddAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidAddWorkUnit,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidCompleteInstallation,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidCompleteMinimumViableInstallation,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFailToAddAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFailToAddWorkUnit,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFailToRemoveAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFailToUpdateAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFailToUpdateWorkUnit,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFetchActionsFromCloud,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidFetchSchedulerFromCloud,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidRemoveAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreDidUpdateWorkUnit,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreInstallationRequested,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreWillAddAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreWillAddWorkUnit,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreWillRemoveAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreWillUpdateAction,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: LocalParseManager.Notification.LocalDatastoreWillUpdateWorkUnit,
+            object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: Scheduler.Notification.SchedulerDidFailToRefreshScheduledActions,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: Scheduler.Notification.SchedulerDidPauseWorkUnitInProgress,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: Scheduler.Notification.SchedulerDidRefreshScheduledActions,
+            object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: AppSettings.Notifications.ShowCompletedAndInvalidatedActionsInPlanViewDidChange,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: AppSettings.Notifications.ShowSkipsInWorkHistoryDidChange,
+            object: nil)
+    }
+    
+    func listenToNotification(notification: NSNotification) {
+        print("\n\(notification)")
+    }
 }
 
