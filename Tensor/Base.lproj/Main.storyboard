@@ -490,7 +490,7 @@
                                                     <rect key="frame" x="16" y="11" width="519" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -516,7 +516,7 @@
                                                     <rect key="frame" x="16" y="11" width="202" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qnf-FG-kK7">
@@ -783,6 +783,7 @@
                     <tabBarItem key="tabBarItem" title="Do Now" id="A0h-tP-2zW"/>
                     <connections>
                         <outlet property="actionNameLabel" destination="JVH-ez-A9y" id="FyL-ph-QyE"/>
+                        <outlet property="clearHeuristicsButton" destination="oBI-4M-WIb" id="Foc-F2-mqB"/>
                         <outlet property="elapsedLabel" destination="bHr-Ya-r6L" id="meX-NK-a9y"/>
                         <outlet property="markActionAsCompleteButton" destination="0fm-xs-mwA" id="T2z-Zn-3sU"/>
                         <outlet property="parentActionNameLabel" destination="eYV-ZF-O7P" id="RmF-x6-p7g"/>
@@ -893,6 +894,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="qzy-SC-M8D"/>
         <segue reference="lGl-AB-CEZ"/>
-        <segue reference="3dU-74-Txt"/>
+        <segue reference="ote-2P-uwL"/>
     </inferredMetricsTieBreakers>
 </document>

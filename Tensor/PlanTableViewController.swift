@@ -47,6 +47,7 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
                     self.tasks = objects
                     dispatch_async(dispatch_get_main_queue()) { self.tableView.reloadData() }
                 }
+                self.refreshControl?.endRefreshing()
             }
         }
         
@@ -70,6 +71,11 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
                 let stringMatch = action.name?.rangeOfString(searchText)
                 return stringMatch != nil
         }
+    }
+    
+    func refresh(refreshControl: UIRefreshControl) {
+        // Do your job, when done:
+        fetchTasks()
     }
     
     func addNotificationCenterObservers()
@@ -150,6 +156,9 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
         self.tableView.tableHeaderView = self.searchController.searchBar
         
         addNotificationCenterObservers()
+        
+        self.refreshControl = UIRefreshControl()
+        refreshControl!.addTarget(self, action: "refresh:", forControlEvents: .ValueChanged)
     }
     
     deinit {

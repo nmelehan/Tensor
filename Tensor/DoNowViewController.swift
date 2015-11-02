@@ -11,16 +11,29 @@ import Parse
 
 class DoNowViewController: UIViewController {
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Properties
     
     var scheduler: Scheduler?
     var timer: NSTimer?
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Methods
     
     func updateUI() {
         actionNameLabel.text = self.scheduler?.currentAction?.name
         parentActionNameLabel.text = self.scheduler?.currentAction?.parentAction?.name
+        clearHeuristicsButton.enabled = self.scheduler != nil && self.scheduler!.hasHeuristics()
     }
     
     func timerTicked(timer: NSTimer) {
@@ -57,6 +70,12 @@ class DoNowViewController: UIViewController {
         scheduler?.pauseWorkUnitInProgress()
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - @IBOutlets
     
     @IBOutlet weak var actionNameLabel: UILabel!
@@ -67,8 +86,14 @@ class DoNowViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var markActionAsCompleteButton: UIButton!
     @IBOutlet weak var saveProgressAndSkipButton: UIButton!
+    @IBOutlet weak var clearHeuristicsButton: UIButton!
     
     
+    
+    //
+    //
+    //
+    //
     // MARK: - @IBActions
     
     @IBAction func markActionAsCompleteButtonPressed()
@@ -119,10 +144,18 @@ class DoNowViewController: UIViewController {
         self.scheduler?.refreshScheduledActions(preserveCurrentAction: false)
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        updateUI()
         
         // fetch scheduler from local datastore
         // otherwise, create one
@@ -187,6 +220,12 @@ class DoNowViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Notifications
     
     func schedulerDidRefreshScheduledActions(notification: NSNotification)
