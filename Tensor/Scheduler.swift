@@ -80,11 +80,11 @@ class Scheduler : PFObject, PFSubclassing {
                         self.actionsIneligibleForScheduling = [Action]()
                         self.refreshScheduledActions()
                     }
-//                    else if scheduledActions.count == 0 && self.hasHeuristics() {
-//                        // relax heuristics
-//                        self.actionFocus = nil
-//                        self.refreshScheduledActions()
-//                    }
+                    else if scheduledActions.count == 0 && self.hasHeuristics() {
+                        // relax heuristics
+                        self.actionFocus = nil
+                        self.refreshScheduledActions()
+                    }
                     else {
                         if      preserveCurrentAction
                             &&  self.currentAction != nil
