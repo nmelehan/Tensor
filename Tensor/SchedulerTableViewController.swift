@@ -46,28 +46,28 @@ class SchedulerTableViewController: UITableViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "schedulerDidRefreshScheduledActions:",
-            name: Scheduler.Notification.SchedulerDidRefreshScheduledActions,
+            name: Scheduler.Notifications.SchedulerDidRefreshScheduledActions,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "schedulerDidFailToRefreshScheduledActions:",
-            name: Scheduler.Notification.SchedulerDidFailToRefreshScheduledActions,
+            name: Scheduler.Notifications.SchedulerDidFailToRefreshScheduledActions,
             object: nil)
     
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "localDatastoreDidChangeActions:",
-            name: LocalParseManager.Notification.LocalDatastoreDidAddAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidAddAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "localDatastoreDidChangeActions:",
-            name: LocalParseManager.Notification.LocalDatastoreDidRemoveAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidRemoveAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "localDatastoreDidChangeActions:",
-            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidUpdateAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "localDatastoreDidChangeActions:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFetchActionsFromCloud,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFetchActionsFromCloud,
             object: nil)
     }
     

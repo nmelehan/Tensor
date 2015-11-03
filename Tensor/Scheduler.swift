@@ -28,10 +28,10 @@ class Scheduler : PFObject, PFSubclassing {
     
     // MARK: - Notification constants
     
-    struct Notification {
-        static let SchedulerDidRefreshScheduledActions = "Tensor.SchedulerDidRefreshScheduledActionsNotification"
-        static let SchedulerDidFailToRefreshScheduledActions = "Tensor.SchedulerDidFailToRefreshScheduledActionsNotification"
-        static let SchedulerDidPauseWorkUnitInProgress = "Tensor.SchedulerDidPauseWorkUnitInProgressNotification"
+    struct Notifications {
+        static let SchedulerDidRefreshScheduledActions = "Tensor.Scheduler.Notifications.SchedulerDidRefreshScheduledActions"
+        static let SchedulerDidFailToRefreshScheduledActions = "Tensor.Scheduler.Notifications.SchedulerDidFailToRefreshScheduledActions"
+        static let SchedulerDidPauseWorkUnitInProgress = "Tensor.Scheduler.Notifications.SchedulerDidPauseWorkUnitInProgress"
     }
     
     // MARK: - Properties
@@ -98,13 +98,13 @@ class Scheduler : PFObject, PFSubclassing {
                         }
                         self.scheduledActions = filteredScheduledActions
                         NSNotificationCenter.defaultCenter()
-                            .postNotificationName(Notification.SchedulerDidRefreshScheduledActions, object: self)
+                            .postNotificationName(Notifications.SchedulerDidRefreshScheduledActions, object: self)
                     }
                 }
             } else {
                 let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
                 NSNotificationCenter.defaultCenter()
-                    .postNotificationName(Notification.SchedulerDidFailToRefreshScheduledActions,
+                    .postNotificationName(Notifications.SchedulerDidFailToRefreshScheduledActions,
                         object: self,
                         userInfo: userInfo)
             }
@@ -170,7 +170,7 @@ class Scheduler : PFObject, PFSubclassing {
         
         let userInfo = ["workUnit" : workUnitInProgress]
         NSNotificationCenter.defaultCenter()
-            .postNotificationName(Notification.SchedulerDidPauseWorkUnitInProgress,
+            .postNotificationName(Notifications.SchedulerDidPauseWorkUnitInProgress,
                 object: self, userInfo: userInfo)
     }
     
@@ -188,7 +188,7 @@ class Scheduler : PFObject, PFSubclassing {
         
         LocalParseManager.sharedManager.saveLocally(self)
         NSNotificationCenter.defaultCenter()
-            .postNotificationName(Notification.SchedulerDidRefreshScheduledActions, object: self)
+            .postNotificationName(Notifications.SchedulerDidRefreshScheduledActions, object: self)
     }
     
 //    func refreshScheduledActionsWithBlock() {

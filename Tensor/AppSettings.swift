@@ -10,19 +10,17 @@ import Foundation
 
 struct AppSettings {
 
+    
+    
     //
     //
     //
     //
     // MARK: - Notification constants
 
-    // Naming pattern:
-    // "Will": posted before pinInBackgroundWithBlock: is called
-    // "Did": posted from block passed to pinInBackgroundWithBlock: on success
-    // "DidFailTo": posted from block passed to pinInBackgroundWithBlock: on error
     struct Notifications {
-        static let ShowCompletedAndInvalidatedActionsInPlanViewDidChange = "Tensor.Notifications.ShowCompletedAndInvalidatedActionsInPlanViewDidChange"
-        static let ShowSkipsInWorkHistoryDidChange = "Tensor.Notifications.ShowSkipsInWorkHistoryDidChange"
+        static let UserDidChangeShowCompletedAndInvalidatedActionsInPlanView = "Tensor.AppSettings.Notifications.UserDidChangeShowCompletedAndInvalidatedActionsInPlanView"
+        static let UserDidChangeShowSkipsInWorkHistory = "Tensor.AppSettings.Notifications.UserDidChangeShowSkipsInWorkHistory"
     }
     
     struct Keys {

@@ -155,105 +155,105 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func registerDebuggingNotificationObservers() {
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidAddAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidAddAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidAddWorkUnit,
+            name: LocalParseManager.Notifications.LocalDatastoreDidAddWorkUnit,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidCompleteInstallation,
+            name: LocalParseManager.Notifications.LocalDatastoreDidCompleteInstallation,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidCompleteMinimumViableInstallation,
+            name: LocalParseManager.Notifications.LocalDatastoreDidCompleteMinimumViableInstallation,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFailToAddAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFailToAddAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFailToAddWorkUnit,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFailToAddWorkUnit,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFailToRemoveAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFailToRemoveAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFailToUpdateAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFailToUpdateAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFailToUpdateWorkUnit,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFailToUpdateWorkUnit,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFetchActionsFromCloud,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFetchActionsFromCloud,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFetchSchedulerFromCloud,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFetchSchedulerFromCloud,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidRemoveAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidRemoveAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidUpdateAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreDidUpdateWorkUnit,
+            name: LocalParseManager.Notifications.LocalDatastoreDidUpdateWorkUnit,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreInstallationRequested,
+            name: LocalParseManager.Notifications.LocalDatastoreInstallationRequested,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreWillAddAction,
+            name: LocalParseManager.Notifications.LocalDatastoreWillAddAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreWillAddWorkUnit,
+            name: LocalParseManager.Notifications.LocalDatastoreWillAddWorkUnit,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreWillRemoveAction,
+            name: LocalParseManager.Notifications.LocalDatastoreWillRemoveAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreWillUpdateAction,
+            name: LocalParseManager.Notifications.LocalDatastoreWillUpdateAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: LocalParseManager.Notification.LocalDatastoreWillUpdateWorkUnit,
-            object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "listenToNotification:",
-            name: Scheduler.Notification.SchedulerDidFailToRefreshScheduledActions,
-            object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "listenToNotification:",
-            name: Scheduler.Notification.SchedulerDidPauseWorkUnitInProgress,
-            object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "listenToNotification:",
-            name: Scheduler.Notification.SchedulerDidRefreshScheduledActions,
+            name: LocalParseManager.Notifications.LocalDatastoreWillUpdateWorkUnit,
             object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: AppSettings.Notifications.ShowCompletedAndInvalidatedActionsInPlanViewDidChange,
+            name: Scheduler.Notifications.SchedulerDidFailToRefreshScheduledActions,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "listenToNotification:",
-            name: AppSettings.Notifications.ShowSkipsInWorkHistoryDidChange,
+            name: Scheduler.Notifications.SchedulerDidPauseWorkUnitInProgress,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: Scheduler.Notifications.SchedulerDidRefreshScheduledActions,
+            object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: AppSettings.Notifications.UserDidChangeShowCompletedAndInvalidatedActionsInPlanView,
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "listenToNotification:",
+            name: AppSettings.Notifications.UserDidChangeShowSkipsInWorkHistory,
             object: nil)
     }
     

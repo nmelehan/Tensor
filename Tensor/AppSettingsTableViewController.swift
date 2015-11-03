@@ -66,7 +66,7 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
                 forKey: AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView)
         let userInfo = [AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView : showConcludedActions]
         NSNotificationCenter.defaultCenter()
-            .postNotificationName(AppSettings.Notifications.ShowCompletedAndInvalidatedActionsInPlanViewDidChange,
+            .postNotificationName(AppSettings.Notifications.UserDidChangeShowCompletedAndInvalidatedActionsInPlanView,
                 object: nil,
                 userInfo: userInfo)
     }
@@ -78,7 +78,7 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
             .setBool(showSkips, forKey: AppSettings.Keys.ShowSkipsInWorkHistory)
         let userInfo = [AppSettings.Keys.ShowSkipsInWorkHistory : showSkips]
         NSNotificationCenter.defaultCenter()
-            .postNotificationName(AppSettings.Notifications.ShowSkipsInWorkHistoryDidChange,
+            .postNotificationName(AppSettings.Notifications.UserDidChangeShowSkipsInWorkHistory,
                 object: nil,
                 userInfo: userInfo)
     }

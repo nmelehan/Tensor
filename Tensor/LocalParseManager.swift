@@ -21,33 +21,33 @@ class LocalParseManager
     // "Will": posted before pinInBackgroundWithBlock: is called
     // "Did": posted from block passed to pinInBackgroundWithBlock: on success
     // "DidFailTo": posted from block passed to pinInBackgroundWithBlock: on error
-    struct Notification {
-        static let LocalDatastoreInstallationRequested = "Tensor.LocalDatastoreInstallationRequestedNotification"
-        static let LocalDatastoreDidCompleteMinimumViableInstallation = "Tensor.LocalDatastoreDidCompleteMinimumViableInstallationNotification"
-        static let LocalDatastoreDidCompleteInstallation = "Tensor.LocalDatastoreDidCompleteInstallationNotification"
+    struct Notifications {
+        static let LocalDatastoreInstallationRequested = "Tensor.Notifications.LocalDatastoreInstallationRequested"
+        static let LocalDatastoreDidCompleteMinimumViableInstallation = "Tensor.Notifications.LocalDatastoreDidCompleteMinimumViableInstallation"
+        static let LocalDatastoreDidCompleteInstallation = "Tensor.Notifications.LocalDatastoreDidCompleteInstallation"
         
-        static let LocalDatastoreDidFetchSchedulerFromCloud = "Tensor.LocalDatastoreDidFetchSchedulerFromCloudNotification"
-        static let LocalDatastoreDidFetchActionsFromCloud = "Tensor.LocalDatastoreDidFetchActionsFromCloudNotification"
+        static let LocalDatastoreDidFetchSchedulerFromCloud = "Tensor.Notifications.LocalDatastoreDidFetchSchedulerFromCloud"
+        static let LocalDatastoreDidFetchActionsFromCloud = "Tensor.Notifications.LocalDatastoreDidFetchActionsFromCloud"
         
-        static let LocalDatastoreWillAddAction = "Tensor.LocalDatastoreWillAddActionNotification"
-        static let LocalDatastoreDidAddAction = "Tensor.LocalDatastoreDidAddActionNotification"
-        static let LocalDatastoreDidFailToAddAction = "Tensor.LocalDatastoreDidFailToAddActionNotification"
+        static let LocalDatastoreWillAddAction = "Tensor.Notifications.LocalDatastoreWillAddAction"
+        static let LocalDatastoreDidAddAction = "Tensor.Notifications.LocalDatastoreDidAddAction"
+        static let LocalDatastoreDidFailToAddAction = "Tensor.Notifications.LocalDatastoreDidFailToAddAction"
         
-        static let LocalDatastoreWillRemoveAction = "Tensor.LocalDatastoreWillRemoveActionNotification"
-        static let LocalDatastoreDidRemoveAction = "Tensor.LocalDatastoreDidRemoveActionNotification"
-        static let LocalDatastoreDidFailToRemoveAction = "Tensor.LocalDatastoreDidFailToRemoveActionNotification"
+        static let LocalDatastoreWillRemoveAction = "Tensor.Notifications.LocalDatastoreWillRemoveAction"
+        static let LocalDatastoreDidRemoveAction = "Tensor.Notifications.LocalDatastoreDidRemoveAction"
+        static let LocalDatastoreDidFailToRemoveAction = "Tensor.Notifications.LocalDatastoreDidFailToRemoveAction"
         
-        static let LocalDatastoreWillUpdateAction = "Tensor.LocalDatastoreWillUpdateActionNotification"
-        static let LocalDatastoreDidUpdateAction = "Tensor.LocalDatastoreDidUpdateActionNotification"
-        static let LocalDatastoreDidFailToUpdateAction = "Tensor.LocalDatastoreDidFailToUpdateActionNotification"
+        static let LocalDatastoreWillUpdateAction = "Tensor.Notifications.LocalDatastoreWillUpdateAction"
+        static let LocalDatastoreDidUpdateAction = "Tensor.Notifications.LocalDatastoreDidUpdateAction"
+        static let LocalDatastoreDidFailToUpdateAction = "Tensor.Notifications.LocalDatastoreDidFailToUpdateAction"
         
-        static let LocalDatastoreWillAddWorkUnit = "Tensor.LocalDatastoreWillAddWorkUnitNotification"
-        static let LocalDatastoreDidAddWorkUnit = "Tensor.LocalDatastoreDidAddWorkUnitNotification"
-        static let LocalDatastoreDidFailToAddWorkUnit = "Tensor.LocalDatastoreDidFailToAddWorkUnitNotification"
+        static let LocalDatastoreWillAddWorkUnit = "Tensor.Notifications.LocalDatastoreWillAddWorkUnit"
+        static let LocalDatastoreDidAddWorkUnit = "Tensor.Notifications.LocalDatastoreDidAddWorkUnit"
+        static let LocalDatastoreDidFailToAddWorkUnit = "Tensor.Notifications.LocalDatastoreDidFailToAddWorkUnit"
         
-        static let LocalDatastoreWillUpdateWorkUnit = "Tensor.LocalDatastoreWillUpdateWorkUnitNotification"
-        static let LocalDatastoreDidUpdateWorkUnit = "Tensor.LocalDatastoreDidUpdateWorkUnitNotification"
-        static let LocalDatastoreDidFailToUpdateWorkUnit = "Tensor.LocalDatastoreDidFailToUpdateWorkUnitNotification"
+        static let LocalDatastoreWillUpdateWorkUnit = "Tensor.Notifications.LocalDatastoreWillUpdateWorkUnit"
+        static let LocalDatastoreDidUpdateWorkUnit = "Tensor.Notifications.LocalDatastoreDidUpdateWorkUnit"
+        static let LocalDatastoreDidFailToUpdateWorkUnit = "Tensor.Notifications.LocalDatastoreDidFailToUpdateWorkUnit"
     }
     
     
@@ -127,7 +127,7 @@ class LocalParseManager
 //                    if success {
 //                        self.installationProgress = (.InstallationComplete, .NoOperationsInProgress)
 //                        NSNotificationCenter.defaultCenter()
-//                            .postNotificationName(Notification.LocalDatastoreDidFetchActionsFromCloud,
+//                            .postNotificationName(Notifications.LocalDatastoreDidFetchActionsFromCloud,
 //                                object: objects as? [Action])
 //                    }
 //                })
@@ -180,7 +180,7 @@ class LocalParseManager
                     if success {
                         self.installationProgress = (.InstallationComplete, .NoOperationsInProgress)
                         NSNotificationCenter.defaultCenter()
-                            .postNotificationName(Notification.LocalDatastoreDidFetchActionsFromCloud,
+                            .postNotificationName(Notifications.LocalDatastoreDidFetchActionsFromCloud,
                                 object: objects as? [Action])
                     }
                 })
@@ -239,11 +239,11 @@ class LocalParseManager
         newWorkUnit.duration = 0
         
         NSNotificationCenter.defaultCenter()
-            .postNotificationName(Notification.LocalDatastoreWillAddWorkUnit, object: newWorkUnit)
+            .postNotificationName(Notifications.LocalDatastoreWillAddWorkUnit, object: newWorkUnit)
         
         newWorkUnit.pinInBackgroundWithBlock { (succeeded, error) -> Void in
             if succeeded {
-                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidAddWorkUnit, object: newWorkUnit)
+                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LocalDatastoreDidAddWorkUnit, object: newWorkUnit)
                 
                 if self.isSubscribed {
                     self.queueToSaveRemotely(newWorkUnit)
@@ -252,7 +252,7 @@ class LocalParseManager
             else {
                 let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
                 NSNotificationCenter.defaultCenter()
-                    .postNotificationName(Notification.LocalDatastoreDidFailToAddWorkUnit,
+                    .postNotificationName(Notifications.LocalDatastoreDidFailToAddWorkUnit,
                         object: newWorkUnit,
                         userInfo: userInfo)
             }
@@ -267,16 +267,16 @@ class LocalParseManager
         newScheduler.inSandbox = currentPersistenceMode.rawValue
         
 //        NSNotificationCenter.defaultCenter()
-//            .postNotificationName(Notification.LocalDatastoreWillAddScheduler, object: newScheduler)
+//            .postNotificationName(Notifications.LocalDatastoreWillAddScheduler, object: newScheduler)
         
         newScheduler.pinInBackgroundWithBlock { (succeeded, error) -> Void in
             if succeeded {
-//                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidAddScheduler, object: newScheduler)
+//                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LocalDatastoreDidAddScheduler, object: newScheduler)
             }
             else {
 //                let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
 //                NSNotificationCenter.defaultCenter()
-//                    .postNotificationName(Notification.LocalDatastoreDidFailToAddSchduler,
+//                    .postNotificationName(Notifications.LocalDatastoreDidFailToAddSchduler,
 //                        object: newScheduler,
 //                        userInfo: userInfo)
             }
@@ -298,16 +298,16 @@ class LocalParseManager
         newAction.depth = 0
         
         NSNotificationCenter.defaultCenter()
-            .postNotificationName(Notification.LocalDatastoreWillAddAction, object: newAction)
+            .postNotificationName(Notifications.LocalDatastoreWillAddAction, object: newAction)
         
         newAction.pinInBackgroundWithBlock { (succeeded, error) -> Void in
             if succeeded {
-                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidAddAction, object: newAction)
+                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LocalDatastoreDidAddAction, object: newAction)
             }
             else {
                 let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
                 NSNotificationCenter.defaultCenter()
-                    .postNotificationName(Notification.LocalDatastoreDidFailToAddAction,
+                    .postNotificationName(Notifications.LocalDatastoreDidFailToAddAction,
                         object: newAction,
                         userInfo: userInfo)
             }
@@ -350,15 +350,15 @@ class LocalParseManager
     }
     
     func saveLocally(action: Action) {
-        NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreWillUpdateAction, object: action)
+        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LocalDatastoreWillUpdateAction, object: action)
         action.pinInBackgroundWithBlock { (succeeded, error) -> Void in
             if succeeded {
-                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidUpdateAction, object: action)
+                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LocalDatastoreDidUpdateAction, object: action)
             }
             else {
                 let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
                 NSNotificationCenter.defaultCenter()
-                    .postNotificationName(Notification.LocalDatastoreDidFailToUpdateAction,
+                    .postNotificationName(Notifications.LocalDatastoreDidFailToUpdateAction,
                         object: action,
                         userInfo: userInfo)
             }
@@ -370,15 +370,15 @@ class LocalParseManager
     }
     
     func saveLocally(scheduler: Scheduler) {
-//        NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreWillUpdateAction, object: action)
+//        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LocalDatastoreWillUpdateAction, object: action)
         scheduler.pinInBackgroundWithBlock { (succeeded, error) -> Void in
             if succeeded {
-//                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidUpdateAction, object: action)
+//                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LocalDatastoreDidUpdateAction, object: action)
             }
             else {
 //                let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
 //                NSNotificationCenter.defaultCenter()
-//                    .postNotificationName(Notification.LocalDatastoreDidFailToUpdateAction,
+//                    .postNotificationName(Notifications.LocalDatastoreDidFailToUpdateAction,
 //                        object: scheduler,
 //                        userInfo: userInfo)
             }
@@ -390,15 +390,15 @@ class LocalParseManager
     }
     
     func saveLocally(workUnit: WorkUnit) {
-        NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreWillUpdateWorkUnit, object: workUnit)
+        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LocalDatastoreWillUpdateWorkUnit, object: workUnit)
         workUnit.pinInBackgroundWithBlock { (succeeded, error) -> Void in
             if succeeded {
-                NSNotificationCenter.defaultCenter().postNotificationName(Notification.LocalDatastoreDidUpdateWorkUnit, object: workUnit)
+                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.LocalDatastoreDidUpdateWorkUnit, object: workUnit)
             }
             else {
                 let userInfo: [NSObject : AnyObject]? = error != nil ? ["error" : error!] : nil
                 NSNotificationCenter.defaultCenter()
-                    .postNotificationName(Notification.LocalDatastoreDidFailToUpdateWorkUnit,
+                    .postNotificationName(Notifications.LocalDatastoreDidFailToUpdateWorkUnit,
                         object: workUnit,
                         userInfo: userInfo)
             }

@@ -85,20 +85,20 @@ class WorkHistoryTableViewController: UITableViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "historyDidChange:",
-            name: LocalParseManager.Notification.LocalDatastoreDidAddWorkUnit,
+            name: LocalParseManager.Notifications.LocalDatastoreDidAddWorkUnit,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "historyDidChange:",
-            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidUpdateAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "historyDidChange:",
-            name: LocalParseManager.Notification.LocalDatastoreDidUpdateWorkUnit,
+            name: LocalParseManager.Notifications.LocalDatastoreDidUpdateWorkUnit,
             object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "settingDidChange:",
-            name: AppSettings.Notifications.ShowSkipsInWorkHistoryDidChange,
+            name: AppSettings.Notifications.UserDidChangeShowSkipsInWorkHistory,
             object: nil)
     }
     

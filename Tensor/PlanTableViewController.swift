@@ -82,24 +82,24 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
     {
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionsWereFetchedFromCloud:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFetchActionsFromCloud,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFetchActionsFromCloud,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidPin:",
-            name: LocalParseManager.Notification.LocalDatastoreDidAddAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidAddAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidFailToPin:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFailToAddAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFailToAddAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidUpdate:",
-            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidUpdateAction,
             object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "settingDidChange:",
-            name: AppSettings.Notifications.ShowCompletedAndInvalidatedActionsInPlanViewDidChange,
+            name: AppSettings.Notifications.UserDidChangeShowCompletedAndInvalidatedActionsInPlanView,
             object: nil)
     }
     

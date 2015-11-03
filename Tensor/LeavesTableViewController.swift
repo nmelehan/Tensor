@@ -55,15 +55,15 @@ class LeavesTableViewController: UITableViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidPin:",
-            name: LocalParseManager.Notification.LocalDatastoreDidAddAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidAddAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidFailToPin:",
-            name: LocalParseManager.Notification.LocalDatastoreDidFailToAddAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidFailToAddAction,
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "actionDidUpdate:",
-            name: LocalParseManager.Notification.LocalDatastoreDidUpdateAction,
+            name: LocalParseManager.Notifications.LocalDatastoreDidUpdateAction,
             object: nil)
     }
     
