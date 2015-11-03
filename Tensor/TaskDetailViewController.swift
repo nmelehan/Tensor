@@ -82,6 +82,12 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func actionDidUpdate(notification: NSNotification) {
+        if let action = notification.object as? Action where action == task {
+            updateUI()
+        }
+    }
+    
     // MARK: - IBOutlets
 
     @IBOutlet weak var taskNameTextField: UITextField!
@@ -134,6 +140,15 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "actionDidUpdate:",
+            name: LocalParseManager.Notifications.LocalDatastoreDidUpdateAction,
+            object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
