@@ -106,11 +106,7 @@ class DoNowViewController: UIViewController {
             return
         }
         
-        let manager = LocalParseManager.sharedManager
-        let workUnit = manager.createWorkUnitForAction(action)
-        workUnit.setType(.Completion)
-        action.workConclusion = workUnit
-        manager.saveLocally(action)
+        action.complete()
     }
     
     @IBAction func saveProgressAndSkipToNextActionButtonPressed() {

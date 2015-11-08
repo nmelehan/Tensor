@@ -34,6 +34,12 @@ class Action : PFObject, PFSubclassing {
     
     @NSManaged var workConclusion: WorkUnit?
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: Convenience methods
     
     func invalidate() {
@@ -49,6 +55,25 @@ class Action : PFObject, PFSubclassing {
             if let dependencies = results as? [Action] {
                 for dependency in dependencies {
                     dependency.invalidate()
+                }
+            }
+        }
+        manager.fetchDependenciesOfActionInBackground(self, withBlock: resultsBlock)
+    }
+    
+    func complete() {
+        guard workConclusion == nil else { return } // throw?
+        
+        let manager = LocalParseManager.sharedManager
+        let workUnit = manager.createWorkUnitForAction(self)
+        workUnit.setType(.Completion)
+        workConclusion = workUnit
+        manager.saveLocally(self)
+        
+        let resultsBlock: PFArrayResultBlock = { (results, error) in
+            if let dependencies = results as? [Action] {
+                for dependency in dependencies {
+                    dependency.complete()
                 }
             }
         }

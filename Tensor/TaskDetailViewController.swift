@@ -25,12 +25,7 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        let manager = LocalParseManager.sharedManager
-        let workUnit = manager.createWorkUnitForAction(action)
-        workUnit.type = WorkUnit.WorkUnitType.Completion.rawValue
-        action.workConclusion = workUnit
-        manager.saveLocally(action)
-        
+        action.complete()
         invalidationStatusSwitch.enabled = false
     }
     
