@@ -46,6 +46,7 @@ class DoNowViewController: UIViewController {
         
         if interval % 30 == 0 {
             scheduler?.workUnitInProgress?.duration = interval
+            LocalParseManager.sharedManager.saveLocally(scheduler!.workUnitInProgress!)
             LocalParseManager.sharedManager.saveLocally(scheduler!)
         }
     }
