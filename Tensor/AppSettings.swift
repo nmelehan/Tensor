@@ -16,7 +16,7 @@ struct AppSettings {
     //
     //
     //
-    // MARK: - Notification constants
+    // MARK: - Constants
 
     struct Notifications {
         static let UserDidChangeShowCompletedAndInvalidatedActionsInPlanView = "Tensor.AppSettings.Notifications.UserDidChangeShowCompletedAndInvalidatedActionsInPlanView"

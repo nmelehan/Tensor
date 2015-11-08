@@ -11,6 +11,12 @@ import Parse
 
 class Scheduler : PFObject, PFSubclassing {
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - PFSubclassing
     
     override class func initialize() {
@@ -26,6 +32,12 @@ class Scheduler : PFObject, PFSubclassing {
         return "Scheduler"
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Notification constants
     
     struct Notifications {
@@ -34,6 +46,12 @@ class Scheduler : PFObject, PFSubclassing {
         static let SchedulerDidPauseWorkUnitInProgress = "Tensor.Scheduler.Notifications.SchedulerDidPauseWorkUnitInProgress"
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Properties
     
     @NSManaged var user: PFUser
@@ -48,10 +66,39 @@ class Scheduler : PFObject, PFSubclassing {
         }
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Heuristics
     
     @NSManaged var actionFocus: Action?
     
+    
+    
+    //
+    //
+    //
+    //
+    // MARK: - Constants
+    
+    struct FieldKeys {
+        static let User = "user"
+        static let InSandbox = "inSandbox"
+        static let ScheduledActions = "scheduledActions"
+        static let ActionsIneligibleForScheduling = "actionsIneligibleForScheduling"
+        static let WorkUnitInProgress = "workUnitInProgress"
+        static let ActionFocus = "actionFocus"
+    }
+    
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Methods
     
     func hasHeuristics() -> Bool {
@@ -112,18 +159,18 @@ class Scheduler : PFObject, PFSubclassing {
             LocalParseManager.sharedManager.saveLocally(self)
         }
         
-        let query = PFQuery(className: "Action")
+        let query = PFQuery(className: Action.parseClassName())
         query.fromLocalDatastore()
         
-        query.whereKey("isLeaf", equalTo: 1)
-        query.whereKeyDoesNotExist("workConclusion")
-        query.whereKey("user", equalTo: user)
-        query.includeKey("parentAction")
-        query.whereKey("inSandbox", equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
+        query.whereKey(Action.FieldKeys.IsLeaf, equalTo: 1)
+        query.whereKeyDoesNotExist(Action.FieldKeys.WorkConclusion)
+        query.whereKey(Action.FieldKeys.User, equalTo: user)
+        query.includeKey(Action.FieldKeys.ParentAction)
+        query.whereKey(Action.FieldKeys.InSandbox, equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
         
         // heuristics
         if let actionFocus = actionFocus {
-            query.whereKey("ancestors", equalTo: actionFocus)
+            query.whereKey(Action.FieldKeys.Ancestors, equalTo: actionFocus)
         }
         
         query.findObjectsInBackgroundWithBlock(resultsBlock)
@@ -190,8 +237,4 @@ class Scheduler : PFObject, PFSubclassing {
         NSNotificationCenter.defaultCenter()
             .postNotificationName(Notifications.SchedulerDidRefreshScheduledActions, object: self)
     }
-    
-//    func refreshScheduledActionsWithBlock() {
-//        
-//    }
 }

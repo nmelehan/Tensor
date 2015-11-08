@@ -40,6 +40,25 @@ class Action : PFObject, PFSubclassing {
     //
     //
     //
+    // MARK: Constants
+    
+    struct FieldKeys {
+        static let User = "user"
+        static let Name = "name"
+        static let ParentAction = "parentAction"
+        static let Ancestors = "ancestors"
+        static let Depth = "depth"
+        static let IsLeaf = "isLeaf"
+        static let InSandbox = "inSandbox"
+        static let WorkConclusion = "workConclusion"
+    }
+    
+    
+    
+    //
+    //
+    //
+    //
     // MARK: Convenience methods
     
     func invalidate() {
