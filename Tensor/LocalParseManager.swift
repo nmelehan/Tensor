@@ -22,32 +22,32 @@ class LocalParseManager
     // "Did": posted from block passed to pinInBackgroundWithBlock: on success
     // "DidFailTo": posted from block passed to pinInBackgroundWithBlock: on error
     struct Notifications {
-        static let LocalDatastoreInstallationRequested = "Tensor.Notifications.LocalDatastoreInstallationRequested"
-        static let LocalDatastoreDidCompleteMinimumViableInstallation = "Tensor.Notifications.LocalDatastoreDidCompleteMinimumViableInstallation"
-        static let LocalDatastoreDidCompleteInstallation = "Tensor.Notifications.LocalDatastoreDidCompleteInstallation"
+        static let LocalDatastoreInstallationRequested = "Tensor.LocalParseManager.Notifications.LocalDatastoreInstallationRequested"
+        static let LocalDatastoreDidCompleteMinimumViableInstallation = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidCompleteMinimumViableInstallation"
+        static let LocalDatastoreDidCompleteInstallation = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidCompleteInstallation"
         
-        static let LocalDatastoreDidFetchSchedulerFromCloud = "Tensor.Notifications.LocalDatastoreDidFetchSchedulerFromCloud"
-        static let LocalDatastoreDidFetchActionsFromCloud = "Tensor.Notifications.LocalDatastoreDidFetchActionsFromCloud"
+        static let LocalDatastoreDidFetchSchedulerFromCloud = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidFetchSchedulerFromCloud"
+        static let LocalDatastoreDidFetchActionsFromCloud = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidFetchActionsFromCloud"
         
-        static let LocalDatastoreWillAddAction = "Tensor.Notifications.LocalDatastoreWillAddAction"
-        static let LocalDatastoreDidAddAction = "Tensor.Notifications.LocalDatastoreDidAddAction"
-        static let LocalDatastoreDidFailToAddAction = "Tensor.Notifications.LocalDatastoreDidFailToAddAction"
+        static let LocalDatastoreWillAddAction = "Tensor.LocalParseManager.Notifications.LocalDatastoreWillAddAction"
+        static let LocalDatastoreDidAddAction = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidAddAction"
+        static let LocalDatastoreDidFailToAddAction = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidFailToAddAction"
         
-        static let LocalDatastoreWillRemoveAction = "Tensor.Notifications.LocalDatastoreWillRemoveAction"
-        static let LocalDatastoreDidRemoveAction = "Tensor.Notifications.LocalDatastoreDidRemoveAction"
-        static let LocalDatastoreDidFailToRemoveAction = "Tensor.Notifications.LocalDatastoreDidFailToRemoveAction"
+        static let LocalDatastoreWillRemoveAction = "Tensor.LocalParseManager.Notifications.LocalDatastoreWillRemoveAction"
+        static let LocalDatastoreDidRemoveAction = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidRemoveAction"
+        static let LocalDatastoreDidFailToRemoveAction = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidFailToRemoveAction"
         
-        static let LocalDatastoreWillUpdateAction = "Tensor.Notifications.LocalDatastoreWillUpdateAction"
-        static let LocalDatastoreDidUpdateAction = "Tensor.Notifications.LocalDatastoreDidUpdateAction"
-        static let LocalDatastoreDidFailToUpdateAction = "Tensor.Notifications.LocalDatastoreDidFailToUpdateAction"
+        static let LocalDatastoreWillUpdateAction = "Tensor.LocalParseManager.Notifications.LocalDatastoreWillUpdateAction"
+        static let LocalDatastoreDidUpdateAction = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidUpdateAction"
+        static let LocalDatastoreDidFailToUpdateAction = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidFailToUpdateAction"
         
-        static let LocalDatastoreWillAddWorkUnit = "Tensor.Notifications.LocalDatastoreWillAddWorkUnit"
-        static let LocalDatastoreDidAddWorkUnit = "Tensor.Notifications.LocalDatastoreDidAddWorkUnit"
-        static let LocalDatastoreDidFailToAddWorkUnit = "Tensor.Notifications.LocalDatastoreDidFailToAddWorkUnit"
+        static let LocalDatastoreWillAddWorkUnit = "Tensor.LocalParseManager.Notifications.LocalDatastoreWillAddWorkUnit"
+        static let LocalDatastoreDidAddWorkUnit = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidAddWorkUnit"
+        static let LocalDatastoreDidFailToAddWorkUnit = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidFailToAddWorkUnit"
         
-        static let LocalDatastoreWillUpdateWorkUnit = "Tensor.Notifications.LocalDatastoreWillUpdateWorkUnit"
-        static let LocalDatastoreDidUpdateWorkUnit = "Tensor.Notifications.LocalDatastoreDidUpdateWorkUnit"
-        static let LocalDatastoreDidFailToUpdateWorkUnit = "Tensor.Notifications.LocalDatastoreDidFailToUpdateWorkUnit"
+        static let LocalDatastoreWillUpdateWorkUnit = "Tensor.LocalParseManager.Notifications.LocalDatastoreWillUpdateWorkUnit"
+        static let LocalDatastoreDidUpdateWorkUnit = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidUpdateWorkUnit"
+        static let LocalDatastoreDidFailToUpdateWorkUnit = "Tensor.LocalParseManager.Notifications.LocalDatastoreDidFailToUpdateWorkUnit"
     }
     
     
