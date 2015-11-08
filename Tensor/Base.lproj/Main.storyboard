@@ -146,7 +146,6 @@
                                 <rect key="frame" x="115" y="149" width="51" height="31"/>
                                 <animations/>
                                 <connections>
-                                    <action selector="completionStatusSwitchValueChanged" destination="oe6-Ag-a0l" eventType="valueChanged" id="UQp-Ib-5Vr"/>
                                     <action selector="invalidationStatusSwitchValueChanged" destination="oe6-Ag-a0l" eventType="valueChanged" id="eqX-sm-Yun"/>
                                 </connections>
                             </switch>

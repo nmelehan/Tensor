@@ -20,11 +20,28 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Methods
     
+    func stopProgress() {
+        let resultBlock: PFObjectResultBlock = { (result, error) in
+            if let scheduler = result as? Scheduler {
+                if  let actionInProgress = scheduler.workUnitInProgress?.action
+                    where actionInProgress == self.task
+                {
+                    scheduler.pauseWorkUnitInProgress()
+                }
+                scheduler.refreshScheduledActions(preserveCurrentAction: false)
+            }
+        }
+        
+        LocalParseManager.sharedManager
+            .fetchSchedulerInBackgroundWithBlock(resultBlock)
+    }
+    
     func markActionAsCompleted() {
         guard let action = task else {
             return
         }
         
+        stopProgress()
         action.complete()
         invalidationStatusSwitch.enabled = false
     }
@@ -34,6 +51,7 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        stopProgress()
         action.invalidate()
         completionStatusSwitch.enabled = false
     }
