@@ -93,6 +93,12 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         else {
             invalidationStatusSwitch.on = false
         }
+        
+        if  let action = task
+            where (action.isLeaf == false || action.trashed == true)
+        {
+            deleteButton.enabled = false
+        }
     }
     
     func actionDidUpdate(notification: NSNotification) {
@@ -106,6 +112,7 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var taskNameTextField: UITextField!
     @IBOutlet weak var completionStatusSwitch: UISwitch!
     @IBOutlet weak var invalidationStatusSwitch: UISwitch!
+    @IBOutlet weak var deleteButton: UIButton!
     
     // MARK: - IBActions
     
@@ -146,6 +153,10 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         
         LocalParseManager.sharedManager
             .fetchSchedulerInBackgroundWithBlock(resultBlock)
+    }
+    
+    @IBAction func deleteButtonPressed(sender: AnyObject) {
+        task?.trash()
     }
     
     // MARK: - View lifecycle

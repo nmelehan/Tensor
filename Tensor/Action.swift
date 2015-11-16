@@ -31,8 +31,8 @@ class Action : PFObject, PFSubclassing {
     @NSManaged var depth: Int
     @NSManaged var isLeaf: Bool
     @NSManaged var inSandbox: NSNumber
-    
     @NSManaged var workConclusion: WorkUnit?
+    @NSManaged var trashed: Bool
     
     
     
@@ -51,6 +51,7 @@ class Action : PFObject, PFSubclassing {
         static let IsLeaf = "isLeaf"
         static let InSandbox = "inSandbox"
         static let WorkConclusion = "workConclusion"
+        static let Trashed = "trashed"
     }
     
     
@@ -97,5 +98,12 @@ class Action : PFObject, PFSubclassing {
             }
         }
         manager.fetchDependenciesOfActionInBackground(self, withBlock: resultsBlock)
+    }
+    
+    func trash() {
+        guard isLeaf == true else { return } // throw?
+        
+        self.trashed = true
+        LocalParseManager.sharedManager.saveLocally(self)
     }
 }

@@ -165,6 +165,14 @@
                                     <action selector="immediatelyScheduleButtonPressed" destination="oe6-Ag-a0l" eventType="touchUpInside" id="Qm0-NP-6zZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AAh-uo-cly">
+                                <rect key="frame" x="20" y="513" width="45" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Delete"/>
+                                <connections>
+                                    <action selector="deleteButtonPressed:" destination="oe6-Ag-a0l" eventType="touchUpInside" id="T5h-N0-Z7D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -179,6 +187,8 @@
                             <constraint firstItem="8O0-Yp-XHm" firstAttribute="baseline" secondItem="bnb-0m-sg5" secondAttribute="baseline" id="Jfz-Tp-jZz"/>
                             <constraint firstItem="xhr-gD-a72" firstAttribute="top" secondItem="BfU-sI-XmV" secondAttribute="bottom" constant="8" id="NIx-rN-Yhg"/>
                             <constraint firstItem="bnb-0m-sg5" firstAttribute="leading" secondItem="k5e-wu-Bnd" secondAttribute="leading" id="OP3-zC-Y1w"/>
+                            <constraint firstItem="AAh-uo-cly" firstAttribute="leading" secondItem="v3w-xm-iDE" secondAttribute="leading" id="Olq-Tw-vNZ"/>
+                            <constraint firstItem="qxq-SV-yvx" firstAttribute="top" secondItem="AAh-uo-cly" secondAttribute="bottom" constant="8" id="PJn-oy-VYF"/>
                             <constraint firstItem="v3w-xm-iDE" firstAttribute="top" secondItem="41U-o6-9bE" secondAttribute="bottom" constant="8" id="R1F-cb-IUa"/>
                             <constraint firstItem="Evw-Mn-53a" firstAttribute="top" secondItem="lkt-6B-PLV" secondAttribute="bottom" constant="8" id="RWC-Ot-xEW"/>
                             <constraint firstItem="41U-o6-9bE" firstAttribute="top" secondItem="Evw-Mn-53a" secondAttribute="bottom" constant="8" id="TUw-vQ-h2t"/>
@@ -191,16 +201,19 @@
                             <constraint firstAttribute="leadingMargin" secondItem="v3w-xm-iDE" secondAttribute="leading" id="jZY-ti-Arx"/>
                             <constraint firstItem="Yd7-a8-Yzo" firstAttribute="leading" secondItem="bnb-0m-sg5" secondAttribute="leading" id="lqR-u5-flc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xhr-gD-a72" secondAttribute="trailing" id="plO-WM-Kv2"/>
+                            <constraint firstItem="AAh-uo-cly" firstAttribute="trailing" secondItem="VV7-bO-815" secondAttribute="trailing" id="q7L-6b-ijr"/>
                             <constraint firstItem="lkt-6B-PLV" firstAttribute="centerY" secondItem="bnb-0m-sg5" secondAttribute="centerY" id="skm-RU-fKg"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="IRV-n6-cDx"/>
+                                <exclude reference="q7L-6b-ijr"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="completionStatusSwitch" destination="lkt-6B-PLV" id="leN-61-jeq"/>
+                        <outlet property="deleteButton" destination="AAh-uo-cly" id="boE-Em-f0J"/>
                         <outlet property="invalidationStatusSwitch" destination="Evw-Mn-53a" id="XmI-a1-9PX"/>
                         <outlet property="taskNameTextField" destination="xhr-gD-a72" id="Ueg-Aj-xNS"/>
                     </connections>

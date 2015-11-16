@@ -167,6 +167,7 @@ class Scheduler : PFObject, PFSubclassing {
         query.whereKey(Action.FieldKeys.User, equalTo: user)
         query.includeKey(Action.FieldKeys.ParentAction)
         query.whereKey(Action.FieldKeys.InSandbox, equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
+        query.whereKey(Action.FieldKeys.Trashed, equalTo: 0)
         
         // heuristics
         if let actionFocus = actionFocus {

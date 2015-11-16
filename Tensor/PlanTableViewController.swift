@@ -47,8 +47,8 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
                     self.tasks = objects
                     dispatch_async(dispatch_get_main_queue()) { self.tableView.reloadData() }
                 }
-                self.refreshControl?.endRefreshing()
             }
+            self.refreshControl?.endRefreshing()
         }
         
         if parentTask == nil

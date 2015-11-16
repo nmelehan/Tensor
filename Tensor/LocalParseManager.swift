@@ -243,6 +243,7 @@ class LocalParseManager
         newAction.user = user
         newAction.inSandbox = currentPersistenceMode.rawValue
         newAction.depth = 0
+        newAction.trashed = false
         
         NSNotificationCenter.defaultCenter()
             .postNotificationName(Notifications.LocalDatastoreWillAddAction, object: newAction)
@@ -383,6 +384,7 @@ class LocalParseManager
         query.whereKeyDoesNotExist(Action.FieldKeys.ParentAction)
         query.whereKey(Action.FieldKeys.User, equalTo: user)
         query.whereKey(Action.FieldKeys.InSandbox, equalTo: LocalParseManager.sharedManager.currentPersistenceMode.rawValue)
+        query.whereKey(Action.FieldKeys.Trashed, equalTo: 0)
         
         let showConcludedActions = NSUserDefaults.standardUserDefaults()
             .boolForKey(AppSettings.Keys.ShowCompletedAndInvalidatedActionsInPlanView)
@@ -400,6 +402,7 @@ class LocalParseManager
     
     func fetchDependenciesOfActionInBackground(action: Action, withBlock block: PFArrayResultBlock?) {
         let query = PFQuery(className: Action.parseClassName())
+        query.whereKey(Action.FieldKeys.Trashed, equalTo: 0)
         query.fromLocalDatastore()
         query.whereKey(Action.FieldKeys.Ancestors, containsAllObjectsInArray: [action])
         query.whereKey(Action.FieldKeys.Depth, equalTo: action.depth+1)
@@ -519,6 +522,25 @@ class LocalParseManager
         let query = PFQuery(className: Action.parseClassName())
 //        query.fromLocalDatastore()
         query.whereKeyDoesNotExist(Action.FieldKeys.ParentAction)
+        query.findObjectsInBackgroundWithBlock(resultsBlock)
+    }
+    
+    func migrateToTrashedField() {
+        let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [Action] {
+                    for action in objects {
+                        action.trashed = false
+                        self.saveLocally(action)
+                    }
+                }
+            }
+        }
+        
+        // condition ensures we don't query against an anonymous
+        // user that hasn't been saved to Parse yet
+        let query = PFQuery(className: Action.parseClassName())
+        query.fromLocalDatastore()
         query.findObjectsInBackgroundWithBlock(resultsBlock)
     }
 }
