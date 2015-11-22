@@ -162,7 +162,8 @@ class Scheduler : PFObject, PFSubclassing {
         let query = PFQuery(className: Action.parseClassName())
         query.fromLocalDatastore()
         
-        query.whereKey(Action.FieldKeys.IsLeaf, equalTo: 1)
+//        query.whereKey(Action.FieldKeys.IsLeaf, equalTo: 1)
+        query.whereKey(Action.FieldKeys.NumberOfInProgressDependencies, equalTo: 0)
         query.whereKeyDoesNotExist(Action.FieldKeys.WorkConclusion)
         query.whereKey(Action.FieldKeys.User, equalTo: user)
         query.includeKey(Action.FieldKeys.ParentAction)

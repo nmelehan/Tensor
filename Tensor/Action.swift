@@ -33,6 +33,8 @@ class Action : PFObject, PFSubclassing {
     @NSManaged var inSandbox: NSNumber
     @NSManaged var workConclusion: WorkUnit?
     @NSManaged var trashed: Bool
+    @NSManaged var numberOfDependencies: Int
+    @NSManaged var numberOfInProgressDependencies: Int
     
     
     
@@ -52,6 +54,8 @@ class Action : PFObject, PFSubclassing {
         static let InSandbox = "inSandbox"
         static let WorkConclusion = "workConclusion"
         static let Trashed = "trashed"
+        static let NumberOfDependencies = "numberOfDependencies"
+        static let NumberOfInProgressDependencies = "numberOfInProgressDependencies"
     }
     
     
@@ -69,6 +73,14 @@ class Action : PFObject, PFSubclassing {
         let workUnit = manager.createWorkUnitForAction(self)
         workUnit.setType(.Invalidation)
         workConclusion = workUnit
+        
+        manager.fetchParentOfAction(self, withBlock: { (result, error) in
+            if let parentAction = result as? Action {
+                parentAction.numberOfInProgressDependencies--
+                manager.saveLocally(parentAction)
+            }
+        })
+        
         manager.saveLocally(self)
         
         let resultsBlock: PFArrayResultBlock = { (results, error) in
@@ -88,6 +100,15 @@ class Action : PFObject, PFSubclassing {
         let workUnit = manager.createWorkUnitForAction(self)
         workUnit.setType(.Completion)
         workConclusion = workUnit
+        
+        
+        manager.fetchParentOfAction(self, withBlock: { (result, error) in
+            if let parentAction = result as? Action {
+                parentAction.numberOfInProgressDependencies--
+                manager.saveLocally(parentAction)
+            }
+        })
+        
         manager.saveLocally(self)
         
         let resultsBlock: PFArrayResultBlock = { (results, error) in
@@ -104,6 +125,15 @@ class Action : PFObject, PFSubclassing {
         guard isLeaf == true else { return } // throw?
         
         self.trashed = true
-        LocalParseManager.sharedManager.saveLocally(self)
+        
+        let manager = LocalParseManager.sharedManager
+        manager.fetchParentOfAction(self, withBlock: { (result, error) in
+            if let parentAction = result as? Action {
+                parentAction.numberOfDependencies--
+                parentAction.numberOfInProgressDependencies--
+                manager.saveLocally(parentAction)
+            }
+        })
+        manager.saveLocally(self)
     }
 }

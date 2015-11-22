@@ -49,6 +49,8 @@ class PlanTableViewController: UITableViewController, UISearchResultsUpdating, P
                 }
             }
             self.refreshControl?.endRefreshing()
+            
+            
         }
         
         if parentTask == nil

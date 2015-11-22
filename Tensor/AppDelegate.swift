@@ -90,6 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        LocalParseManager.sharedManager.migrateToAncestorArray()
 //        LocalParseManager.sharedManager.migrateToTrashedField()
+//        LocalParseManager.sharedManager.migrateToDependencyCount()
         
         registerDebuggingNotificationObservers()
         

@@ -244,6 +244,8 @@ class LocalParseManager
         newAction.inSandbox = currentPersistenceMode.rawValue
         newAction.depth = 0
         newAction.trashed = false
+        newAction.numberOfDependencies = 0
+        newAction.numberOfInProgressDependencies = 0
         
         NSNotificationCenter.defaultCenter()
             .postNotificationName(Notifications.LocalDatastoreWillAddAction, object: newAction)
@@ -279,6 +281,11 @@ class LocalParseManager
         newAction.depth = action.depth + 1
         
         action.isLeaf = false
+        
+        action.numberOfDependencies++
+        action.numberOfInProgressDependencies++
+//        action.incrementKey(Action.FieldKeys.NumberOfDescendents)
+//        action.incrementKey(Action.FieldKeys.NumberOfInProgressDescendents)
         
         if isSubscribed {
             queueToSaveRemotely(newAction)
@@ -422,6 +429,10 @@ class LocalParseManager
         query.findObjectsInBackgroundWithBlock(block)
     }
     
+    func fetchParentOfAction(action: Action, withBlock block: PFObjectResultBlock) {
+        action.ancestors?.first?.fetchFromLocalDatastoreInBackgroundWithBlock(block)
+    }
+    
     func fetchSchedulerInBackgroundWithBlock(block: PFObjectResultBlock?) {
         let query = PFQuery(className: Scheduler.parseClassName())
         query.fromLocalDatastore()
@@ -473,7 +484,7 @@ class LocalParseManager
     //
     //
     //
-    // MARK: - Model migration method
+    // MARK: - Model migration methods
     
     func assignAncestorsForAction(action: Action) {
         defer {
@@ -521,6 +532,71 @@ class LocalParseManager
         // user that hasn't been saved to Parse yet
         let query = PFQuery(className: Action.parseClassName())
 //        query.fromLocalDatastore()
+        query.whereKeyDoesNotExist(Action.FieldKeys.ParentAction)
+        query.findObjectsInBackgroundWithBlock(resultsBlock)
+    }
+    
+    func assignDependencyCountForAction(action: Action) {
+        let numberOfDescendentsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+            if let objects = objects as? [Action]
+            {
+                action.numberOfDependencies = objects.count
+                
+                for action in objects {
+                    self.assignDependencyCountForAction(action)
+                }
+            }
+            else {
+                action.numberOfDependencies = 0
+            }
+            
+            self.saveLocally(action)
+        }
+        
+        let numberOfDescendentsQuery = PFQuery(className: Action.parseClassName())
+//        numberOfDescendentsQuery.fromLocalDatastore()
+        numberOfDescendentsQuery.whereKey(Action.FieldKeys.Ancestors, containsAllObjectsInArray: [action])
+        numberOfDescendentsQuery.whereKey(Action.FieldKeys.Depth, equalTo: action.depth+1)
+        numberOfDescendentsQuery.whereKey(Action.FieldKeys.Trashed, equalTo: 0)
+        numberOfDescendentsQuery.findObjectsInBackgroundWithBlock(numberOfDescendentsBlock)
+        
+        
+        let numberOfInProgressDescendentsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+            if let objects = objects as? [Action]
+            {
+                action.numberOfInProgressDependencies = objects.count
+            }
+            else {
+                action.numberOfInProgressDependencies = 0
+            }
+            
+            self.saveLocally(action)
+        }
+        
+        let numberOfInProgressDescendentsQuery = PFQuery(className: Action.parseClassName())
+//        numberOfInProgressDescendentsQuery.fromLocalDatastore()
+        numberOfInProgressDescendentsQuery.whereKey(Action.FieldKeys.Ancestors, containsAllObjectsInArray: [action])
+        numberOfInProgressDescendentsQuery.whereKey(Action.FieldKeys.Depth, equalTo: action.depth+1)
+        numberOfInProgressDescendentsQuery.whereKeyDoesNotExist(Action.FieldKeys.WorkConclusion)
+        numberOfInProgressDescendentsQuery.whereKey(Action.FieldKeys.Trashed, equalTo: 0)
+        numberOfInProgressDescendentsQuery.findObjectsInBackgroundWithBlock(numberOfInProgressDescendentsBlock)
+    }
+    
+    func migrateToDependencyCount() {
+        let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [Action] {
+                    for action in objects {
+                        self.assignDependencyCountForAction(action)
+                    }
+                }
+            }
+        }
+        
+        // condition ensures we don't query against an anonymous
+        // user that hasn't been saved to Parse yet
+        let query = PFQuery(className: Action.parseClassName())
+        //        query.fromLocalDatastore()
         query.whereKeyDoesNotExist(Action.FieldKeys.ParentAction)
         query.findObjectsInBackgroundWithBlock(resultsBlock)
     }
