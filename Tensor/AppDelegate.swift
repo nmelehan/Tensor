@@ -86,12 +86,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotificationTypes(types)
         }
         
-        
-        
-//        LocalParseManager.sharedManager.migrateToAncestorArray()
-//        LocalParseManager.sharedManager.migrateToTrashedField()
-//        LocalParseManager.sharedManager.migrateToDependencyCount()
-        
         registerDebuggingNotificationObservers()
         
         return true

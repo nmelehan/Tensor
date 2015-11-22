@@ -83,6 +83,18 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
                 userInfo: userInfo)
     }
     
+    @IBAction func migrateToAncestoryArrayButtonPressed(sender: AnyObject) {
+        LocalParseManager.sharedManager.migrateToAncestorArray()
+    }
+    
+    @IBAction func migrateToTrashedFieldButtonPressed(sender: AnyObject) {
+        LocalParseManager.sharedManager.migrateToTrashedField()
+    }
+    
+    @IBAction func migrateToDependencyCountButtonPressed(sender: AnyObject) {
+        LocalParseManager.sharedManager.migrateToDependencyCount()
+    }
+    
     
     
     // 
