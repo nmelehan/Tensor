@@ -121,6 +121,23 @@ class Action : PFObject, PFSubclassing {
         manager.fetchDependenciesOfActionInBackground(self, withBlock: resultsBlock)
     }
     
+    func reactivate() {
+        guard workConclusion != nil else { return } // throw?
+        
+        let manager = LocalParseManager.sharedManager
+        let workUnit = manager.createWorkUnitForAction(self)
+        workUnit.type = WorkUnit.WorkUnitType.Reactivation.rawValue
+        workConclusion = nil
+        manager.saveLocally(self)
+        
+        manager.fetchParentOfAction(self, withBlock: { (result, error) in
+            if let parentAction = result as? Action {
+                parentAction.numberOfInProgressDependencies++
+                manager.saveLocally(parentAction)
+            }
+        })
+    }
+    
     func trash() {
         guard isLeaf == true else { return } // throw?
         

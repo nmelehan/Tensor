@@ -61,12 +61,13 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        let manager = LocalParseManager.sharedManager
-        let workUnit = manager.createWorkUnitForAction(action)
-        workUnit.type = WorkUnit.WorkUnitType.Reactivation.rawValue
-        action.workConclusion = nil
-        manager.saveLocally(action)
+//        let manager = LocalParseManager.sharedManager
+//        let workUnit = manager.createWorkUnitForAction(action)
+//        workUnit.type = WorkUnit.WorkUnitType.Reactivation.rawValue
+//        action.workConclusion = nil
+//        manager.saveLocally(action)
         
+        action.reactivate()
         completionStatusSwitch.enabled = true
         invalidationStatusSwitch.enabled = true
     }
