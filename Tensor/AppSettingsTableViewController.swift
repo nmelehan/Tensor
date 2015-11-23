@@ -95,6 +95,9 @@ class AppSettingsTableViewController: UITableViewController, ParseLoginViewContr
         LocalParseManager.sharedManager.migrateToDependencyCount()
     }
     
+    @IBAction func migrateToDueDateSettingButtonPressed(sender: AnyObject) {
+        LocalParseManager.sharedManager.migrateToDueDateSettingField()
+    }
     
     
     // 

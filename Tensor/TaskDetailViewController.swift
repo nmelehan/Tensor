@@ -11,6 +11,12 @@ import Parse
 
 class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Properties
     
     var task: Action?
@@ -18,6 +24,12 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
 //        didSet { updateUI() }
 //    }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Methods
     
     func stopProgress() {
@@ -61,12 +73,6 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-//        let manager = LocalParseManager.sharedManager
-//        let workUnit = manager.createWorkUnitForAction(action)
-//        workUnit.type = WorkUnit.WorkUnitType.Reactivation.rawValue
-//        action.workConclusion = nil
-//        manager.saveLocally(action)
-        
         action.reactivate()
         completionStatusSwitch.enabled = true
         invalidationStatusSwitch.enabled = true
@@ -74,6 +80,13 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     
     func updateUI() {
         taskNameTextField.text = task?.name
+        
+        if let dueDateSetting = task?.getDueDateSetting() {
+            dueDateSettingTextField.text = dueDateSettingPrompts[dueDateSetting]
+        }
+        else {
+            dueDateSettingTextField.text = dueDateSettingPrompts[dueDateSettingPromptOrdering.first!]
+        }
         
         if  let workConclusionType = task?.workConclusion?.getType()
             where workConclusionType == .Completion
@@ -108,13 +121,30 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - IBOutlets
 
     @IBOutlet weak var taskNameTextField: UITextField!
     @IBOutlet weak var completionStatusSwitch: UISwitch!
     @IBOutlet weak var invalidationStatusSwitch: UISwitch!
     @IBOutlet weak var deleteButton: UIButton!
+
+    @IBOutlet weak var dueDateSettingInputView: UIView!
+    @IBOutlet weak var dueDateSettingInputViewPicker: UIPickerView!
+    @IBOutlet weak var dueDateSettingTextField: UITextField!
+    @IBOutlet weak var dueDateValueTextField: UITextField!
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - IBActions
     
     @IBAction func completionStatusSwitchValueChanged() {
@@ -160,10 +190,32 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         task?.trash()
     }
     
+    @IBAction func dueDateSettingInputViewSelectButtonPressed() {
+        let selectedRow = dueDateSettingInputViewPicker.selectedRowInComponent(0)
+        
+        task?.setDueDateSetting(dueDateSettingPromptOrdering[selectedRow])
+        if let action = task {
+            LocalParseManager.sharedManager.saveLocally(action)
+        }
+        dueDateSettingTextField.text = self.pickerView(dueDateSettingInputViewPicker,
+            titleForRow: selectedRow, forComponent: 0)
+        
+        dueDateSettingTextField.resignFirstResponder()
+    }
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dueDateSettingTextField.inputView = dueDateSettingInputView
+//        dueDateSettingTextField.inputAccessoryView = pickerInputAccessoryView
+        
         updateUI()
         
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -181,6 +233,12 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - UITextFieldDelegate
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
@@ -201,6 +259,41 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    
+    
+    //
+    //
+    //
+    //
+    // MARK: - UIPickerViewDelegate, UIPickerViewDataSource
+    
+    let dueDateSettingPrompts: [Action.AttributeSettingMethod : String] = [
+        .Inherit: "Inherit from parent action",
+        .SetByUser: "Choose a date"
+    ]
+    let dueDateSettingPromptOrdering: [Action.AttributeSettingMethod] = [.Inherit, .SetByUser]
+    
+    // The number of columns of data
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    // The number of rows of data
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return dueDateSettingPromptOrdering.count
+    }
+    
+    // The data to return for the row and component (column) that's being passed in
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return dueDateSettingPrompts[dueDateSettingPromptOrdering[row]]
+    }
+    
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Navigation
     
     struct Storyboard {

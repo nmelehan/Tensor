@@ -35,6 +35,20 @@ class Action : PFObject, PFSubclassing {
     @NSManaged var trashed: Bool
     @NSManaged var numberOfDependencies: Int
     @NSManaged var numberOfInProgressDependencies: Int
+    @NSManaged var dueDateSetting: String
+    
+    enum AttributeSettingMethod: String {
+        case Inherit = "inherit"
+        case SetByUser = "setbyuser"
+    }
+    
+    func setDueDateSetting(attributeSettingMethod: AttributeSettingMethod) {
+        dueDateSetting = attributeSettingMethod.rawValue
+    }
+    
+    func getDueDateSetting() -> AttributeSettingMethod {
+        return AttributeSettingMethod(rawValue: dueDateSetting)!
+    }
     
     
     

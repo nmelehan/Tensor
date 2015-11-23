@@ -11,6 +11,12 @@ import Parse
 
 class WorkUnit : PFObject, PFSubclassing {
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - PFSubclassing
     
     override class func initialize() {
@@ -26,6 +32,12 @@ class WorkUnit : PFObject, PFSubclassing {
         return "WorkUnit"
     }
     
+    
+    
+    //
+    //
+    //
+    //
     // MARK: - Properties
     
     @NSManaged var user: PFUser
@@ -49,6 +61,8 @@ class WorkUnit : PFObject, PFSubclassing {
     func getType() -> WorkUnitType {
         return WorkUnitType(rawValue: type)!
     }
+    
+    
     
     //
     //

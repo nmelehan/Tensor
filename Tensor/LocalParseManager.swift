@@ -246,6 +246,7 @@ class LocalParseManager
         newAction.trashed = false
         newAction.numberOfDependencies = 0
         newAction.numberOfInProgressDependencies = 0
+        newAction.setDueDateSetting(.Inherit)
         
         NSNotificationCenter.defaultCenter()
             .postNotificationName(Notifications.LocalDatastoreWillAddAction, object: newAction)
@@ -616,7 +617,26 @@ class LocalParseManager
         // condition ensures we don't query against an anonymous
         // user that hasn't been saved to Parse yet
         let query = PFQuery(className: Action.parseClassName())
-        query.fromLocalDatastore()
+//        query.fromLocalDatastore()
+        query.findObjectsInBackgroundWithBlock(resultsBlock)
+    }
+    
+    func migrateToDueDateSettingField() {
+        let resultsBlock = { (objects: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects as? [Action] {
+                    for action in objects {
+                        action.setDueDateSetting(.Inherit)
+                        self.saveLocally(action)
+                    }
+                }
+            }
+        }
+        
+        // condition ensures we don't query against an anonymous
+        // user that hasn't been saved to Parse yet
+        let query = PFQuery(className: Action.parseClassName())
+//        query.fromLocalDatastore()
         query.findObjectsInBackgroundWithBlock(resultsBlock)
     }
 }
