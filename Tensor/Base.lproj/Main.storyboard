@@ -233,10 +233,12 @@
                     <connections>
                         <outlet property="completionStatusSwitch" destination="lkt-6B-PLV" id="leN-61-jeq"/>
                         <outlet property="deleteButton" destination="AAh-uo-cly" id="boE-Em-f0J"/>
+                        <outlet property="dueDateInputView" destination="0u3-13-mzC" id="UkE-6D-bLd"/>
+                        <outlet property="dueDateInputViewDatePicker" destination="zqO-eC-4sd" id="YsA-wo-0s9"/>
                         <outlet property="dueDateSettingInputView" destination="H7j-62-Oxb" id="5sl-x2-d32"/>
                         <outlet property="dueDateSettingInputViewPicker" destination="2nu-cB-jHp" id="PdH-te-2ZC"/>
                         <outlet property="dueDateSettingTextField" destination="bcz-PE-jsC" id="Jee-Ua-onb"/>
-                        <outlet property="dueDateValueTextField" destination="7f8-IM-bc4" id="f5t-zG-RPN"/>
+                        <outlet property="dueDateTextField" destination="7f8-IM-bc4" id="Qrj-XH-rzp"/>
                         <outlet property="invalidationStatusSwitch" destination="Evw-Mn-53a" id="XmI-a1-9PX"/>
                         <outlet property="taskNameTextField" destination="xhr-gD-a72" id="Ueg-Aj-xNS"/>
                     </connections>
@@ -282,6 +284,47 @@
                         <constraint firstAttribute="trailing" secondItem="Mgj-Bn-ptq" secondAttribute="trailing" id="jnU-Kd-K0T"/>
                         <constraint firstItem="2nu-cB-jHp" firstAttribute="leading" secondItem="H7j-62-Oxb" secondAttribute="leading" id="seW-c0-t7B"/>
                         <constraint firstAttribute="trailing" secondItem="2nu-cB-jHp" secondAttribute="trailing" id="zFB-88-UcU"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" id="0u3-13-mzC">
+                    <rect key="frame" x="0.0" y="0.0" width="462" height="247"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KvC-fC-uxK">
+                            <rect key="frame" x="0.0" y="0.0" width="462" height="43"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ekv-fJ-e1Y">
+                                    <rect key="frame" x="209" y="7" width="44" height="30"/>
+                                    <state key="normal" title="Select"/>
+                                    <connections>
+                                        <action selector="dueDateInputViewSelectButtonPressed" destination="oe6-Ag-a0l" eventType="touchUpInside" id="8X5-cX-j2Y"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.7576414574" green="0.88975483389999999" blue="0.96823817489999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="ekv-fJ-e1Y" firstAttribute="centerX" secondItem="KvC-fC-uxK" secondAttribute="centerX" id="4ia-tl-RgR"/>
+                                <constraint firstAttribute="height" constant="43" id="Xde-Wz-yIw"/>
+                                <constraint firstItem="ekv-fJ-e1Y" firstAttribute="top" secondItem="KvC-fC-uxK" secondAttribute="top" constant="7" id="dLB-Lk-jf0"/>
+                                <constraint firstAttribute="bottom" secondItem="ekv-fJ-e1Y" secondAttribute="bottom" constant="6" id="wjI-qQ-40C"/>
+                            </constraints>
+                        </view>
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="zqO-eC-4sd">
+                            <rect key="frame" x="0.0" y="43" width="462" height="204"/>
+                            <date key="date" timeIntervalSinceReferenceDate="469958026.43773597">
+                                <!--2015-11-23 07:53:46 +0000-->
+                            </date>
+                        </datePicker>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="KvC-fC-uxK" firstAttribute="leading" secondItem="0u3-13-mzC" secondAttribute="leading" id="0YC-kU-Rj9"/>
+                        <constraint firstAttribute="trailing" secondItem="zqO-eC-4sd" secondAttribute="trailing" id="FEL-ed-VsA"/>
+                        <constraint firstItem="zqO-eC-4sd" firstAttribute="leading" secondItem="0u3-13-mzC" secondAttribute="leading" id="KKP-6c-Zg0"/>
+                        <constraint firstItem="zqO-eC-4sd" firstAttribute="top" secondItem="KvC-fC-uxK" secondAttribute="bottom" id="O9A-fM-IZm"/>
+                        <constraint firstAttribute="trailing" secondItem="KvC-fC-uxK" secondAttribute="trailing" id="ohH-p0-x6t"/>
+                        <constraint firstItem="KvC-fC-uxK" firstAttribute="top" secondItem="0u3-13-mzC" secondAttribute="top" id="vbJ-ge-ouN"/>
+                        <constraint firstAttribute="bottom" secondItem="zqO-eC-4sd" secondAttribute="bottom" id="ykO-AU-8Bq"/>
                     </constraints>
                 </view>
             </objects>

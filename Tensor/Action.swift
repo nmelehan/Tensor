@@ -36,6 +36,9 @@ class Action : PFObject, PFSubclassing {
     @NSManaged var numberOfDependencies: Int
     @NSManaged var numberOfInProgressDependencies: Int
     @NSManaged var dueDateSetting: String
+    @NSManaged var inheritedDueDate: NSDate?
+    @NSManaged var userSetDueDate: NSDate?
+    @NSManaged var effectiveDueDate: NSDate?
     
     enum AttributeSettingMethod: String {
         case Inherit = "inherit"
@@ -48,6 +51,54 @@ class Action : PFObject, PFSubclassing {
     
     func getDueDateSetting() -> AttributeSettingMethod {
         return AttributeSettingMethod(rawValue: dueDateSetting)!
+    }
+    
+    func setEffectiveDueDate() {
+        if inheritedDueDate == nil && userSetDueDate == nil {
+            effectiveDueDate = nil
+        }
+        else if inheritedDueDate == nil && userSetDueDate != nil {
+            effectiveDueDate = userSetDueDate
+        }
+        else if inheritedDueDate != nil && userSetDueDate == nil {
+            effectiveDueDate = inheritedDueDate
+        }
+        else if inheritedDueDate!.compare(userSetDueDate!) == .OrderedAscending {
+            effectiveDueDate = inheritedDueDate
+        }
+        else {
+            effectiveDueDate = userSetDueDate
+        }
+    }
+    
+    func inheritDueDate(date: NSDate?) {
+        inheritedDueDate = date
+        setEffectiveDueDate()
+        LocalParseManager.sharedManager.saveLocally(self)
+        
+        // recurse
+        LocalParseManager.sharedManager.fetchDependenciesOfActionInBackground(self) { (results, error) -> Void in
+            if let dependencies = results as? [Action] {
+                for dependency in dependencies {
+                    dependency.inheritDueDate(self.effectiveDueDate)
+                }
+            }
+        }
+    }
+    
+    func setDueDate(date: NSDate?) {
+        userSetDueDate = date
+        setEffectiveDueDate()
+        LocalParseManager.sharedManager.saveLocally(self)
+        
+        // recurse
+        LocalParseManager.sharedManager.fetchDependenciesOfActionInBackground(self) { (results, error) -> Void in
+            if let dependencies = results as? [Action] {
+                for dependency in dependencies {
+                    dependency.inheritDueDate(self.effectiveDueDate)
+                }
+            }
+        }
     }
     
     

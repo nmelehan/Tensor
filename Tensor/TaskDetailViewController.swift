@@ -88,6 +88,14 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
             dueDateSettingTextField.text = dueDateSettingPrompts[dueDateSettingPromptOrdering.first!]
         }
         
+        if let dueDate = task?.effectiveDueDate {
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+            formatter.timeStyle = NSDateFormatterStyle.MediumStyle
+            formatter.timeZone = NSTimeZone.localTimeZone()
+            dueDateTextField.text = formatter.stringFromDate(dueDate)
+        }
+        
         if  let workConclusionType = task?.workConclusion?.getType()
             where workConclusionType == .Completion
         {
@@ -137,7 +145,10 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var dueDateSettingInputView: UIView!
     @IBOutlet weak var dueDateSettingInputViewPicker: UIPickerView!
     @IBOutlet weak var dueDateSettingTextField: UITextField!
-    @IBOutlet weak var dueDateValueTextField: UITextField!
+    
+    @IBOutlet weak var dueDateTextField: UITextField!
+    @IBOutlet weak var dueDateInputView: UIView!
+    @IBOutlet weak var dueDateInputViewDatePicker: UIDatePicker!
     
     
     
@@ -203,6 +214,11 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         dueDateSettingTextField.resignFirstResponder()
     }
     
+    @IBAction func dueDateInputViewSelectButtonPressed() {
+        task?.setDueDate(dueDateInputViewDatePicker.date)
+        dueDateTextField.resignFirstResponder()
+    }
+    
     
     //
     //
@@ -214,7 +230,8 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         dueDateSettingTextField.inputView = dueDateSettingInputView
-//        dueDateSettingTextField.inputAccessoryView = pickerInputAccessoryView
+        dueDateTextField.inputView = dueDateInputView
+        dueDateInputViewDatePicker.timeZone = NSTimeZone.localTimeZone()
         
         updateUI()
         
