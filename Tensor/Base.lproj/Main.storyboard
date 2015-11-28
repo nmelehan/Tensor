@@ -329,7 +329,7 @@
                                 <constraint firstAttribute="bottom" secondItem="ekv-fJ-e1Y" secondAttribute="bottom" constant="6" id="wjI-qQ-40C"/>
                             </constraints>
                         </view>
-                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="zqO-eC-4sd">
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="zqO-eC-4sd">
                             <rect key="frame" x="0.0" y="43" width="462" height="204"/>
                             <date key="date" timeIntervalSinceReferenceDate="469958026.43773597">
                                 <!--2015-11-23 07:53:46 +0000-->
