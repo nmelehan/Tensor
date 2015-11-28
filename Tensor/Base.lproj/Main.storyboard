@@ -737,27 +737,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="LVA-Cb-5fA">
-                                        <rect key="frame" x="0.0" y="412" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LVA-Cb-5fA" id="3wu-2p-VYp">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B4D-qS-Bka">
-                                                    <rect key="frame" x="16" y="7" width="191" height="30"/>
-                                                    <state key="normal" title="Migrate to Due Date Setting"/>
-                                                    <connections>
-                                                        <action selector="migrateToDueDateSettingButtonPressed:" destination="opy-e0-MaU" eventType="touchUpInside" id="aHJ-BX-Mb9"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="B4D-qS-Bka" firstAttribute="centerY" secondItem="3wu-2p-VYp" secondAttribute="centerY" id="J8C-Il-HXR"/>
-                                                <constraint firstItem="B4D-qS-Bka" firstAttribute="leading" secondItem="3wu-2p-VYp" secondAttribute="leadingMargin" constant="8" id="f1D-g4-oEs"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>

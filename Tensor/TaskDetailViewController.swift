@@ -81,13 +81,6 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     func updateUI() {
         taskNameTextField.text = task?.name
         
-//        if let dueDateSetting = task?.getDueDateSetting() {
-//            dueDateSettingTextField.text = dueDateSettingPrompts[dueDateSetting]
-//        }
-//        else {
-//            dueDateSettingTextField.text = dueDateSettingPrompts[dueDateSettingPromptOrdering.first!]
-//        }
-        
         if let dueDate = task?.userSetDueDate {
             let formatter = NSDateFormatter()
             formatter.dateStyle = NSDateFormatterStyle.ShortStyle
@@ -216,19 +209,6 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         task?.trash()
     }
     
-//    @IBAction func dueDateSettingInputViewSelectButtonPressed() {
-//        let selectedRow = dueDateSettingInputViewPicker.selectedRowInComponent(0)
-//        
-//        task?.setDueDateSetting(dueDateSettingPromptOrdering[selectedRow])
-//        if let action = task {
-//            LocalParseManager.sharedManager.saveLocally(action)
-//        }
-//        dueDateSettingTextField.text = self.pickerView(dueDateSettingInputViewPicker,
-//            titleForRow: selectedRow, forComponent: 0)
-//        
-//        dueDateSettingTextField.resignFirstResponder()
-//    }
-    
     @IBAction func dueDateInputViewSelectButtonPressed() {
         task?.setDueDate(dueDateInputViewDatePicker.date)
         dueDateTextField.resignFirstResponder()
@@ -251,7 +231,6 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        dueDateSettingTextField.inputView = dueDateSettingInputView
         dueDateTextField.inputView = dueDateInputView
         dueDateInputViewDatePicker.timeZone = NSTimeZone.localTimeZone()
         
