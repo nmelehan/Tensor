@@ -121,6 +121,9 @@ class Action : PFObject, PFSubclassing {
         static let Trashed = "trashed"
         static let NumberOfDependencies = "numberOfDependencies"
         static let NumberOfInProgressDependencies = "numberOfInProgressDependencies"
+        static let InheritedDueDate = "inheritedDueDate"
+        static let UserSetDueDate = "userSetDueDate"
+        static let EffectiveDueDate = "effectiveDueDate"
     }
     
     
