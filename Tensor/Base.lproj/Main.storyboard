@@ -259,44 +259,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Elf-pp-pCL" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="H7j-62-Oxb">
-                    <rect key="frame" x="0.0" y="0.0" width="498" height="248"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2nu-cB-jHp">
-                            <rect key="frame" x="0.0" y="43" width="498" height="205"/>
-                        </pickerView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mgj-Bn-ptq">
-                            <rect key="frame" x="0.0" y="0.0" width="498" height="43"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JYx-7i-AT4">
-                                    <rect key="frame" x="227" y="8" width="44" height="30"/>
-                                    <state key="normal" title="Select"/>
-                                    <connections>
-                                        <action selector="dueDateSettingInputViewSelectButtonPressed" destination="oe6-Ag-a0l" eventType="touchUpInside" id="WO8-Ai-hEG"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" red="0.75764145743463684" green="0.88975483385520482" blue="0.96823817491531372" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="43" id="Ib4-YH-mEH"/>
-                                <constraint firstItem="JYx-7i-AT4" firstAttribute="top" secondItem="Mgj-Bn-ptq" secondAttribute="top" constant="20" symbolic="YES" id="bA6-wI-atk"/>
-                                <constraint firstAttribute="bottom" secondItem="JYx-7i-AT4" secondAttribute="bottom" constant="20" symbolic="YES" id="v65-r0-5PD"/>
-                                <constraint firstItem="JYx-7i-AT4" firstAttribute="centerX" secondItem="Mgj-Bn-ptq" secondAttribute="centerX" id="yxS-0W-4pY"/>
-                            </constraints>
-                        </view>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="2nu-cB-jHp" secondAttribute="bottom" id="Ccb-aN-POL"/>
-                        <constraint firstItem="2nu-cB-jHp" firstAttribute="top" secondItem="Mgj-Bn-ptq" secondAttribute="bottom" id="DDf-nw-EaL"/>
-                        <constraint firstItem="Mgj-Bn-ptq" firstAttribute="leading" secondItem="H7j-62-Oxb" secondAttribute="leading" id="GTf-Ri-M6O"/>
-                        <constraint firstItem="Mgj-Bn-ptq" firstAttribute="top" secondItem="H7j-62-Oxb" secondAttribute="top" id="dW5-4J-Mwy"/>
-                        <constraint firstAttribute="trailing" secondItem="Mgj-Bn-ptq" secondAttribute="trailing" id="jnU-Kd-K0T"/>
-                        <constraint firstItem="2nu-cB-jHp" firstAttribute="leading" secondItem="H7j-62-Oxb" secondAttribute="leading" id="seW-c0-t7B"/>
-                        <constraint firstAttribute="trailing" secondItem="2nu-cB-jHp" secondAttribute="trailing" id="zFB-88-UcU"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" id="0u3-13-mzC">
                     <rect key="frame" x="0.0" y="0.0" width="462" height="247"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
