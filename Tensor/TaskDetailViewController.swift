@@ -81,19 +81,36 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     func updateUI() {
         taskNameTextField.text = task?.name
         
-        if let dueDateSetting = task?.getDueDateSetting() {
-            dueDateSettingTextField.text = dueDateSettingPrompts[dueDateSetting]
-        }
-        else {
-            dueDateSettingTextField.text = dueDateSettingPrompts[dueDateSettingPromptOrdering.first!]
-        }
+//        if let dueDateSetting = task?.getDueDateSetting() {
+//            dueDateSettingTextField.text = dueDateSettingPrompts[dueDateSetting]
+//        }
+//        else {
+//            dueDateSettingTextField.text = dueDateSettingPrompts[dueDateSettingPromptOrdering.first!]
+//        }
         
-        if let dueDate = task?.effectiveDueDate {
+        if let dueDate = task?.userSetDueDate {
             let formatter = NSDateFormatter()
-            formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-            formatter.timeStyle = NSDateFormatterStyle.MediumStyle
+            formatter.dateStyle = NSDateFormatterStyle.ShortStyle
+            formatter.timeStyle = NSDateFormatterStyle.ShortStyle
             formatter.timeZone = NSTimeZone.localTimeZone()
             dueDateTextField.text = formatter.stringFromDate(dueDate)
+            
+            clearDueDateButton.enabled = true
+        }
+        else {
+            dueDateTextField.text = ""
+            clearDueDateButton.enabled = false
+        }
+        
+        if let dueDate = task?.inheritedDueDate {
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = NSDateFormatterStyle.ShortStyle
+            formatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            formatter.timeZone = NSTimeZone.localTimeZone()
+            inheritedDateLabel.text = formatter.stringFromDate(dueDate)
+        }
+        else {
+            inheritedDateLabel.text = "No inherited date"
         }
         
         if  let workConclusionType = task?.workConclusion?.getType()
@@ -141,14 +158,12 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var completionStatusSwitch: UISwitch!
     @IBOutlet weak var invalidationStatusSwitch: UISwitch!
     @IBOutlet weak var deleteButton: UIButton!
-
-    @IBOutlet weak var dueDateSettingInputView: UIView!
-    @IBOutlet weak var dueDateSettingInputViewPicker: UIPickerView!
-    @IBOutlet weak var dueDateSettingTextField: UITextField!
+    @IBOutlet weak var clearDueDateButton: UIButton!
     
     @IBOutlet weak var dueDateTextField: UITextField!
     @IBOutlet weak var dueDateInputView: UIView!
     @IBOutlet weak var dueDateInputViewDatePicker: UIDatePicker!
+    @IBOutlet weak var inheritedDateLabel: UILabel!
     
     
     
@@ -201,24 +216,31 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
         task?.trash()
     }
     
-    @IBAction func dueDateSettingInputViewSelectButtonPressed() {
-        let selectedRow = dueDateSettingInputViewPicker.selectedRowInComponent(0)
-        
-        task?.setDueDateSetting(dueDateSettingPromptOrdering[selectedRow])
-        if let action = task {
-            LocalParseManager.sharedManager.saveLocally(action)
-        }
-        dueDateSettingTextField.text = self.pickerView(dueDateSettingInputViewPicker,
-            titleForRow: selectedRow, forComponent: 0)
-        
-        dueDateSettingTextField.resignFirstResponder()
-    }
+//    @IBAction func dueDateSettingInputViewSelectButtonPressed() {
+//        let selectedRow = dueDateSettingInputViewPicker.selectedRowInComponent(0)
+//        
+//        task?.setDueDateSetting(dueDateSettingPromptOrdering[selectedRow])
+//        if let action = task {
+//            LocalParseManager.sharedManager.saveLocally(action)
+//        }
+//        dueDateSettingTextField.text = self.pickerView(dueDateSettingInputViewPicker,
+//            titleForRow: selectedRow, forComponent: 0)
+//        
+//        dueDateSettingTextField.resignFirstResponder()
+//    }
     
     @IBAction func dueDateInputViewSelectButtonPressed() {
         task?.setDueDate(dueDateInputViewDatePicker.date)
         dueDateTextField.resignFirstResponder()
     }
     
+    @IBAction func dueDateInputViewCancelButtonPressed(sender: AnyObject) {
+        dueDateTextField.resignFirstResponder()
+    }
+    
+    @IBAction func clearDueDateButtonPressed(sender: AnyObject) {
+        task?.setDueDate(nil)
+    }
     
     //
     //
@@ -229,7 +251,7 @@ class TaskDetailViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dueDateSettingTextField.inputView = dueDateSettingInputView
+//        dueDateSettingTextField.inputView = dueDateSettingInputView
         dueDateTextField.inputView = dueDateInputView
         dueDateInputViewDatePicker.timeZone = NSTimeZone.localTimeZone()
         
